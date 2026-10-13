@@ -256,7 +256,7 @@
     <!-- ========================================================================= -->
     <!-- 2. VISTA: VITRINA DIGITAL DE LA TIENDA                                   -->
     <!-- ========================================================================= -->
-    <main id="vista-vitrina-tienda" class="w-full max-w-5xl mx-auto px-3.5 py-4 space-y-4 flex-grow hidden">
+    <main id="vista-vitrina-tienda" class="w-full max-w-5xl mx-auto px-3.5 py-4 space-y-4 flex-grow hidden relative">
         
         <!-- BANNER DUAL DE RETORNO (COMERCIANTE Y MÁSTER) -->
         <div id="banner-retorno-dueno" class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 text-white rounded-2xl p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5 shadow-md hidden">
@@ -305,6 +305,9 @@
                         </span>
                         <span class="text-emerald-600 font-semibold flex items-center gap-1">
                             <i class="fa-solid fa-circle-check"></i> Verificado TCL
+                        </span>
+                        <span id="tienda-rif-badge" class="bg-slate-100 text-slate-700 font-mono px-2 py-0.5 rounded-md border border-slate-200 hidden">
+                            RIF: J-00000000-0
                         </span>
                     </div>
 
@@ -376,6 +379,30 @@
                 </button>
             </div>
         </div>
+
+        <!-- CAPA PROTECTORA: ESPEJO BORROSO PARA TIENDAS VENCIDAS/PAUSADAS -->
+        <div id="overlay-tienda-vencida" class="fixed inset-0 z-50 backdrop-blur-md bg-slate-950/80 p-4 flex items-center justify-center hidden">
+            <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center space-y-4 shadow-2xl border border-slate-200">
+                <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-50 text-amber-500 border border-amber-200 flex items-center justify-center text-2xl shadow-inner">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div class="space-y-1.5">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-amber-600 block">Aviso Comercial</span>
+                    <h3 class="text-base font-extrabold text-slate-900 leading-snug">Vitrina Temporalmente Pausada</h3>
+                    <p class="text-xs text-slate-500 font-medium leading-relaxed">
+                        Esta vitrina web se encuentra en proceso de renovación de servicio. Para información o reactivación comercial, comuníquese con el administrador.
+                    </p>
+                </div>
+                <div class="space-y-2 pt-2 border-t border-slate-100">
+                    <button onclick="window.contactarMasterPorSuspension()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs py-3 rounded-xl uppercase tracking-wider shadow flex items-center justify-center gap-2 btn-interactive">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> <span>Contactar a Soporte (Máster)</span>
+                    </button>
+                    <button onclick="window.navegarAInicioGuia()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs py-2.5 rounded-xl uppercase tracking-wider btn-interactive">
+                        Volver a la Guía Comercial
+                    </button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <!-- ========================================================================= -->
@@ -383,7 +410,6 @@
     <!-- ========================================================================= -->
     <div id="modal-detalle-producto" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[150] p-4 hidden flex items-center justify-center">
         <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 flex flex-col max-h-[90vh]">
-            <!-- Foto en grande con botón cerrar -->
             <div class="relative w-full h-52 sm:h-60 bg-slate-100 overflow-hidden shrink-0">
                 <img id="det-prod-img" src="" alt="Foto del producto" class="w-full h-full object-cover">
                 <button onclick="window.cerrarModalDetalleProducto()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center shadow-lg transition-all btn-interactive">
@@ -394,7 +420,6 @@
                 </div>
             </div>
 
-            <!-- Información detallada -->
             <div class="p-4 sm:p-5 overflow-y-auto space-y-3.5 no-scrollbar flex-grow">
                 <div>
                     <span id="det-prod-categoria" class="text-[10px] font-black uppercase tracking-wider text-blue-600 block">CATEGORÍA</span>
@@ -409,7 +434,6 @@
                     Descripción detallada del producto.
                 </p>
 
-                <!-- BOTONES DE ACCIÓN DEL PRODUCTO -->
                 <div class="space-y-2 pt-2 border-t border-slate-100">
                     <button id="det-btn-add-carrito" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-black text-xs py-2.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-2 transition-all btn-interactive">
                         <i class="fa-solid fa-cart-plus text-blue-600"></i> <span>Agregar al Carrito</span>
@@ -424,7 +448,6 @@
                     </button>
                 </div>
 
-                <!-- FORMULARIO DE COMPRA DIRECTA DESPLEGABLE -->
                 <div id="det-box-compra-directa" class="hidden bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2.5 pt-3">
                     <div class="flex justify-between items-center border-b border-slate-200/80 pb-1.5">
                         <span class="text-[10.5px] font-black uppercase text-slate-700 tracking-wider block">
@@ -506,8 +529,8 @@
                 </div>
             </div>
 
-            <!-- TABS DEL COMERCIANTE -->
-            <div class="grid grid-cols-3 gap-1.5 font-bold text-xs">
+            <!-- TABS DEL COMERCIANTE (4 PESTAÑAS: PRODUCTOS, TASAS, PERFIL, CLAVE) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 font-bold text-xs">
                 <button type="button" id="tab-btn-productos" onclick="window.cambiarTabComerciante('PRODUCTOS')" class="py-2 px-1 rounded-xl border border-blue-600 bg-blue-600 text-white font-black shadow-sm flex items-center justify-center gap-1 transition-all text-center">
                     <i class="fa-solid fa-boxes-stacked text-[11px]"></i> <span class="truncate">Productos (<span id="cnt-tab-prods">0</span>)</span>
                 </button>
@@ -516,6 +539,9 @@
                 </button>
                 <button type="button" id="tab-btn-perfil" onclick="window.cambiarTabComerciante('PERFIL')" class="py-2 px-1 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 flex items-center justify-center gap-1 hover:bg-slate-100 transition-all text-center">
                     <i class="fa-solid fa-store text-blue-600 text-[11px]"></i> <span class="truncate">Mi Portada</span>
+                </button>
+                <button type="button" id="tab-btn-clave" onclick="window.cambiarTabComerciante('CLAVE')" class="py-2 px-1 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 flex items-center justify-center gap-1 hover:bg-slate-100 transition-all text-center">
+                    <i class="fa-solid fa-key text-emerald-600 text-[11px]"></i> <span class="truncate">Mi Clave</span>
                 </button>
             </div>
 
@@ -631,7 +657,7 @@
                         <i class="fa-solid fa-calculator text-amber-500"></i> Fijar Mis Tasas de Cambio del Día
                     </h3>
                     <p class="text-[11px] text-slate-500 font-medium">
-                        Define cómo se calculan tus precios. Estas tasas quedan <strong>fijas permanentemente</strong> para tu tienda.
+                        Define cómo se convierten tus precios en Dólares, Pesos y Bolívares. Estas tasas quedan <strong>fijas permanentemente</strong> para tu tienda hasta que tú las vuelvas a cambiar.
                     </p>
                 </div>
 
@@ -659,7 +685,7 @@
             </div>
         </div>
 
-        <!-- SECCIÓN 3: PERFIL & PORTADA DE TIENDA -->
+        <!-- SECCIÓN 3: PERFIL & PORTADA DE TIENDA (CON OPCIÓN DE RIF SÍ/NO Y MOSTRAR SÍ/NO) -->
         <div id="seccion-comerciante-perfil" class="space-y-4 hidden">
             <div class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-4">
                 <div class="border-b border-slate-100 pb-2">
@@ -704,6 +730,31 @@
                     </div>
                 </div>
 
+                <!-- SECCIÓN DE RIF EN PERFIL -->
+                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2.5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div>
+                            <label class="text-[9.5px] text-slate-600 uppercase font-bold block mb-1">¿Posee RIF o Cédula Fiscal? *</label>
+                            <select id="perfil-select-tiene-rif" onchange="window.toggleRifPerfil(this.value)" class="input-clean text-xs font-bold">
+                                <option value="NO">❌ No posee RIF</option>
+                                <option value="SI">✅ Sí posee RIF</option>
+                            </select>
+                        </div>
+                        <div id="perfil-box-rif-input" class="hidden">
+                            <label class="text-[9.5px] text-slate-600 uppercase font-bold block mb-1">Número de RIF / Cédula Fiscal</label>
+                            <input type="text" id="perfil-inp-rif" class="input-clean font-mono text-xs font-bold" placeholder="Ej: J-12345678-0 o V-12345678">
+                        </div>
+                    </div>
+
+                    <div id="perfil-box-mostrar-rif" class="hidden pt-1 border-t border-slate-200/80 flex items-center justify-between gap-2">
+                        <span class="text-[10px] font-bold text-slate-600">¿Desea mostrar el RIF públicamente en su vitrina?</span>
+                        <select id="perfil-select-mostrar-rif" class="input-clean text-xs font-bold w-28 shrink-0">
+                            <option value="SI">Mostrar</option>
+                            <option value="NO">Ocultar</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Municipio / Zona *</label>
@@ -732,6 +783,35 @@
 
                 <button onclick="window.guardarPerfilComerciante()" class="w-full btn-brand py-3 text-xs shadow-md flex items-center justify-center gap-2 btn-interactive">
                     <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios de Mi Negocio
+                </button>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: CAMBIAR CLAVE DE ACCESO DEL COMERCIANTE -->
+        <div id="seccion-comerciante-clave" class="space-y-4 hidden">
+            <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3.5">
+                <div class="border-b border-slate-100 pb-2">
+                    <h3 class="text-xs font-black uppercase text-slate-800 tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-key text-emerald-600"></i> Cambiar Mi Clave de Acceso
+                    </h3>
+                    <p class="text-[11px] text-slate-500 font-medium">
+                        Puedes actualizar tu contraseña cuando lo desees. El cambio se registrará de inmediato en la base de datos central.
+                    </p>
+                </div>
+
+                <div class="space-y-2 max-w-sm">
+                    <div>
+                        <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Tu Usuario de Acceso:</label>
+                        <input type="text" id="comerciante-clave-usuario" readonly class="input-clean bg-slate-100 font-mono text-xs font-bold text-slate-700">
+                    </div>
+                    <div>
+                        <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Nueva Contraseña para tu Panel *</label>
+                        <input type="text" id="comerciante-clave-nueva" placeholder="Escribe tu nueva clave segura..." class="input-clean font-mono text-xs font-black text-blue-600">
+                    </div>
+                </div>
+
+                <button onclick="window.guardarNuevaClaveComerciante()" class="btn-brand py-3 px-6 text-xs shadow flex items-center gap-2 btn-interactive">
+                    <i class="fa-solid fa-check"></i> Actualizar Mi Contraseña
                 </button>
             </div>
         </div>
@@ -874,13 +954,36 @@
                 <input type="hidden" id="saas-editing-id" value="">
                 <div class="space-y-2">
                     <div>
-                        <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Nombre Comercial / Razón Social *</label>
-                        <input type="text" id="saas-input-nombre" oninput="window.autogenerarUsuarioSlug()" placeholder="Ej: Panadería El Parque" class="input-clean text-xs">
+                        <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Nombre Comercial del Negocio *</label>
+                        <input type="text" id="saas-input-nombre" oninput="window.autogenerarUsuarioCompacto()" placeholder="Ej: Panadería El Parque" class="input-clean text-xs">
                     </div>
                     <div>
-                        <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Responsable / Titular</label>
-                        <input type="text" id="saas-input-responsable" placeholder="Ej: Juan Pérez" class="input-clean text-xs">
+                        <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Responsable / Titular (Confidencial) *</label>
+                        <input type="text" id="saas-input-responsable" oninput="window.autogenerarUsuarioCompacto()" placeholder="Ej: Juan Pérez" class="input-clean text-xs">
                     </div>
+
+                    <!-- CAMPOS DE RIF EN MÁSTER -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200">
+                        <div>
+                            <label class="text-[9px] text-slate-600 uppercase font-bold block mb-0.5">¿Posee RIF? *</label>
+                            <select id="saas-select-tiene-rif" class="input-clean text-xs font-bold">
+                                <option value="NO">No posee RIF</option>
+                                <option value="SI">Sí posee RIF</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-slate-600 uppercase font-bold block mb-0.5">Número de RIF</label>
+                            <input type="text" id="saas-input-rif" placeholder="Ej: J-12345678-0" class="input-clean font-mono text-xs font-bold">
+                        </div>
+                        <div class="sm:col-span-2 flex items-center justify-between pt-1">
+                            <span class="text-[9px] font-bold text-slate-500">¿Mostrar RIF en vitrina pública?</span>
+                            <select id="saas-select-mostrar-rif" class="input-clean text-xs font-bold w-24">
+                                <option value="SI">Mostrar</option>
+                                <option value="NO">Ocultar</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div>
                         <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">WhatsApp de Contacto *</label>
                         <input type="tel" id="saas-input-wa" placeholder="Ej: 584240000000" class="input-clean font-mono text-xs">
@@ -895,17 +998,25 @@
                             <input list="lista-sugerencias-ramos" id="saas-input-rubro" placeholder="Ej: Panadería, Farmacia..." class="input-clean text-xs font-bold">
                         </div>
                     </div>
+                    <div>
+                        <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Dirección Física Exacta *</label>
+                        <input type="text" id="saas-input-dir" placeholder="Ej: Av. Bolívar, frente a la Plaza Bolívar" class="input-clean text-xs">
+                    </div>
+                    <div>
+                        <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Enlace Externo Opcional (Redes / Web)</label>
+                        <input type="url" id="saas-input-link" placeholder="https://instagram.com/tutienda" class="input-clean text-xs font-mono">
+                    </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <div>
-                            <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Usuario ID de Acceso (Slug) *</label>
-                            <input type="text" id="saas-input-user" oninput="window.actualizarLinkGeneradoManual()" placeholder="panaderiaelparque" class="input-clean font-mono text-xs">
+                            <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Usuario de Acceso Compacto *</label>
+                            <input type="text" id="saas-input-user" placeholder="tcl_juanperez" class="input-clean font-mono text-xs font-black text-blue-700">
                         </div>
                         <div>
                             <div class="flex justify-between items-center mb-0.5">
-                                <label class="text-[9.5px] text-slate-500 uppercase block font-bold">Clave de Acceso *</label>
+                                <label class="text-[9.5px] text-slate-500 uppercase block font-bold">Clave Asignada *</label>
                                 <button type="button" onclick="window.toggleVisibilidadPassField('saas-input-pass')" class="text-[9px] text-blue-600 font-black uppercase">👁️ Ver</button>
                             </div>
-                            <input type="password" id="saas-input-pass" placeholder="Contraseña segura" class="input-clean font-mono font-black text-blue-600 bg-blue-50/50 text-xs">
+                            <input type="password" id="saas-input-pass" value="12345" placeholder="Contraseña" class="input-clean font-mono font-black text-blue-600 bg-blue-50/50 text-xs">
                         </div>
                     </div>
                 </div>
@@ -916,17 +1027,17 @@
                         <div class="grid grid-cols-3 gap-1.5">
                             <button type="button" onclick="window.seleccionarPildoraDias(3)" id="pildora-3" class="p-1.5 border rounded-lg text-purple-700 bg-white text-xs font-bold">3 Días</button>
                             <button type="button" onclick="window.seleccionarPildoraDias(5)" id="pildora-5" class="p-1.5 border rounded-lg text-purple-700 bg-white text-xs font-bold">5 Días</button>
-                            <button type="button" onclick="window.seleccionarPildoraDias(7)" id="pildora-7" class="p-1.5 border rounded-lg text-purple-700 bg-white text-xs font-bold">7 Días</button>
+                            <button type="button" onclick="window.seleccionarPildoraDias(7)" id="pildora-7" class="p-1.5 border rounded-lg bg-blue-600 text-white font-bold text-xs">7 Días</button>
                         </div>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                             <button type="button" onclick="window.seleccionarPildoraDias(30)" id="pildora-30" class="p-1.5 border rounded-lg bg-white text-xs font-bold">30 Días</button>
                             <button type="button" onclick="window.seleccionarPildoraDias(90)" id="pildora-90" class="p-1.5 border rounded-lg bg-white text-xs font-bold">90 Días</button>
-                            <button type="button" onclick="window.seleccionarPildoraDias(180)" id="pildora-180" class="p-1.5 border rounded-lg bg-blue-600 text-white text-xs font-bold">180 Días</button>
+                            <button type="button" onclick="window.seleccionarPildoraDias(180)" id="pildora-180" class="p-1.5 border rounded-lg bg-white text-xs font-bold">180 Días</button>
                             <button type="button" onclick="window.seleccionarPildoraDias(365)" id="pildora-365" class="p-1.5 border rounded-lg bg-white text-xs font-bold">365 Días</button>
                         </div>
                     </div>
                     <div id="lbl-display-dias-seleccionados" class="bg-slate-900 p-2 rounded-xl border border-slate-700 text-center font-black text-xs text-amber-400 font-mono shadow-sm">
-                        180 Días (6 MESES)
+                        7 Días (PRUEBA GRATIS)
                     </div>
                 </div>
 
@@ -941,7 +1052,7 @@
 
                     <div class="grid grid-cols-2 gap-1.5">
                         <button onclick="window.enviarNotificacionAccionWA('activacion')" class="bg-blue-600 hover:bg-blue-500 text-white font-black py-2 rounded-xl uppercase text-[10px] shadow flex items-center justify-center gap-1">
-                            ENVIAR ACTIVACIÓN
+                            ENVIAR CREDENCIALES
                         </button>
                         <button onclick="window.enviarNotificacionAccionWA('renovacion')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-black py-2 rounded-xl uppercase text-[10px] shadow flex items-center justify-center gap-1">
                             ENVIAR RENOVACIÓN
@@ -955,7 +1066,7 @@
                     ELIMINAR / PAUSAR
                 </button>
                 <button onclick="window.guardarNuevoComercioEntornoSaaS()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-xl uppercase text-xs shadow">
-                    GUARDAR CAMBIOS
+                    GUARDAR / ACTIVAR
                 </button>
             </div>
         </div>
@@ -971,7 +1082,7 @@
                 <button onclick="document.getElementById('modal-base-clientes').classList.add('hidden')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-sm"></i></button>
             </div>
             <div class="p-3 bg-slate-100 border-b border-slate-200">
-                <input type="text" id="busqueda-modal-cliente" onkeyup="window.renderizarListaClientesModal()" placeholder="🔍 Buscar comercio..." class="input-clean text-xs">
+                <input type="text" id="busqueda-modal-cliente" onkeyup="window.renderizarListaClientesModal()" placeholder="🔍 Buscar comercio o titular..." class="input-clean text-xs">
             </div>
             <div class="p-4 overflow-y-auto space-y-2.5 no-scrollbar flex-grow">
                 <div id="lista-clientes-modal" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
@@ -1160,42 +1271,85 @@
         </div>
     </div>
 
-    <!-- MODAL REGISTRO COMERCIO AUTÓNOMO -->
+    <!-- MODAL DE SOLICITUD DE REGISTRO COMERCIAL (FORMAL CON RIF & DESPACHO A WHATSAPP) -->
     <div id="modal-registro-comercio" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[100] p-3 hidden flex items-center justify-center">
-        <div class="bg-white rounded-2xl w-full max-w-md p-4 space-y-3 shadow-2xl border border-slate-200">
+        <div class="bg-white rounded-3xl w-full max-w-md p-4 sm:p-5 space-y-3.5 shadow-2xl border border-slate-200 overflow-y-auto max-h-[92vh] no-scrollbar">
             <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                 <div class="flex items-center gap-2">
-                    <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs"><i class="fa-solid fa-rocket"></i></div>
-                    <h3 class="text-xs font-black text-slate-900 uppercase tracking-tight">Publica tu Tienda Gratis</h3>
+                    <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm"><i class="fa-solid fa-store"></i></div>
+                    <h3 class="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-tight">Solicitud de Activación (7 Días Gratis)</h3>
                 </div>
-                <button onclick="document.getElementById('modal-registro-comercio').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 p-1"><i class="fa-solid fa-xmark text-xs"></i></button>
+                <button onclick="document.getElementById('modal-registro-comercio').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 p-1"><i class="fa-solid fa-xmark text-sm"></i></button>
             </div>
-            <p class="text-[10.5px] text-slate-500 font-medium">¡Pruébalo durante <strong>7 días sin costo</strong>! Publica tus productos y recibe pedidos directo en tu WhatsApp.</p>
-            <form onsubmit="event.preventDefault(); window.procesarAutoRegistroTienda();" class="space-y-2 text-xs font-bold text-slate-700">
+
+            <!-- AVISO OFICIAL OBLIGATORIO -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-2.5 text-[10.5px] text-amber-900 font-medium leading-relaxed">
+                <p><strong>⚠️ Aviso Importante:</strong> Recuerda que estás solicitando una cuenta de <strong>7 días gratis de prueba</strong>. Al finalizar tu período, debes contactar al Máster para la asignación de alguno de nuestros planes comerciales.</p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); window.procesarSolicitudRegistroCliente();" class="space-y-2.5 text-xs font-bold text-slate-700">
                 <div>
-                    <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Nombre Comercial de tu Negocio *</label>
-                    <input type="text" id="reg-in-nombre" required placeholder="Ej: Panadería La Estrella" class="input-clean text-xs">
+                    <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Nombre Comercial del Emprendimiento / Negocio *</label>
+                    <input type="text" id="sol-in-nombre" required placeholder="Ej: Panadería & Pastelería La Estrella" class="input-clean text-xs">
                 </div>
+
                 <div>
-                    <label class="text-[9px] text-slate-500 uppercase block mb-0.5">WhatsApp de Ventas *</label>
-                    <input type="tel" id="reg-in-wa" required placeholder="Ej: 584141234567" class="input-clean font-mono text-xs">
+                    <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Nombre y Apellido del Responsable / Titular * (Confidencial)</label>
+                    <input type="text" id="sol-in-titular" required placeholder="Ej: María José Gómez" class="input-clean text-xs">
                 </div>
-                <div class="grid grid-cols-2 gap-2">
+
+                <!-- SECCIÓN DE RIF (TIENE SÍ/NO Y MOSTRAR SÍ/NO) -->
+                <div class="bg-slate-50 p-2.5 rounded-2xl border border-slate-200 space-y-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[9px] text-slate-600 uppercase font-bold block mb-0.5">¿Posee RIF o Cédula Fiscal? *</label>
+                            <select id="sol-select-tiene-rif" onchange="window.toggleRifSolicitud(this.value)" class="input-clean text-xs font-bold">
+                                <option value="NO">No posee RIF</option>
+                                <option value="SI">Sí posee RIF</option>
+                            </select>
+                        </div>
+                        <div id="sol-box-rif-input" class="hidden">
+                            <label class="text-[9px] text-slate-600 uppercase font-bold block mb-0.5">Número de RIF / Cédula</label>
+                            <input type="text" id="sol-in-rif" placeholder="Ej: J-12345678-0" class="input-clean font-mono text-xs font-bold">
+                        </div>
+                    </div>
+                    <div id="sol-box-mostrar-rif" class="hidden flex items-center justify-between pt-1 border-t border-slate-200">
+                        <span class="text-[9px] text-slate-600 font-bold">¿Desea mostrar el RIF en su vitrina pública?</span>
+                        <select id="sol-select-mostrar-rif" class="input-clean text-xs font-bold w-24 shrink-0">
+                            <option value="SI">Sí, mostrar</option>
+                            <option value="NO">No, ocultar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[9px] text-slate-500 uppercase block mb-0.5">WhatsApp de Ventas y Pedidos *</label>
+                    <input type="tel" id="sol-in-wa" required placeholder="Ej: 584141234567" class="input-clean font-mono text-xs">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <div>
                         <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Municipio / Zona *</label>
-                        <input list="lista-sugerencias-zonas" id="reg-in-zona" required placeholder="Ej: Cordero, Táriba, Capacho..." class="input-clean text-xs font-bold">
+                        <input list="lista-sugerencias-zonas" id="sol-in-zona" required placeholder="Ej: Cordero, Táriba, Capacho..." class="input-clean text-xs font-bold">
                     </div>
                     <div>
-                        <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Rubro Principal *</label>
-                        <input list="lista-sugerencias-ramos" id="reg-in-rubro" required placeholder="Ej: Panadería, Repuestos..." class="input-clean text-xs font-bold">
+                        <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Ramo o Rubro Comercial *</label>
+                        <input list="lista-sugerencias-ramos" id="sol-in-rubro" required placeholder="Ej: Panadería, Repuestos..." class="input-clean text-xs font-bold">
                     </div>
                 </div>
+
                 <div>
-                    <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Contraseña para tu Panel *</label>
-                    <input type="password" id="reg-in-pass" required placeholder="Crea una clave para tu catálogo" class="input-clean font-mono text-xs">
+                    <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Dirección Física Exacta o Punto de Referencia *</label>
+                    <input type="text" id="sol-in-dir" required placeholder="Ej: Av. Bolívar, frente a la Plaza Bolívar, local #2" class="input-clean text-xs">
                 </div>
-                <button type="submit" class="btn-brand w-full py-3 text-xs shadow flex items-center justify-center gap-1.5 btn-interactive mt-1">
-                    <i class="fa-solid fa-sparkles text-amber-300"></i> Activar Mi Tienda en 1 Paso
+
+                <div>
+                    <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Redes Sociales o Enlace Web (Opcional)</label>
+                    <input type="url" id="sol-in-link" placeholder="https://instagram.com/tutienda" class="input-clean font-mono text-xs">
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs py-3.5 rounded-xl uppercase tracking-wider shadow flex items-center justify-center gap-2 btn-interactive mt-1">
+                    <i class="fa-brands fa-whatsapp text-base"></i> <span>Solicitar Usuario y Clave de Prueba (7 Días)</span>
                 </button>
             </form>
         </div>
@@ -1214,7 +1368,7 @@
             <form onsubmit="event.preventDefault(); window.procesarLogin();" class="space-y-2.5 text-xs font-bold text-slate-700">
                 <div>
                     <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Usuario / ID *</label>
-                    <input type="text" id="login-in-user" required placeholder="Ej: TUCOCEL o panaderiaelparque" class="input-clean font-mono text-xs">
+                    <input type="text" id="login-in-user" required placeholder="Ej: TUCOCEL o tcl_mariajose" class="input-clean font-mono text-xs">
                 </div>
                 <div>
                     <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Contraseña *</label>
@@ -1223,6 +1377,44 @@
                 <button type="submit" class="btn-brand w-full py-2.5 text-xs shadow flex items-center justify-center gap-1.5 btn-interactive mt-1">
                     Ingresar al Panel
                 </button>
+            </form>
+        </div>
+    </div>
+
+    
+    <!-- MODAL DE AUTORIZACIÓN MÁSTER PARA ENLACES DE ACTIVACIÓN -->
+    <div id="modal-auth-master-activacion" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-[250] p-4 hidden flex items-center justify-center">
+        <div class="bg-white rounded-3xl w-full max-w-sm p-5 sm:p-6 space-y-4 shadow-2xl border border-slate-200 text-center">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center text-2xl shadow-inner">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            
+            <div class="space-y-1.5">
+                <span class="text-[9.5px] font-black uppercase tracking-widest text-blue-600 block">Seguridad Administrativa</span>
+                <h3 class="text-base font-extrabold text-slate-900 leading-snug">Autorización Máster Requerida</h3>
+                <p class="text-xs text-slate-500 font-medium leading-relaxed">
+                    Este enlace contiene una solicitud comercial y requiere la clave del <strong>Administrador Central (Máster)</strong> para su activación.
+                </p>
+            </div>
+
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-2.5 text-[10.5px] text-amber-900 font-medium text-left leading-relaxed">
+                <p>🔒 <strong>Aviso para solicitantes:</strong> Si usted es el comerciante que envió la solicitud, no requiere ingresar aquí. Su solicitud ya fue enviada a nuestro equipo y nos comunicaremos con usted a la brevedad.</p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); window.verificarClaveMasterParaActivacion();" class="space-y-3 pt-1 text-left">
+                <div>
+                    <label class="text-[9px] text-slate-500 uppercase font-bold block mb-1">Clave Máster *</label>
+                    <input type="password" id="auth-in-pass-master" required placeholder="••••••••" class="input-clean font-mono font-black text-center text-sm text-blue-700">
+                </div>
+                
+                <div class="space-y-1.5 pt-1">
+                    <button type="submit" class="w-full btn-brand py-3 rounded-xl uppercase text-xs font-black tracking-wider shadow flex items-center justify-center gap-2 btn-interactive">
+                        <i class="fa-solid fa-unlock-keyhole"></i> <span>Desbloquear y Activar Comercio</span>
+                    </button>
+                    <button type="button" onclick="window.cerrarModalAuthMasterActivacion()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs py-2.5 rounded-xl uppercase tracking-wider btn-interactive">
+                        Volver a la Guía
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -1274,7 +1466,7 @@
         let productoSeleccionadoModal = null;
         window.esMasterLogueado = false;
         window.tipoVistaModalActual = 'ACTIVOS';
-        window.diasSuscripcionSeleccionados = 180;
+        window.diasSuscripcionSeleccionados = 7;
 
         let zonaFiltroSeleccionada = "TODOS";
         let rubroFiltroSeleccionado = "TODOS";
@@ -1282,18 +1474,23 @@
         let tasasGlobales = JSON.parse(localStorage.getItem("tcl_tz_tasas")) || { cop: 3600, paridadBs: 3.3 };
         window.tasasConfig = tasasGlobales;
 
-        // FOTOS REALES DE ALTA DEFINICIÓN
+        // FOTOS REALES Y DATOS SEMILLA CON FECHAS Y RIF
         const TIENDAS_SEMILLA = [
             { 
-                slug: "panaderia-el-parque", 
+                slug: "tcl_panaderiaelparque", 
                 nombre: "Panadería & Pastelería El Parque", 
+                responsable: "Carlos Gómez",
+                rif: "J-30495821-4",
+                tieneRif: "SI",
+                mostrarRif: "SI",
                 rubro: "Panadería", 
                 zona: "Cordero", 
                 direccion: "Frente a la Plaza Bolívar, Cordero", 
                 telefono: "584147357549", 
-                user: "panaderia-el-parque", 
-                pass: "1234", 
+                user: "tcl_panaderiaelparque", 
+                pass: "12345", 
                 dias: 180, 
+                fechaCreacion: Date.now() - (5 * 24 * 60 * 60 * 1000),
                 estatus: "ACTIVO", 
                 portada: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=700&auto=format&fit=crop&q=80",
                 logo: "🥖",
@@ -1302,15 +1499,20 @@
                 tasas: { cop: 3600, bs: 45.0 }
             },
             { 
-                slug: "multirepuestos-los-andes", 
+                slug: "tcl_multirepuestos", 
                 nombre: "Multirepuestos Los Andes C.A.", 
+                responsable: "Marcos Ramírez",
+                rif: "J-40918273-0",
+                tieneRif: "SI",
+                mostrarRif: "SI",
                 rubro: "Repuestos", 
                 zona: "Táriba", 
                 direccion: "Av. 1 con Calle 4, Táriba", 
                 telefono: "584247357549", 
-                user: "multirepuestos-los-andes", 
-                pass: "1234", 
+                user: "tcl_multirepuestos", 
+                pass: "12345", 
                 dias: 365, 
+                fechaCreacion: Date.now() - (10 * 24 * 60 * 60 * 1000),
                 estatus: "ACTIVO", 
                 portada: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=700&auto=format&fit=crop&q=80",
                 logo: "🚗",
@@ -1319,15 +1521,20 @@
                 tasas: { cop: 4000, bs: 50.0 }
             },
             { 
-                slug: "farmacia-la-salud", 
+                slug: "tcl_farmacialasalud", 
                 nombre: "Farmacia & Perfumería La Salud", 
+                responsable: "Dra. Elena Silva",
+                rif: "J-50192834-8",
+                tieneRif: "SI",
+                mostrarRif: "SI",
                 rubro: "Farmacia", 
                 zona: "San Cristóbal", 
                 direccion: "Barrio Obrero, Carrera 19, San Cristóbal", 
                 telefono: "584147357549", 
-                user: "farmacia-la-salud", 
-                pass: "1234", 
+                user: "tcl_farmacialasalud", 
+                pass: "12345", 
                 dias: 180, 
+                fechaCreacion: Date.now() - (20 * 24 * 60 * 60 * 1000),
                 estatus: "ACTIVO", 
                 portada: "https://images.unsplash.com/photo-1586015555751-63c258d4e73b?w=700&auto=format&fit=crop&q=80",
                 logo: "💊",
@@ -1336,15 +1543,20 @@
                 tasas: { cop: 3800, bs: 48.0 }
             },
             { 
-                slug: "tucocel-cordero", 
+                slug: "tcl_tucocel", 
                 nombre: "Tucocel C.A. — Telefonía & Tech", 
+                responsable: "Robert Alexis",
+                rif: "J-29837465-1",
+                tieneRif: "SI",
+                mostrarRif: "SI",
                 rubro: "Tecnología", 
                 zona: "Cordero", 
                 direccion: "Av. Bolívar, entre calles 12 y 13, Cordero", 
                 telefono: "584247357549", 
-                user: "tucocel-cordero", 
+                user: "tcl_tucocel", 
                 pass: "Razu2020.", 
                 dias: 365, 
+                fechaCreacion: Date.now() - (30 * 24 * 60 * 60 * 1000),
                 estatus: "ACTIVO", 
                 portada: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=700&auto=format&fit=crop&q=80",
                 logo: "📱",
@@ -1355,25 +1567,26 @@
         ];
 
         const PRODUCTOS_SEMILLA = {
-            "panaderia-el-parque": [
+            "tcl_panaderiaelparque": [
                 { id: "p1", nombre: "Torta Tres Leches Familiar", precio: 8.00, moneda: "USD", categoria: "Postres", desc: "Bizcocho húmedo bañado en tres leches con merengue suizo.", disponible: true, foto: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&auto=format&fit=crop&q=80" },
                 { id: "p2", nombre: "Pan Andino Dulce Campesino (Paquete)", precio: 3.00, moneda: "USD", categoria: "Panadería", desc: "Tradicional pan andino suave con toque de anís dulce.", disponible: true, foto: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop&q=80" },
                 { id: "p3", nombre: "Café Capuchino Cremoso Grande", precio: 1.50, moneda: "USD", categoria: "Bebidas", desc: "Preparado al momento con granos de café 100% tachirense.", disponible: true, foto: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=500&auto=format&fit=crop&q=80" }
             ],
-            "multirepuestos-los-andes": [
+            "tcl_multirepuestos": [
                 { id: "p4", nombre: "Aceite Motor 20W-50 Mineral", precio: 4.50, moneda: "USD", categoria: "Lubricantes", desc: "Protección contra desgaste a altas temperaturas.", disponible: true, foto: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=500&auto=format&fit=crop&q=80" },
                 { id: "p5", nombre: "Filtro de Aceite Universal", precio: 3.00, moneda: "USD", categoria: "Filtros", desc: "Máxima retención de impurezas para motor.", disponible: true, foto: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop&q=80" }
             ],
-            "farmacia-la-salud": [
+            "tcl_farmacialasalud": [
                 { id: "p6", nombre: "Acetaminofén 500mg (20 Tab)", precio: 1.20, moneda: "USD", categoria: "Medicamentos", desc: "Alivio efectivo de dolor de cabeza y fiebre.", disponible: true, foto: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=80" }
             ],
-            "tucocel-cordero": [
+            "tcl_tucocel": [
                 { id: "p7", nombre: "Cargador Rápido 65W Tipo C", precio: 15.00, moneda: "USD", categoria: "Cargadores", desc: "Carga turbo segura para Xiaomi, iPhone y Samsung.", disponible: true, foto: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500&auto=format&fit=crop&q=80" }
             ]
         };
 
         window.addEventListener("DOMContentLoaded", async () => {
             await cargarBaseDeDatos();
+            verificarSolicitudActivacionMasterURL();
             verificarParametrosURL();
         });
 
@@ -1392,7 +1605,7 @@
                 } catch(e) {}
             }
 
-            // GARANTÍA TOTAL: Asegurar que las tiendas tengan sus productos siempre cargados
+            // Garantizar productos semilla si están vacíos
             Object.keys(PRODUCTOS_SEMILLA).forEach(slug => {
                 if (!productosPorTienda[slug] || productosPorTienda[slug].length === 0) {
                     productosPorTienda[slug] = [...PRODUCTOS_SEMILLA[slug]];
@@ -1421,6 +1634,100 @@
             actualizarDatalistsSugerencias();
             renderizarPildorasZonas();
             renderizarPildorasCategorias();
+        }
+
+        // SISTEMA DE CONTROL DE EXPIRACIÓN Y VENCIMIENTO
+        function isTiendaExpirada(tienda) {
+            if (!tienda) return false;
+            if (tienda.estatus === 'INACTIVO') return true;
+            if (!tienda.fechaCreacion || !tienda.dias) return false;
+            const msDuracion = (parseInt(tienda.dias) || 7) * 24 * 60 * 60 * 1000;
+            const fechaFin = tienda.fechaCreacion + msDuracion;
+            return Date.now() > fechaFin;
+        }
+
+        function obtenerDiasRestantes(tienda) {
+            if (!tienda || !tienda.fechaCreacion) return 7;
+            const msDuracion = (parseInt(tienda.dias) || 7) * 24 * 60 * 60 * 1000;
+            const fechaFin = tienda.fechaCreacion + msDuracion;
+            const dif = fechaFin - Date.now();
+            return Math.ceil(dif / (24 * 60 * 60 * 1000));
+        }
+
+        // VERIFICAR PARÁMETROS DE ACTIVACIÓN MÁSTER PROVENIENTES DE WHATSAPP
+        let datosSolicitudPendienteActivacion = null;
+
+        function verificarSolicitudActivacionMasterURL() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                if (params.get("activar_master") === "1") {
+                    datosSolicitudPendienteActivacion = {
+                        nom: params.get("nom") || "",
+                        tit: params.get("tit") || "",
+                        rif: params.get("rif") || "",
+                        mRif: params.get("m_rif") || "SI",
+                        wa: params.get("wa") || "",
+                        zona: params.get("zona") || "Cordero",
+                        rubro: params.get("rubro") || "Comercio",
+                        dir: params.get("dir") || "",
+                        link: params.get("link") || ""
+                    };
+
+                    // CANDADO 1: Si ya está logueado como Máster, abrir directamente
+                    if (window.esMasterLogueado) {
+                        ejecutarAperturaActivacionMasterPrefill();
+                    } else {
+                        // Si no está logueado como Máster, bloquear con la barrera de seguridad
+                        document.getElementById("modal-auth-master-activacion").classList.remove("hidden");
+                    }
+                }
+            } catch(e) {}
+        }
+
+        window.verificarClaveMasterParaActivacion = function() {
+            const passIngresada = document.getElementById("auth-in-pass-master").value.trim();
+            const masterCreds = window.obtenerCredencialesMaster();
+
+            if (passIngresada === masterCreds.pass) {
+                // Clave correcta: Desbloquear sesión Máster y abrir el formulario prellenado
+                window.esMasterLogueado = true;
+                window.actualizarNavbarEstado();
+                document.getElementById("modal-auth-master-activacion").classList.add("hidden");
+                ejecutarAperturaActivacionMasterPrefill();
+            } else {
+                alert("❌ Clave Máster incorrecta.\nAcceso denegado: Autorización exclusiva para TUCOCEL C.A.");
+            }
+        };
+
+        window.cerrarModalAuthMasterActivacion = function() {
+            document.getElementById("modal-auth-master-activacion").classList.add("hidden");
+            datosSolicitudPendienteActivacion = null;
+            window.navegarAInicioGuia();
+        };
+
+        function ejecutarAperturaActivacionMasterPrefill() {
+            if (!datosSolicitudPendienteActivacion) return;
+            const d = datosSolicitudPendienteActivacion;
+
+            document.getElementById("modal-configurar-entorno-saas").classList.remove("hidden");
+            document.getElementById("modal-saas-titulo").innerText = "AUTORIZAR Y ACTIVAR CUENTA (7 DÍAS)";
+            document.getElementById("saas-editing-id").value = "";
+            document.getElementById("saas-input-nombre").value = d.nom;
+            document.getElementById("saas-input-responsable").value = d.tit;
+            document.getElementById("saas-select-tiene-rif").value = d.rif ? "SI" : "NO";
+            document.getElementById("saas-input-rif").value = d.rif;
+            document.getElementById("saas-select-mostrar-rif").value = d.mRif;
+            document.getElementById("saas-input-wa").value = d.wa;
+            document.getElementById("saas-input-zona").value = d.zona;
+            document.getElementById("saas-input-rubro").value = d.rubro;
+            document.getElementById("saas-input-dir").value = d.dir;
+            document.getElementById("saas-input-link").value = d.link;
+
+            window.autogenerarUsuarioCompacto();
+            document.getElementById("saas-input-pass").value = "12345";
+            window.seleccionarPildoraDias(7);
+
+            alert("🔔 Solicitud de cliente verificada con éxito.\nLos datos han sido cargados automáticamente en el formulario listos para activar en 1 clic.");
         }
 
         function verificarParametrosURL() {
@@ -1493,7 +1800,7 @@
             window.navegarAInicioGuia();
         };
 
-        // MATEMÁTICA MULTIMONEDA
+        // MATEMÁTICA MULTIMONEDA CON TASAS PROPIAS DE CADA COMERCIO
         function obtenerTasasActivasTienda(slug) {
             const t = tiendasEnSistema.find(x => x.slug === slug);
             if (t && t.tasas && t.tasas.cop > 0) {
@@ -1745,7 +2052,7 @@
             }).join("");
         }
 
-        // APERTURA DE VITRINA INDIVIDUAL (CON PROTECCIÓN CONTRA FALLOS DE file://)
+        // APERTURA DE VITRINA INDIVIDUAL (CON CONTROL DE SUSPENSIÓN POR VENCIMIENTO)
         window.abrirVitrinaTienda = function(slug, actualizarHistorial = true) {
             const tienda = tiendasEnSistema.find(t => t.slug === slug);
             if (!tienda) return window.navegarAInicioGuia();
@@ -1759,7 +2066,6 @@
             document.getElementById("vista-master-admin").classList.add("hidden");
             document.getElementById("vista-vitrina-tienda").classList.remove("hidden");
 
-            // SEGURIDAD: Prevenir excepción de seguridad en Android local (file://)
             try {
                 if (actualizarHistorial && window.location.protocol !== 'file:') {
                     window.history.pushState({}, "", `?tienda=${slug}`);
@@ -1773,6 +2079,15 @@
             document.getElementById("tienda-descripcion-texto").innerText = tienda.desc || 'Catálogo oficial en vivo.';
             document.getElementById("tienda-avatar-box").innerHTML = tienda.logo || '🏪';
             
+            // Mostrar u ocultar RIF en vitrina
+            const badgeRif = document.getElementById("tienda-rif-badge");
+            if (tienda.mostrarRif === 'SI' && tienda.rif && tienda.rif.trim()) {
+                badgeRif.classList.remove("hidden");
+                badgeRif.innerText = `RIF: ${tienda.rif}`;
+            } else {
+                badgeRif.classList.add("hidden");
+            }
+
             const coverEl = document.getElementById("tienda-cover-img");
             if (coverEl) coverEl.src = tienda.portada || 'https://images.unsplash.com/photo-1555421689-491a97ff2040?w=800&auto=format&fit=crop&q=80';
             
@@ -1787,7 +2102,17 @@
 
             document.getElementById("btn-tienda-wa-directo").onclick = () => window.abrirWhatsAppTienda(tienda.telefono, tienda.nombre);
 
-            // CONTROL DE BANNER DE RETORNO AL PANEL
+            // CONTROL DE BLOQUEO POR SUSPENSIÓN O VENCIMIENTO (ESPEJO BORROSO)
+            const overlayVencida = document.getElementById("overlay-tienda-vencida");
+            const expirada = isTiendaExpirada(tienda);
+
+            if (expirada && !window.esMasterLogueado) {
+                overlayVencida.classList.remove("hidden");
+            } else {
+                overlayVencida.classList.add("hidden");
+            }
+
+            // BANNER DUAL DE RETORNO AL PANEL
             const bannerRet = document.getElementById("banner-retorno-dueno");
             const txtRet = document.getElementById("lbl-banner-retorno-txt");
             const btnGestionar = document.getElementById("btn-gestionar-como-tienda");
@@ -1795,7 +2120,7 @@
 
             if (window.esMasterLogueado) {
                 bannerRet.classList.remove("hidden");
-                txtRet.innerText = `Modo Máster: Viendo Vitrina de ${tienda.nombre}`;
+                txtRet.innerText = `Modo Máster: Viendo Vitrina de ${tienda.nombre} ${expirada ? '(⚠️ VENCIDA/PAUSADA)' : ''}`;
                 btnGestionar.classList.remove("hidden");
                 btnTxtRegreso.innerText = "Panel Máster";
             } else if (comercianteSesion && comercianteSesion.slug === slug) {
@@ -1807,7 +2132,6 @@
                 bannerRet.classList.add("hidden");
             }
 
-            // LIMPIAR BÚSQUEDA INTERNA DE LA TIENDA
             const inBusq = document.getElementById("buscador-tienda-productos");
             if (inBusq) inBusq.value = "";
 
@@ -1816,6 +2140,11 @@
             renderizarProductosTienda(slug);
             actualizarBarraCarrito();
             window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+
+        window.contactarMasterPorSuspension = function() {
+            const msg = `¡Hola TUCOCEL C.A.! 👋 Vi una vitrina comercial pausada en *TCL TuZona Comercial* y quisiera consultar información para su renovación comercial.`;
+            abrirWhatsAppDirecto("584247357549", msg);
         };
 
         function renderizarPildorasCategoriasTienda(slug) {
@@ -1831,7 +2160,7 @@
 
         window.filtrarProductosTiendaActiva = function() { renderizarProductosTienda(tiendaActivaSlug); };
 
-        // RENDERIZADO DE PRODUCTOS CON CLICK PARA VER EN GRANDE (MODAL DETALLE)
+        // RENDERIZADO DE PRODUCTOS CON MODAL DETALLE EN GRANDE
         function renderizarProductosTienda(slug, catFiltro = "TODOS") {
             const grid = document.getElementById("grid-productos-tienda");
             const busq = document.getElementById("buscador-tienda-productos").value.trim().toLowerCase();
@@ -1889,9 +2218,7 @@
             grid.innerHTML = html;
         }
 
-        // =========================================================================
-        // LÓGICA DEL MODAL DE DETALLE DEL PRODUCTO (EN GRANDE, CONSULTAS & COMPRA)
-        // =========================================================================
+        // LÓGICA DEL MODAL DE DETALLE DEL PRODUCTO
         function obtenerSaludoPorHora() {
             const hora = new Date().getHours();
             if (hora >= 5 && hora < 12) return "¡Buenos días!";
@@ -1921,7 +2248,6 @@
                 badgeDisp.innerText = "○ Pausado / Agotado";
             }
 
-            // Precios calculados
             const pUSD = prod.precio;
             const pCOP = Math.round(pUSD * tasas.cop).toLocaleString("es-CO");
             const pBs = (pUSD * tasas.bs).toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1929,13 +2255,11 @@
             document.getElementById("det-prod-precio-principal").innerText = convertirMonto(pUSD, monedaTiendaActiva, tiendaActivaSlug);
             document.getElementById("det-prod-precio-ref").innerText = `Ref: ${pCOP} COP | ${pBs} Bs.`;
 
-            // Botón agregar carrito desde modal
             document.getElementById("det-btn-add-carrito").onclick = function() {
                 window.agregarAlCarrito(prod.id);
                 alert("🛒 ¡Producto agregado a tu carrito!");
             };
 
-            // Ocultar formulario de compra directa por defecto
             document.getElementById("det-box-compra-directa").classList.add("hidden");
             document.getElementById("modal-detalle-producto").classList.remove("hidden");
         };
@@ -1982,18 +2306,7 @@
             const pCOP = Math.round(pUSD * tasas.cop).toLocaleString("es-CO");
             const pBs = (pUSD * tasas.bs).toFixed(2);
 
-            let msg = `🛍️ *PEDIDO DIRECTO — ${tienda.nombre}*
-
-${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL TuZona Comercial*:
-
-📦 *PRODUCTO:* ${productoSeleccionadoModal.nombre}
-💰 *PRECIO:* $${pUSD.toFixed(2)} USD | ${pCOP} COP | ${pBs} Bs.
-👤 *CLIENTE:* ${nom}
-📍 *DIRECCIÓN:* ${dir}
-🛵 *ENTREGA:* ${entrega}
-💳 *FORMA DE PAGO:* ${pago}
-
-¿Me confirman disponibilidad para coordinar la entrega? 🙌`;
+            let msg = `🛍️ *PEDIDO DIRECTO — ${tienda.nombre}*\n\n${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL TuZona Comercial*:\n\n📦 *PRODUCTO:* ${productoSeleccionadoModal.nombre}\n💰 *PRECIO:* $${pUSD.toFixed(2)} USD | ${pCOP} COP | ${pBs} Bs.\n👤 *CLIENTE:* ${nom}\n📍 *DIRECCIÓN:* ${dir}\n🛵 *ENTREGA:* ${entrega}\n💳 *FORMA DE PAGO:* ${pago}\n\n¿Me confirman disponibilidad para coordinar la entrega? 🙌`;
 
             window.cerrarModalDetalleProducto();
             abrirWhatsAppDirecto(tienda.telefono, msg);
@@ -2078,25 +2391,9 @@ ${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL T
             const totalCOP = Math.round(totalUSD * tasas.cop).toLocaleString("es-CO");
             const totalBs = (totalUSD * tasas.bs).toFixed(2);
 
-            let msg = `🛍️ *NUEVO PEDIDO DESDE TU VITRINA DIGITAL*
-🏢 *Comercio:* ${tienda.nombre}
-
-👤 *Cliente:* ${nombreCli}
-📍 *Dirección:* ${dirCli}
-🛵 *Entrega:* ${entrega}
-💳 *Pago:* ${pago}
-━━━━━━━━━━━━━━━━━━━━━
-*PRODUCTOS:*
-`;
-            items.forEach(it => { msg += `▪️ ${it.cant}x ${it.nombre} ($${(it.precio * it.cant).toFixed(2)})
-`; });
-            msg += `━━━━━━━━━━━━━━━━━━━━━
-💰 *TOTAL A PAGAR:*
-💵 $${totalUSD.toFixed(2)} USD
-🇨🇴 ${totalCOP} COP
-🇻🇪 ${totalBs} Bs.
-
-¡Hola! Acabo de hacer mi pedido a través de su vitrina en TCL TuZona Comercial. ¿Me confirman para coordinar? 🙌`;
+            let msg = `🛍️ *NUEVO PEDIDO DESDE TU VITRINA DIGITAL*\n🏢 *Comercio:* ${tienda.nombre}\n\n👤 *Cliente:* ${nombreCli}\n📍 *Dirección:* ${dirCli}\n🛵 *Entrega:* ${entrega}\n💳 *Pago:* ${pago}\n━━━━━━━━━━━━━━━━━━━━━\n*PRODUCTOS:*\n`;
+            items.forEach(it => { msg += `▪️ ${it.cant}x ${it.nombre} ($${(it.precio * it.cant).toFixed(2)})\n`; });
+            msg += `━━━━━━━━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR:*\n💵 $${totalUSD.toFixed(2)} USD\n🇨🇴 ${totalCOP} COP\n🇻🇪 ${totalBs} Bs.\n\n¡Hola! Acabo de hacer mi pedido a través de su vitrina en TCL TuZona Comercial. ¿Me confirman para coordinar? 🙌`;
 
             carritoCompras = carritoCompras.filter(it => it.tiendaSlug !== tiendaActivaSlug);
             actualizarBarraCarrito();
@@ -2164,18 +2461,20 @@ ${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL T
             reader.readAsDataURL(input.files[0]);
         };
 
-        // GESTIÓN DE TABS DEL COMERCIANTE (3 PESTAÑAS)
+        // GESTIÓN DE TABS DEL COMERCIANTE (4 PESTAÑAS)
         window.cambiarTabComerciante = function(tab) {
             const secProds = document.getElementById("seccion-comerciante-productos");
             const secTasas = document.getElementById("seccion-comerciante-tasas");
             const secPerfil = document.getElementById("seccion-comerciante-perfil");
+            const secClave = document.getElementById("seccion-comerciante-clave");
 
             const btnProds = document.getElementById("tab-btn-productos");
             const btnTasas = document.getElementById("tab-btn-tasas");
             const btnPerfil = document.getElementById("tab-btn-perfil");
+            const btnClave = document.getElementById("tab-btn-clave");
 
-            [secProds, secTasas, secPerfil].forEach(s => s.classList.add("hidden"));
-            [btnProds, btnTasas, btnPerfil].forEach(b => {
+            [secProds, secTasas, secPerfil, secClave].forEach(s => s.classList.add("hidden"));
+            [btnProds, btnTasas, btnPerfil, btnClave].forEach(b => {
                 b.className = "py-2 px-1 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 flex items-center justify-center gap-1 hover:bg-slate-100 transition-all text-center";
             });
 
@@ -2185,9 +2484,29 @@ ${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL T
             } else if (tab === 'TASAS') {
                 secTasas.classList.remove("hidden");
                 btnTasas.className = "py-2 px-1 rounded-xl border border-blue-600 bg-blue-600 text-white font-black shadow-sm flex items-center justify-center gap-1 transition-all text-center";
-            } else {
+            } else if (tab === 'PERFIL') {
                 secPerfil.classList.remove("hidden");
                 btnPerfil.className = "py-2 px-1 rounded-xl border border-blue-600 bg-blue-600 text-white font-black shadow-sm flex items-center justify-center gap-1 transition-all text-center";
+            } else {
+                secClave.classList.remove("hidden");
+                btnClave.className = "py-2 px-1 rounded-xl border border-blue-600 bg-blue-600 text-white font-black shadow-sm flex items-center justify-center gap-1 transition-all text-center";
+                if (comercianteSesion) {
+                    document.getElementById("comerciante-clave-usuario").value = comercianteSesion.user || comercianteSesion.slug;
+                    document.getElementById("comerciante-clave-nueva").value = comercianteSesion.pass || "";
+                }
+            }
+        };
+
+        // TOGGLE RIF EN PERFIL COMERCIANTE
+        window.toggleRifPerfil = function(val) {
+            const boxInput = document.getElementById("perfil-box-rif-input");
+            const boxMostrar = document.getElementById("perfil-box-mostrar-rif");
+            if (val === 'SI') {
+                boxInput.classList.remove("hidden");
+                boxMostrar.classList.remove("hidden");
+            } else {
+                boxInput.classList.add("hidden");
+                boxMostrar.classList.add("hidden");
             }
         };
 
@@ -2206,22 +2525,20 @@ ${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL T
             }
 
             await guardarEnNube();
-            alert(`✅ ¡Tus tasas fijas han sido guardadas con éxito!
-
-• 1 USD = ${cop.toLocaleString("es-CO")} COP
-• 1 USD = ${bs.toFixed(2)} Bs
-
-Todos tus productos se calcularán con estas tasas fijas.`);
+            alert(`✅ ¡Tus tasas fijas han sido guardadas con éxito!\n\n• 1 USD = ${cop.toLocaleString("es-CO")} COP\n• 1 USD = ${bs.toFixed(2)} Bs\n\nTodos tus productos se calcularán con estas tasas fijas.`);
             window.cambiarTabComerciante('PRODUCTOS');
         };
 
-        // GUARDAR PERFIL DEL COMERCIANTE CON ZONA Y RAMO NORMALIZADOS
+        // GUARDAR PERFIL DEL COMERCIANTE (CON RIF SÍ/NO Y MOSTRAR SÍ/NO)
         window.guardarPerfilComerciante = async function() {
             if (!comercianteSesion) return;
             const slug = comercianteSesion.slug;
 
             const nuevoNombre = document.getElementById("perfil-inp-nombre").value.trim();
             const nuevoWa = document.getElementById("perfil-inp-wa").value.trim();
+            const tieneRif = document.getElementById("perfil-select-tiene-rif").value;
+            const rifVal = tieneRif === 'SI' ? document.getElementById("perfil-inp-rif").value.trim() : "";
+            const mostrarRif = tieneRif === 'SI' ? document.getElementById("perfil-select-mostrar-rif").value : "NO";
             const nuevaZona = capitalizarTexto(document.getElementById("perfil-inp-zona").value);
             const nuevoRubro = capitalizarTexto(document.getElementById("perfil-inp-rubro").value);
             const nuevaDir = document.getElementById("perfil-inp-dir").value.trim();
@@ -2238,6 +2555,9 @@ Todos tus productos se calcularán con estas tasas fijas.`);
             if (idx !== -1) {
                 tiendasEnSistema[idx].nombre = nuevoNombre;
                 tiendasEnSistema[idx].telefono = nuevoWa;
+                tiendasEnSistema[idx].tieneRif = tieneRif;
+                tiendasEnSistema[idx].rif = rifVal;
+                tiendasEnSistema[idx].mostrarRif = mostrarRif;
                 tiendasEnSistema[idx].zona = nuevaZona;
                 tiendasEnSistema[idx].rubro = nuevoRubro;
                 tiendasEnSistema[idx].direccion = nuevaDir;
@@ -2251,12 +2571,29 @@ Todos tus productos se calcularán con estas tasas fijas.`);
 
             await guardarEnNube();
             document.getElementById("comerciante-titulo-panel").innerText = nuevoNombre;
-            alert(`✨ ¡Información de tu negocio guardada con éxito!
+            alert(`✨ ¡Información de tu negocio guardada con éxito!\n\nZona: ${nuevaZona}\nRamo: ${nuevoRubro}\nRIF: ${tieneRif === 'SI' ? rifVal : 'No posee'}`);
+            window.cambiarTabComerciante('PRODUCTOS');
+        };
 
-Zona registrada: ${nuevaZona}
-Ramo registrado: ${nuevoRubro}
+        // CAMBIAR CONTRASEÑA POR EL COMERCIANTE (SE REFLEJA DE INMEDIATO AL MÁSTER)
+        window.guardarNuevaClaveComerciante = async function() {
+            if (!comercianteSesion) return;
+            const slug = comercianteSesion.slug;
+            const nuevaClave = document.getElementById("comerciante-clave-nueva").value.trim();
 
-Se han actualizado automáticamente en la Guía Comercial.`);
+            if (!nuevaClave) {
+                alert("⚠️ Por favor ingresa una clave válida.");
+                return;
+            }
+
+            const idx = tiendasEnSistema.findIndex(t => t.slug === slug);
+            if (idx !== -1) {
+                tiendasEnSistema[idx].pass = nuevaClave;
+                comercianteSesion.pass = nuevaClave;
+            }
+
+            await guardarEnNube();
+            alert("🔑 ¡Tu contraseña ha sido actualizada exitosamente!\nTu clave quedó registrada en la base de datos central.");
             window.cambiarTabComerciante('PRODUCTOS');
         };
 
@@ -2366,10 +2703,7 @@ Se han actualizado automáticamente en la Guía Comercial.`);
         window.compartirCatalogoWhatsAppComerciante = function() {
             if (!comercianteSesion) return;
             const urlT = `${window.location.origin}${window.location.pathname}?tienda=${comercianteSesion.slug}`;
-            const msg = `🛍️ *CATÁLOGO EN VIVO — ${comercianteSesion.nombre.toUpperCase()}*
-
-Hola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido directo al WhatsApp:
-🔗 ${urlT}`;
+            const msg = `🛍️ *CATÁLOGO EN VIVO — ${comercianteSesion.nombre.toUpperCase()}*\n\nHola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido directo al WhatsApp:\n🔗 ${urlT}`;
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
         };
 
@@ -2402,8 +2736,8 @@ Hola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido direc
         };
 
         window.recalcularTotalesYBadgesComercios = function() {
-            const activos = tiendasEnSistema.filter(t => (t.estatus || 'ACTIVO') === 'ACTIVO').length;
-            const inactivos = tiendasEnSistema.filter(t => t.estatus === 'INACTIVO').length;
+            const activos = tiendasEnSistema.filter(t => (t.estatus || 'ACTIVO') === 'ACTIVO' && !isTiendaExpirada(t)).length;
+            const inactivos = tiendasEnSistema.filter(t => t.estatus === 'INACTIVO' || isTiendaExpirada(t)).length;
             const elAct = document.getElementById("master-count-clientes");
             const elBadgeAct = document.getElementById("cnt-badge-activos");
             const elBadgeInact = document.getElementById("cnt-badge-inactivos");
@@ -2412,54 +2746,20 @@ Hola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido direc
             if (elBadgeInact) elBadgeInact.innerText = inactivos;
         };
 
-        // CORRECCIÓN MÁSTER: CERRAR BASE CLIENTES ANTES DE ABRIR CONFIGURAR
-        window.abrirModalConfigurarEntornoSaaS = function(modo, id = null) {
-            document.getElementById("modal-base-clientes")?.classList.add("hidden");
+        // GENERACIÓN DE USUARIOS COMPACTOS (tcl_nombre o tcl_titular)
+        window.autogenerarUsuarioCompacto = function() {
+            const titular = document.getElementById("saas-input-responsable").value;
+            const nomNegocio = document.getElementById("saas-input-nombre").value;
+            const base = (titular.trim() ? titular : nomNegocio)
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9]/g, "")
+                .slice(0, 14);
 
-            const modal = document.getElementById("modal-configurar-entorno-saas");
-            const titulo = document.getElementById("modal-saas-titulo");
-            if (modo === 'NUEVO') {
-                titulo.innerText = "REGISTRAR NUEVO COMERCIO";
-                document.getElementById("saas-editing-id").value = "";
-                document.getElementById("saas-input-nombre").value = "";
-                document.getElementById("saas-input-responsable").value = "";
-                document.getElementById("saas-input-wa").value = "";
-                document.getElementById("saas-input-zona").value = "";
-                document.getElementById("saas-input-user").value = "";
-                document.getElementById("saas-input-pass").value = "";
-                document.getElementById("saas-input-rubro").value = "";
-                window.seleccionarPildoraDias(180);
-                document.getElementById("saas-link-generado").value = "";
-            } else {
-                titulo.innerText = "CONFIGURAR COMERCIO";
-                const c = tiendasEnSistema.find(t => t.slug === id || t.user === id || t.id === id);
-                if (c) {
-                    document.getElementById("saas-editing-id").value = c.slug;
-                    document.getElementById("saas-input-nombre").value = c.nombre;
-                    document.getElementById("saas-input-responsable").value = c.responsable || "";
-                    document.getElementById("saas-input-wa").value = c.telefono;
-                    document.getElementById("saas-input-zona").value = c.zona || "Cordero";
-                    document.getElementById("saas-input-rubro").value = c.rubro || "Comercio";
-                    document.getElementById("saas-input-user").value = c.slug;
-                    document.getElementById("saas-input-pass").value = c.pass || "1234";
-                    window.seleccionarPildoraDias(c.dias || 180);
-                    document.getElementById("saas-link-generado").value = `${window.location.origin}${window.location.pathname}?tienda=${c.slug}`;
-                }
-            }
-            modal.classList.remove("hidden");
-        };
-
-        window.autogenerarUsuarioSlug = function() {
-            const nom = document.getElementById("saas-input-nombre").value;
-            const slug = nom.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
-            document.getElementById("saas-input-user").value = slug;
-            document.getElementById("saas-link-generado").value = `${window.location.origin}${window.location.pathname}?tienda=${slug}`;
-        };
-
-        window.actualizarLinkGeneradoManual = function() {
-            const user = document.getElementById("saas-input-user").value.toLowerCase().replace(/[^a-z0-9-]/g, "");
-            document.getElementById("saas-input-user").value = user;
-            document.getElementById("saas-link-generado").value = `${window.location.origin}${window.location.pathname}?tienda=${user}`;
+            const userCompacto = `tcl_${base || 'cliente'}`;
+            document.getElementById("saas-input-user").value = userCompacto;
+            document.getElementById("saas-link-generado").value = `${window.location.origin}${window.location.pathname}?tienda=${userCompacto}`;
         };
 
         window.copiarEnlaceComercioGenerado = function() {
@@ -2468,7 +2768,7 @@ Hola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido direc
         };
 
         window.seleccionarPildoraDias = function(dias) {
-            window.diasSuscripcionSeleccionados = parseInt(dias) || 180;
+            window.diasSuscripcionSeleccionados = parseInt(dias) || 7;
             [3, 5, 7, 30, 90, 180, 365].forEach(d => {
                 const btn = document.getElementById(`pildora-${d}`);
                 if (btn) {
@@ -2480,36 +2780,129 @@ Hola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido direc
                 }
             });
             const disp = document.getElementById("lbl-display-dias-seleccionados");
-            if (disp) disp.innerText = `${window.diasSuscripcionSeleccionados} Días`;
+            if (disp) disp.innerText = `${window.diasSuscripcionSeleccionados} Días ${window.diasSuscripcionSeleccionados <= 7 ? '(PRUEBA GRATIS)' : ''}`;
+        };
+
+        window.abrirModalConfigurarEntornoSaaS = function(modo, id = null) {
+            document.getElementById("modal-base-clientes")?.classList.add("hidden");
+
+            const modal = document.getElementById("modal-configurar-entorno-saas");
+            const titulo = document.getElementById("modal-saas-titulo");
+            if (modo === 'NUEVO') {
+                titulo.innerText = "REGISTRAR NUEVO COMERCIO";
+                document.getElementById("saas-editing-id").value = "";
+                document.getElementById("saas-input-nombre").value = "";
+                document.getElementById("saas-input-responsable").value = "";
+                document.getElementById("saas-select-tiene-rif").value = "NO";
+                document.getElementById("saas-input-rif").value = "";
+                document.getElementById("saas-select-mostrar-rif").value = "NO";
+                document.getElementById("saas-input-wa").value = "";
+                document.getElementById("saas-input-zona").value = "";
+                document.getElementById("saas-input-rubro").value = "";
+                document.getElementById("saas-input-dir").value = "";
+                document.getElementById("saas-input-link").value = "";
+                document.getElementById("saas-input-user").value = "";
+                document.getElementById("saas-input-pass").value = "12345";
+                window.seleccionarPildoraDias(7);
+                document.getElementById("saas-link-generado").value = "";
+            } else {
+                titulo.innerText = "CONFIGURAR COMERCIO";
+                const c = tiendasEnSistema.find(t => t.slug === id || t.user.toLowerCase() === id.toLowerCase() || t.id === id);
+                if (c) {
+                    document.getElementById("saas-editing-id").value = c.slug;
+                    document.getElementById("saas-input-nombre").value = c.nombre;
+                    document.getElementById("saas-input-responsable").value = c.responsable || "";
+                    document.getElementById("saas-select-tiene-rif").value = c.tieneRif || (c.rif ? "SI" : "NO");
+                    document.getElementById("saas-input-rif").value = c.rif || "";
+                    document.getElementById("saas-select-mostrar-rif").value = c.mostrarRif || "SI";
+                    document.getElementById("saas-input-wa").value = c.telefono;
+                    document.getElementById("saas-input-zona").value = c.zona || "Cordero";
+                    document.getElementById("saas-input-rubro").value = c.rubro || "Comercio";
+                    document.getElementById("saas-input-dir").value = c.direccion || "";
+                    document.getElementById("saas-input-link").value = c.link || "";
+                    document.getElementById("saas-input-user").value = c.user || c.slug;
+                    document.getElementById("saas-input-pass").value = c.pass || "12345";
+                    window.seleccionarPildoraDias(c.dias || 7);
+                    document.getElementById("saas-link-generado").value = `${window.location.origin}${window.location.pathname}?tienda=${c.slug}`;
+                }
+            }
+            modal.classList.remove("hidden");
         };
 
         window.guardarNuevoComercioEntornoSaaS = async function() {
             const idEdit = document.getElementById("saas-editing-id").value;
             const nombre = document.getElementById("saas-input-nombre").value.trim();
             const responsable = document.getElementById("saas-input-responsable").value.trim();
+            const tieneRif = document.getElementById("saas-select-tiene-rif").value;
+            const rifVal = tieneRif === 'SI' ? document.getElementById("saas-input-rif").value.trim() : "";
+            const mostrarRif = tieneRif === 'SI' ? document.getElementById("saas-select-mostrar-rif").value : "NO";
             const wa = document.getElementById("saas-input-wa").value.trim();
             const zona = capitalizarTexto(document.getElementById("saas-input-zona").value);
             const rubro = capitalizarTexto(document.getElementById("saas-input-rubro").value) || "Comercio";
+            const dir = document.getElementById("saas-input-dir").value.trim();
+            const link = document.getElementById("saas-input-link").value.trim();
             const user = document.getElementById("saas-input-user").value.trim().toLowerCase();
-            const pass = document.getElementById("saas-input-pass").value.trim();
-            const dias = window.diasSuscripcionSeleccionados || 180;
+            const pass = document.getElementById("saas-input-pass").value.trim() || "12345";
+            const dias = window.diasSuscripcionSeleccionados || 7;
 
-            if (!nombre || !user || !pass || !wa || !zona) return alert("Complete los campos obligatorios (Nombre, Usuario, Clave, WhatsApp y Zona).");
+            if (!nombre || !user || !pass || !wa || !zona) {
+                alert("Complete los campos obligatorios (Nombre, Usuario, Clave, WhatsApp y Zona).");
+                return;
+            }
 
             if (idEdit) {
                 const idx = tiendasEnSistema.findIndex(t => t.slug === idEdit);
                 if (idx !== -1) {
-                    tiendasEnSistema[idx] = { ...tiendasEnSistema[idx], nombre, responsable, telefono: wa, zona, rubro, user, pass, dias, estatus: 'ACTIVO' };
+                    tiendasEnSistema[idx] = { 
+                        ...tiendasEnSistema[idx], 
+                        nombre, 
+                        responsable, 
+                        tieneRif, 
+                        rif: rifVal, 
+                        mostrarRif, 
+                        telefono: wa, 
+                        zona, 
+                        rubro, 
+                        direccion: dir, 
+                        link, 
+                        user, 
+                        pass, 
+                        dias, 
+                        fechaCreacion: Date.now(), // reinicia conteo con los nuevos días asignados
+                        estatus: 'ACTIVO' 
+                    };
                 }
             } else {
-                if (tiendasEnSistema.some(t => t.slug === user)) return alert("El usuario / slug ya existe.");
-                tiendasEnSistema.push({ slug: user, user: user, nombre, responsable, telefono: wa, zona, rubro, pass, dias, estatus: 'ACTIVO', fechaCreacion: Date.now(), desc: `Productos y catálogo digital en ${zona}.`, tasas: { cop: 3600, bs: 45.0 } });
+                if (tiendasEnSistema.some(t => t.slug === user || t.user.toLowerCase() === user)) {
+                    alert("El usuario ya existe en el sistema.");
+                    return;
+                }
+                tiendasEnSistema.push({ 
+                    slug: user, 
+                    user: user, 
+                    nombre, 
+                    responsable, 
+                    tieneRif, 
+                    rif: rifVal, 
+                    mostrarRif, 
+                    telefono: wa, 
+                    zona, 
+                    rubro, 
+                    direccion: dir || `${zona} (Comercio Local)`, 
+                    link, 
+                    pass, 
+                    dias, 
+                    estatus: 'ACTIVO', 
+                    fechaCreacion: Date.now(), 
+                    desc: `Productos y catálogo digital en ${zona}.`, 
+                    tasas: { cop: 3600, bs: 45.0 } 
+                });
                 if (!productosPorTienda[user]) productosPorTienda[user] = [];
             }
 
             await guardarEnNube();
             document.getElementById("modal-configurar-entorno-saas").classList.add("hidden");
-            alert("✨ Comercio guardado y sincronizado exitosamente.");
+            alert(`✨ Comercio [${nombre}] guardado y activado exitosamente por ${dias} días.`);
         };
 
         window.eliminarPerfilComercioSaas = async function() {
@@ -2521,7 +2914,7 @@ Hola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido direc
                 tiendasEnSistema[idx].estatus = 'INACTIVO';
                 await guardarEnNube();
                 document.getElementById("modal-configurar-entorno-saas").classList.add("hidden");
-                alert("📦 Comercio movido a Inactivos.");
+                alert("📦 Comercio pausado y movido a la Bóveda de Inactivos.");
             }
         };
 
@@ -2533,24 +2926,9 @@ Hola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido direc
             const link = document.getElementById("saas-link-generado").value;
             let text = "";
             if (tipo === 'activacion') {
-                text = `¡Hola, *${nom}*! 🎉
-
-Tu catálogo oficial en *TCL TuZona Comercial* ya está activo.
-
-🔗 *Enlace de tu vitrina:* ${link}
-👤 *Usuario:* \`${user}\`
-🔑 *Contraseña:* \`${pass}\`
-
-💡 Para gestionar productos, fijar tus tasas de cambio y cambiar tu foto de portada, entra a tu enlace, presiona el candado superior e ingresa tus credenciales.
-
-¡Mucho éxito! 🚀`;
+                text = `¡Hola, *${nom}*! 🎉\n\nTu catálogo oficial en *TCL TuZona Comercial* ya está activo.\n\n🔗 *Enlace de tu vitrina:* ${link}\n👤 *Usuario:* \`${user}\`\n🔑 *Contraseña asignada:* \`${pass}\`\n\n💡 Recuerda que puedes ingresar con tu usuario y contraseña para cargar productos, fijar tus tasas de cambio y cambiar tu clave desde tu panel.\n\n¡Mucho éxito! 🚀`;
             } else {
-                text = `🔄 *RENOVACIÓN — TCL TUZONA COMERCIAL*
-
-Estimado *${nom}*, tu suscripción ha sido renovada con éxito.
-🔗 *Tu Vitrina:* ${link}
-
-*Respaldo TUCOCEL C.A. & PublionlineMK*`;
+                text = `🔄 *RENOVACIÓN COMERCIAL — TCL TUZONA COMERCIAL*\n\nEstimado *${nom}*, tu suscripción ha sido renovada con éxito.\n🔗 *Tu Vitrina:* ${link}\n\n*Respaldo TUCOCEL C.A. & PublionlineMK*`;
             }
             abrirWhatsAppDirecto(wa, text);
         };
@@ -2566,32 +2944,46 @@ Estimado *${nom}*, tu suscripción ha sido renovada con éxito.
             const cont = document.getElementById("lista-clientes-modal");
             const busq = (document.getElementById("busqueda-modal-cliente").value || "").toLowerCase();
             const target = window.tipoVistaModalActual === 'INACTIVOS' ? 'INACTIVO' : 'ACTIVO';
-            const filtrados = tiendasEnSistema.filter(t => (t.estatus || 'ACTIVO') === target && (!busq || t.nombre.toLowerCase().includes(busq) || t.slug.includes(busq)));
+            
+            const filtrados = tiendasEnSistema.filter(t => {
+                const expirada = isTiendaExpirada(t);
+                const estadoReal = (t.estatus === 'INACTIVO' || expirada) ? 'INACTIVO' : 'ACTIVO';
+                const matchTarget = estadoReal === target;
+                const matchBusq = (!busq || t.nombre.toLowerCase().includes(busq) || (t.responsable && t.responsable.toLowerCase().includes(busq)) || t.slug.includes(busq) || (t.user && t.user.toLowerCase().includes(busq)));
+                return matchTarget && matchBusq;
+            });
 
             if (filtrados.length === 0) {
                 cont.innerHTML = `<div class="col-span-2 text-center text-slate-400 py-6">No hay comercios en esta sección.</div>`;
                 return;
             }
 
-            cont.innerHTML = filtrados.map(c => `
-                <div class="card-store p-3.5 space-y-2 border-slate-200 shadow-sm">
+            cont.innerHTML = filtrados.map(c => {
+                const expirada = isTiendaExpirada(c);
+                const diasRest = obtenerDiasRestantes(c);
+                return `
+                <div class="card-store p-3.5 space-y-2 border-slate-200 shadow-sm ${expirada ? 'opacity-75 bg-slate-50' : ''}">
                     <div class="flex justify-between items-start">
                         <div class="min-w-0">
                             <h4 class="font-black text-slate-900 text-xs uppercase truncate">${c.nombre}</h4>
-                            <span class="text-[9.5px] text-blue-600 font-mono font-bold block truncate">/${c.slug}</span>
+                            <span class="text-[9.5px] text-blue-600 font-mono font-bold block truncate">/${c.user || c.slug}</span>
                         </div>
-                        <span class="bg-blue-50 text-blue-700 text-[8px] font-black uppercase px-1.5 py-0.5 rounded">${c.dias || 30} Días</span>
+                        <span class="${expirada ? 'bg-rose-100 text-rose-700' : 'bg-blue-50 text-blue-700'} text-[8px] font-black uppercase px-1.5 py-0.5 rounded">
+                            ${expirada ? 'Expirado' : `${diasRest} Días Restantes`}
+                        </span>
                     </div>
                     <div class="text-[9.5px] font-mono text-slate-600 border-t border-slate-100 pt-1 space-y-0.5">
+                        <p>👤 Titular: <strong class="text-slate-800">${c.responsable || 'No indicado'}</strong></p>
                         <p>📞 WA: ${c.telefono}</p>
-                        <p>📍 Zona: ${c.zona || 'Táchira'}</p>
+                        <p>📄 RIF: ${c.rif ? c.rif : 'No posee'} ${c.mostrarRif === 'SI' ? '(Visible)' : ''}</p>
                         <p>🔑 Clave: <strong class="text-blue-600">${c.pass}</strong></p>
                     </div>
                     <div class="grid grid-cols-2 gap-1 pt-1 border-t border-slate-100">
-                        <button onclick="window.abrirModalConfigurarEntornoSaaS('EDITAR', '${c.slug}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-[9px] font-bold py-1 rounded-lg uppercase">Configurar</button>
+                        <button onclick="window.abrirModalConfigurarEntornoSaaS('EDITAR', '${c.slug}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-[9px] font-bold py-1 rounded-lg uppercase">Configurar / Renovar</button>
                         <button onclick="window.abrirVitrinaTienda('${c.slug}')" class="btn-brand text-[9px] py-1 rounded-lg uppercase">Ver Tienda</button>
                     </div>
-                </div>`).join("");
+                </div>`;
+            }).join("");
         };
 
         window.abrirModalTarifasSaas = function() {
@@ -2622,19 +3014,7 @@ Estimado *${nom}*, tu suscripción ha sido renovada con éxito.
         window.cerrarModalZonaPropuesta = function() { document.getElementById("modal-zona-propuesta").classList.add("hidden"); };
         window.accionPropuestaWhatsApp = function() {
             const url = `${window.location.origin}${window.location.pathname}`;
-            const msg = `🚀 *PROPUESTA COMERCIAL — TCL TUZONA COMERCIAL*
-
-¡Moderniza tu negocio con tu propio Catálogo Digital y presencia en la Guía Comercial regional!
-
-📦 *Incluye:*
-• Vitrina Web 24/7 con fotos y precios
-• Pedidos directos a tu WhatsApp con carrito
-• Presencia en el directorio por municipio
-
-👉 Consulta la plataforma aquí:
-🔗 ${url}
-
-🏛️ *Respaldo TUCOCEL C.A. & @publionlinemk*`;
+            const msg = `🚀 *PROPUESTA COMERCIAL — TCL TUZONA COMERCIAL*\n\n¡Moderniza tu negocio con tu propio Catálogo Digital y presencia en la Guía Comercial regional!\n\n📦 *Incluye:*\n• Vitrina Web 24/7 con fotos y precios\n• Pedidos directos a tu WhatsApp con carrito\n• Presencia en el directorio por municipio\n\n👉 Consulta la plataforma aquí:\n🔗 ${url}\n\n🏛️ *Respaldo TUCOCEL C.A. & @publionlinemk*`;
             abrirWhatsAppDirecto("", msg);
         };
 
@@ -2686,55 +3066,108 @@ Estimado *${nom}*, tu suscripción ha sido renovada con éxito.
             if (el) el.type = el.type === "password" ? "text" : "password";
         };
 
-        // AUTO-REGISTRO 7 DÍAS CON ZONA Y RUBRO DINÁMICOS
-        window.abrirModalRegistroComercio = function() { document.getElementById("modal-registro-comercio").classList.remove("hidden"); };
-        window.procesarAutoRegistroTienda = async function() {
-            const nom = document.getElementById("reg-in-nombre").value.trim();
-            const wa = document.getElementById("reg-in-wa").value.trim();
-            const zona = capitalizarTexto(document.getElementById("reg-in-zona").value);
-            const rubro = capitalizarTexto(document.getElementById("reg-in-rubro").value) || "Comercio";
-            const pass = document.getElementById("reg-in-pass").value.trim();
-            if (!nom || !wa || !pass || !zona) {
-                alert("⚠️ Por favor completa los campos requeridos (Nombre, WhatsApp, Zona y Clave).");
+        // FORMULARIO DE SOLICITUD DE REGISTRO COMERCIAL (7 DÍAS)
+        window.abrirModalRegistroComercio = function() { 
+            document.getElementById("modal-registro-comercio").classList.remove("hidden"); 
+        };
+
+        window.toggleRifSolicitud = function(val) {
+            const boxInput = document.getElementById("sol-box-rif-input");
+            const boxMostrar = document.getElementById("sol-box-mostrar-rif");
+            if (val === 'SI') {
+                boxInput.classList.remove("hidden");
+                boxMostrar.classList.remove("hidden");
+            } else {
+                boxInput.classList.add("hidden");
+                boxMostrar.classList.add("hidden");
+            }
+        };
+
+        window.procesarSolicitudRegistroCliente = function() {
+            const nombre = document.getElementById("sol-in-nombre").value.trim();
+            const titular = document.getElementById("sol-in-titular").value.trim();
+            const tieneRif = document.getElementById("sol-select-tiene-rif").value;
+            const rifVal = tieneRif === 'SI' ? document.getElementById("sol-in-rif").value.trim() : "No posee";
+            const mostrarRif = tieneRif === 'SI' ? document.getElementById("sol-select-mostrar-rif").value : "NO";
+            const wa = document.getElementById("sol-in-wa").value.trim();
+            const zona = capitalizarTexto(document.getElementById("sol-in-zona").value);
+            const rubro = capitalizarTexto(document.getElementById("sol-in-rubro").value);
+            const dir = document.getElementById("sol-in-dir").value.trim();
+            const link = document.getElementById("sol-in-link").value.trim();
+
+            if (!nombre || !titular || !wa || !zona || !rubro || !dir) {
+                alert("⚠️ Por favor completa los campos obligatorios para enviar tu solicitud.");
                 return;
             }
 
-            const slug = nom.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
-            const nueva = { slug, user: slug, nombre: nom, rubro, zona, direccion: `${zona} (Comercio Local)`, telefono: wa, pass, dias: 7, estatus: "ACTIVO", fechaCreacion: Date.now(), desc: `Productos en ${zona}. Pedidos a WhatsApp.`, tasas: { cop: 3600, bs: 45.0 } };
+            // Construir enlace de activación automática codificado para el Máster
+            const baseUrl = window.location.origin + window.location.pathname;
+            const params = new URLSearchParams({
+                activar_master: "1",
+                nom: nombre,
+                tit: titular,
+                rif: tieneRif === 'SI' ? rifVal : "",
+                m_rif: mostrarRif,
+                wa: wa,
+                zona: zona,
+                rubro: rubro,
+                dir: dir,
+                link: link
+            });
+            const linkActivacion = `${baseUrl}?${params.toString()}`;
 
-            tiendasEnSistema.push(nueva);
-            productosPorTienda[slug] = [];
-            await guardarEnNube();
+            let msg = `🚀 *SOLICITUD DE ACTIVACIÓN (7 DÍAS GRATIS) — TCL TUZONA COMERCIAL*\n\n` +
+                      `🏢 *Comercio:* ${nombre}\n` +
+                      `👤 *Titular:* ${titular}\n` +
+                      `📄 *RIF:* ${rifVal} (Mostrar en vitrina: ${mostrarRif})\n` +
+                      `📞 *WhatsApp Ventas:* ${wa}\n` +
+                      `📍 *Zona / Municipio:* ${zona}\n` +
+                      `🏷️ *Ramo:* ${rubro}\n` +
+                      `📌 *Dirección:* ${dir}\n` +
+                      (link ? `🔗 *Enlace:* ${link}\n` : '') +
+                      `\n━━━━━━━━━━━━━━━━━━━━━\n` +
+                      `👉 *ENLACE DE ACTIVACIÓN RÁPIDA (PARA EL MÁSTER):*\n${linkActivacion}\n\n` +
+                      `Hola TUCOCEL C.A., deseo activar mi cuenta de prueba gratuita por 7 días en TCL TuZona Comercial. 🙌`;
+
             document.getElementById("modal-registro-comercio").classList.add("hidden");
-            comercianteSesion = nueva;
-            abrirPanelComerciante(nueva);
-            alert(`🎉 ¡FELICITACIONES!
-
-Tu tienda [${nom}] ha sido activada con 7 días gratis en la zona [${zona}].
-Puedes fijar tus tasas de cambio y subir productos ahora.`);
+            alert("✅ ¡Tu solicitud ha sido preparada!\nSe abrirá WhatsApp para que envíes tu información al Máster y recibir tus credenciales de acceso.");
+            abrirWhatsAppDirecto("584247357549", msg);
         };
 
-        // LOGIN
+        // LOGIN CON CONTROL DE VENCIMIENTO Y COMPARACIÓN CASE-INSENSITIVE
         window.abrirModalLogin = function() { document.getElementById("modal-login-sistema").classList.remove("hidden"); };
         window.procesarLogin = function() {
-            const u = document.getElementById("login-in-user").value.trim().toUpperCase();
+            const u = document.getElementById("login-in-user").value.trim().toLowerCase();
             const p = document.getElementById("login-in-pass").value.trim();
             const masterCreds = window.obtenerCredencialesMaster();
 
-            if (u === masterCreds.user.toUpperCase() && p === masterCreds.pass) {
+            // Login Máster
+            if (u === masterCreds.user.toLowerCase() && p === masterCreds.pass) {
                 document.getElementById("modal-login-sistema").classList.add("hidden");
                 abrirPanelMaster();
                 return;
             }
 
-            const t = tiendasEnSistema.find(x => (x.slug.toUpperCase() === u || (x.user && x.user.toUpperCase() === u)) && x.pass === p);
+            // Login Comerciante
+            const t = tiendasEnSistema.find(x => 
+                (x.slug.toLowerCase() === u || (x.user && x.user.toLowerCase() === u)) && x.pass === p
+            );
+
             if (t) {
+                // Verificar si la tienda está expirada
+                if (isTiendaExpirada(t)) {
+                    alert(`⚠️ ESTIMADO CLIENTE:\n\nSu suscripción en TCL TuZona Comercial ha finalizado.\nDebe contactar al Máster para renovar su servicio y reactivar su panel.\n\n📞 Soporte WhatsApp: 0424-7357549`);
+                    window.contactarMasterPorSuspension();
+                    return;
+                }
+
                 document.getElementById("modal-login-sistema").classList.add("hidden");
                 comercianteSesion = t;
                 abrirPanelComerciante(t);
                 return;
             }
-            alert("❌ Credenciales incorrectas.");
+
+            alert("❌ Credenciales incorrectas. Verifica tu usuario y contraseña.");
         };
 
         function abrirPanelComerciante(tienda, comoMaster = false) {
@@ -2755,12 +3188,18 @@ Puedes fijar tus tasas de cambio y subir productos ahora.`);
 
             document.getElementById("comerciante-titulo-panel").innerText = tienda.nombre;
             document.getElementById("comerciante-avatar-panel").innerHTML = tienda.logo || '🏪';
-            document.getElementById("badge-vigencia-comerciante").innerText = `Membresía: ${tienda.dias || 7} Días Activos`;
+            
+            const diasRest = obtenerDiasRestantes(tienda);
+            document.getElementById("badge-vigencia-comerciante").innerText = `Membresía: ${diasRest} Días Restantes`;
             document.getElementById("inp-enlace-mi-tienda").value = `${window.location.origin}${window.location.pathname}?tienda=${tienda.slug}`;
 
             // Cargar datos en la pestaña de Perfil
             document.getElementById("perfil-inp-nombre").value = tienda.nombre || '';
             document.getElementById("perfil-inp-wa").value = tienda.telefono || '';
+            document.getElementById("perfil-select-tiene-rif").value = tienda.tieneRif || (tienda.rif ? 'SI' : 'NO');
+            window.toggleRifPerfil(document.getElementById("perfil-select-tiene-rif").value);
+            document.getElementById("perfil-inp-rif").value = tienda.rif || '';
+            document.getElementById("perfil-select-mostrar-rif").value = tienda.mostrarRif || 'SI';
             document.getElementById("perfil-inp-zona").value = tienda.zona || 'Cordero';
             document.getElementById("perfil-inp-rubro").value = tienda.rubro || '';
             document.getElementById("perfil-inp-dir").value = tienda.direccion || '';
