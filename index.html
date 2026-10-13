@@ -11,7 +11,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="TCL TuZona">
-    <title>TCL TuZona Comercial — Guía de Comercios & Vitrinas Digitales</title>
+    <title>TCL TuZona Comercial — Guía & Catálogos Digitales</title>
 
     <!-- METADATOS OPEN GRAPH -->
     <meta property="og:type" content="website">
@@ -103,53 +103,51 @@
             user-select: none;
             touch-action: manipulation;
         }
-
-        .glass-panel {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white w-full overflow-x-hidden">
 
-    <!-- NAVBAR INTELIGENTE Y CONTEXTUAL -->
+    <!-- DATALISTS GLOBALES PARA SUGERENCIAS INTELIGENTES -->
+    <datalist id="lista-sugerencias-zonas"></datalist>
+    <datalist id="lista-sugerencias-ramos"></datalist>
+
+    <!-- NAVBAR EQUILIBRADO -->
     <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 w-full">
-        <div class="w-full max-w-6xl mx-auto px-4 py-2.5 flex justify-between items-center gap-2">
+        <div class="w-full max-w-6xl mx-auto px-3 sm:px-4 py-2 flex justify-between items-center gap-2">
             <!-- LOGO & MARCA -->
-            <div class="flex items-center gap-2.5 min-w-0 cursor-pointer" onclick="window.navegarAInicioGuia()">
-                <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black text-sm flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
+            <div class="flex items-center gap-2 shrink-0 cursor-pointer" onclick="window.navegarAInicioGuia()">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white font-black text-xs flex items-center justify-center shadow shrink-0">
                     TCL
                 </div>
-                <div class="min-w-0">
-                    <h1 class="font-black text-sm sm:text-base tracking-tight text-slate-900 leading-none truncate">
+                <div class="shrink-0 leading-none">
+                    <h1 class="font-black text-sm sm:text-base tracking-tight text-slate-900 whitespace-nowrap">
                         TuZona <span class="text-blue-600">Comercial</span>
                     </h1>
-                    <span class="text-[9px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5 truncate">
-                        Guía & Catálogos
+                    <span class="text-[8.5px] text-slate-400 font-bold uppercase tracking-wider block mt-0.5 whitespace-nowrap">
+                        Directorio &bull; Táchira
                     </span>
                 </div>
             </div>
 
-            <!-- CONTROLES DERECHA PÚBLICOS (SIN SESIÓN) -->
-            <div id="nav-controles-publicos" class="flex items-center gap-2 shrink-0">
-                <button onclick="window.abrirModalRegistroComercio()" class="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs px-3.5 py-2 rounded-xl uppercase tracking-wider shadow-sm flex items-center gap-1.5 transition-all active:scale-95 btn-interactive">
-                    <i class="fa-solid fa-user-plus text-[11px]"></i>
+            <!-- CONTROLES DERECHA PÚBLICOS -->
+            <div id="nav-controles-publicos" class="flex items-center gap-1.5 shrink-0">
+                <button onclick="window.abrirModalRegistroComercio()" class="bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-[11px] px-2.5 py-1.5 rounded-xl uppercase tracking-wider shadow-sm flex items-center gap-1 transition-all active:scale-95 btn-interactive shrink-0">
+                    <i class="fa-solid fa-store text-[10px]"></i>
                     <span>Regístrate</span>
                 </button>
 
-                <button onclick="window.abrirModalLogin()" title="Panel de Administración" class="w-9 h-9 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 rounded-xl flex items-center justify-center transition-all active:scale-95 btn-interactive shrink-0">
+                <button onclick="window.abrirModalLogin()" title="Panel de Administración" class="w-8 h-8 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 rounded-xl flex items-center justify-center transition-all active:scale-95 btn-interactive shrink-0">
                     <i class="fa-solid fa-lock text-xs"></i>
                 </button>
             </div>
 
             <!-- CONTROLES DERECHA SESIÓN ACTIVA (COMERCIANTE O MÁSTER) -->
-            <div id="nav-controles-sesion" class="flex items-center gap-2 shrink-0 hidden">
-                <button id="nav-btn-volver-panel" onclick="window.regresarAlPanelCorrespondiente()" class="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-black text-xs px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm transition-all btn-interactive">
+            <div id="nav-controles-sesion" class="flex items-center gap-1.5 shrink-0 hidden">
+                <button id="nav-btn-volver-panel" onclick="window.regresarAlPanelCorrespondiente()" class="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-black text-xs px-2.5 py-1.5 rounded-xl flex items-center gap-1 shadow-sm transition-all btn-interactive">
                     <i class="fa-solid fa-gauge-high"></i>
                     <span id="nav-txt-panel-btn">Mi Panel</span>
                 </button>
-                <button onclick="window.cerrarSesionUniversal()" class="w-9 h-9 bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 border border-slate-200 rounded-xl flex items-center justify-center transition-all btn-interactive shrink-0" title="Cerrar Sesión">
+                <button onclick="window.cerrarSesionUniversal()" class="w-8 h-8 bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-600 border border-slate-200 rounded-xl flex items-center justify-center transition-all btn-interactive shrink-0" title="Cerrar Sesión">
                     <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
                 </button>
             </div>
@@ -159,28 +157,86 @@
     <!-- ========================================================================= -->
     <!-- 1. VISTA: GUÍA COMERCIAL PRINCIPAL                                        -->
     <!-- ========================================================================= -->
-    <main id="vista-guia-principal" class="w-full max-w-6xl mx-auto px-4 py-4 space-y-4 flex-grow">
+    <main id="vista-guia-principal" class="w-full max-w-6xl mx-auto px-3.5 sm:px-4 py-3.5 space-y-3.5 flex-grow">
         
+        <!-- BANNER DE BIENVENIDA MODERNO & CENTRADO (DISEÑO PROFESIONAL TÁCHIRA) -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-[#0a1532] to-slate-950 text-white p-5 sm:p-7 shadow-xl border border-blue-500/30 text-center space-y-3.5">
+            <div class="absolute -right-12 -top-12 w-48 h-48 bg-blue-500/15 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-12 -bottom-12 w-48 h-48 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 max-w-2xl mx-auto space-y-2.5">
+                <div class="inline-flex items-center gap-1.5 bg-blue-500/20 border border-blue-400/30 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-blue-300">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Directorio Comercial &bull; Estado Táchira</span>
+                </div>
+                
+                <h2 class="text-lg sm:text-2xl font-black tracking-tight uppercase leading-snug">
+                    ¡Bienvenido a <span class="text-blue-400">TCL TuZona Comercial</span>!
+                </h2>
+                
+                <p class="text-[11.5px] sm:text-xs text-slate-300 font-medium leading-relaxed max-w-lg mx-auto">
+                    Tu punto de encuentro con el comercio tachirense. Descubre tiendas locales, consulta catálogos en tiempo real y pide directo a WhatsApp con total comodidad y sin comisiones.
+                </p>
+
+                <div class="pt-3 border-t border-white/10 space-y-2 text-center">
+                    <span class="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-blue-300 block">
+                        ✨ TuZona Comercial cuenta con:
+                    </span>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-left">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-2.5 flex items-center gap-2.5 backdrop-blur-sm">
+                            <div class="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm shrink-0">
+                                <i class="fa-solid fa-store"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <h4 class="text-xs font-black text-white uppercase truncate">Vitrinas en Vivo</h4>
+                                <p class="text-[9.5px] text-slate-300 font-medium leading-tight">Catálogos 24/7 con fotos y productos reales.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-2.5 flex items-center gap-2.5 backdrop-blur-sm">
+                            <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm shrink-0">
+                                <i class="fa-brands fa-whatsapp text-base"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <h4 class="text-xs font-black text-white uppercase truncate">Pedidos a WhatsApp</h4>
+                                <p class="text-[9.5px] text-slate-300 font-medium leading-tight">Contacto directo con la tienda sin comisiones.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-2.5 flex items-center gap-2.5 backdrop-blur-sm">
+                            <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm shrink-0">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <h4 class="text-xs font-black text-white uppercase truncate">Precios Multimoneda</h4>
+                                <p class="text-[9.5px] text-slate-300 font-medium leading-tight">Elige ver montos en Dólares, Pesos o Bolívares.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- BUSCADOR -->
         <div class="relative w-full">
-            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 text-sm"></i>
-            <input type="text" id="buscador-general" oninput="window.filtrarDirectorioGuia()" placeholder="Buscar panaderías, repuestos, comida, farmacia..." class="w-full bg-white border border-slate-300 rounded-2xl pl-11 pr-4 py-3 text-sm font-bold text-slate-900 placeholder-slate-400 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+            <input type="text" id="buscador-general" oninput="window.filtrarDirectorioGuia()" placeholder="Buscar panaderías, repuestos, comida, farmacia..." class="w-full bg-white border border-slate-300 rounded-xl pl-10 pr-3 py-2.5 text-xs sm:text-sm font-bold text-slate-900 placeholder-slate-400 shadow-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100">
         </div>
 
-        <!-- FILTROS DESLIZABLES (ZONAS) -->
+        <!-- FILTROS DESLIZABLES DE ZONAS -->
         <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 text-xs">
-            <span class="text-[10px] font-black uppercase tracking-wider text-slate-400 shrink-0 mr-1 flex items-center gap-1">
+            <span class="text-[9.5px] font-black uppercase tracking-wider text-slate-400 shrink-0 flex items-center gap-1">
                 <i class="fa-solid fa-location-dot text-rose-500"></i> Zona:
             </span>
-            <div id="contenedor-zonas-pildoras" class="flex items-center gap-1.5 shrink-0"></div>
+            <div id="contenedor-zonas-pildoras" class="flex items-center gap-1 shrink-0"></div>
         </div>
 
-        <!-- FILTROS DESLIZABLES (RUBROS) -->
+        <!-- FILTROS DESLIZABLES DE CATEGORÍAS -->
         <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 text-xs">
-            <span class="text-[10px] font-black uppercase tracking-wider text-slate-400 shrink-0 mr-1 flex items-center gap-1">
+            <span class="text-[9.5px] font-black uppercase tracking-wider text-slate-400 shrink-0 flex items-center gap-1">
                 <i class="fa-solid fa-layer-group text-amber-500"></i> Ramo:
             </span>
-            <div id="contenedor-categorias-pildoras" class="flex items-center gap-1.5 shrink-0"></div>
+            <div id="contenedor-categorias-pildoras" class="flex items-center gap-1 shrink-0"></div>
         </div>
 
         <!-- ENCABEZADO DE SECCIÓN -->
@@ -194,13 +250,13 @@
         </div>
 
         <!-- CUADRÍCULA DE COMERCIOS -->
-        <div id="grid-comercios-guia" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full"></div>
+        <div id="grid-comercios-guia" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 w-full"></div>
     </main>
 
     <!-- ========================================================================= -->
     <!-- 2. VISTA: VITRINA DIGITAL DE LA TIENDA                                   -->
     <!-- ========================================================================= -->
-    <main id="vista-vitrina-tienda" class="w-full max-w-5xl mx-auto px-4 py-4 space-y-4 flex-grow hidden">
+    <main id="vista-vitrina-tienda" class="w-full max-w-5xl mx-auto px-3.5 py-4 space-y-4 flex-grow hidden">
         
         <!-- BANNER DUAL DE RETORNO (COMERCIANTE Y MÁSTER) -->
         <div id="banner-retorno-dueno" class="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-700 text-white rounded-2xl p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5 shadow-md hidden">
@@ -323,9 +379,97 @@
     </main>
 
     <!-- ========================================================================= -->
-    <!-- 3. VISTA: PANEL DEL COMERCIANTE (TOTAL AUTONOMÍA Y EDICIÓN COMPLETA)     -->
+    <!-- 3. MODAL DE PRODUCTO EN GRANDE (DETALLE, COMPRA RÁPIDA & CONSULTA)       -->
     <!-- ========================================================================= -->
-    <main id="vista-panel-comerciante" class="w-full max-w-4xl mx-auto px-4 py-5 space-y-4 flex-grow hidden">
+    <div id="modal-detalle-producto" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[150] p-4 hidden flex items-center justify-center">
+        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 flex flex-col max-h-[90vh]">
+            <!-- Foto en grande con botón cerrar -->
+            <div class="relative w-full h-52 sm:h-60 bg-slate-100 overflow-hidden shrink-0">
+                <img id="det-prod-img" src="" alt="Foto del producto" class="w-full h-full object-cover">
+                <button onclick="window.cerrarModalDetalleProducto()" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center shadow-lg transition-all btn-interactive">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+                <div id="det-prod-badge-disp" class="absolute bottom-3 left-3 bg-emerald-500 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+                    ● En Stock
+                </div>
+            </div>
+
+            <!-- Información detallada -->
+            <div class="p-4 sm:p-5 overflow-y-auto space-y-3.5 no-scrollbar flex-grow">
+                <div>
+                    <span id="det-prod-categoria" class="text-[10px] font-black uppercase tracking-wider text-blue-600 block">CATEGORÍA</span>
+                    <h3 id="det-prod-nombre" class="text-base sm:text-lg font-extrabold text-slate-900 uppercase leading-snug">Nombre del Producto</h3>
+                    <div class="mt-2 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
+                        <strong id="det-prod-precio-principal" class="text-xl font-black font-mono text-slate-900">$0.00 USD</strong>
+                        <span id="det-prod-precio-ref" class="text-xs font-mono text-slate-400 font-bold block">Ref: 0 COP | 0.00 Bs</span>
+                    </div>
+                </div>
+
+                <p id="det-prod-desc" class="text-xs text-slate-600 leading-relaxed font-medium border-t border-slate-100 pt-2.5">
+                    Descripción detallada del producto.
+                </p>
+
+                <!-- BOTONES DE ACCIÓN DEL PRODUCTO -->
+                <div class="space-y-2 pt-2 border-t border-slate-100">
+                    <button id="det-btn-add-carrito" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-black text-xs py-2.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-2 transition-all btn-interactive">
+                        <i class="fa-solid fa-cart-plus text-blue-600"></i> <span>Agregar al Carrito</span>
+                    </button>
+
+                    <button onclick="window.mostrarFormularioCompraDirecta()" class="w-full btn-brand py-3 rounded-xl uppercase text-xs font-black tracking-wider flex items-center justify-center gap-2 shadow-md btn-interactive">
+                        <i class="fa-solid fa-bolt text-amber-300"></i> <span>Comprar Este Producto Ahora</span>
+                    </button>
+
+                    <button onclick="window.consultarProductoWhatsAppModal()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs py-2.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-all btn-interactive">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> <span>Hacer una Pregunta / Consultar</span>
+                    </button>
+                </div>
+
+                <!-- FORMULARIO DE COMPRA DIRECTA DESPLEGABLE -->
+                <div id="det-box-compra-directa" class="hidden bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2.5 pt-3">
+                    <div class="flex justify-between items-center border-b border-slate-200/80 pb-1.5">
+                        <span class="text-[10.5px] font-black uppercase text-slate-700 tracking-wider block">
+                            📝 Datos para tu pedido directo:
+                        </span>
+                        <button type="button" onclick="document.getElementById('det-box-compra-directa').classList.add('hidden')" class="text-[10px] text-slate-400 hover:text-slate-700 font-bold uppercase">Cerrar</button>
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Tu Nombre y Apellido *</label>
+                        <input type="text" id="dir-in-nombre" placeholder="Ej: Juan Pérez" class="input-clean text-xs">
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Dirección o Referencia *</label>
+                        <input type="text" id="dir-in-direccion" placeholder="Ej: Calle 5 con carrera 2, Casa #10" class="input-clean text-xs">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Entrega *</label>
+                            <select id="dir-in-entrega" class="input-clean text-xs font-bold">
+                                <option value="🛵 Envío a Domicilio (Delivery)">🛵 Delivery</option>
+                                <option value="🏪 Retiro en Tienda">🏪 Retiro en Tienda</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Método de Pago *</label>
+                            <select id="dir-in-pago" class="input-clean text-xs font-bold">
+                                <option value="💵 Efectivo Dólares ($)">💵 Dólares ($)</option>
+                                <option value="🇨🇴 Pesos (COP / Nequi)">🇨🇴 Pesos (COP)</option>
+                                <option value="🇻🇪 Pago Móvil (Bs)">🇻🇪 Pago Móvil (Bs)</option>
+                                <option value="🪙 Binance USDT">🪙 Binance USDT</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="window.confirmarCompraDirectaWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs py-3 rounded-xl uppercase tracking-wider shadow flex items-center justify-center gap-1.5 btn-interactive mt-1">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> <span>Confirmar y Enviar Pedido</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 4. VISTA: PANEL DEL COMERCIANTE                                          -->
+    <!-- ========================================================================= -->
+    <main id="vista-panel-comerciante" class="w-full max-w-4xl mx-auto px-3.5 py-4 space-y-4 flex-grow hidden">
         
         <!-- BANNER DE ADMINISTRACIÓN MÁSTER DENTRO DEL PANEL DEL CLIENTE -->
         <div id="banner-master-en-panel-cliente" class="bg-slate-900 border border-slate-700 text-amber-400 rounded-2xl p-2.5 px-3.5 flex justify-between items-center shadow-md hidden">
@@ -337,51 +481,51 @@
             </button>
         </div>
 
-        <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-4">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-100 pb-3">
+        <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200 shadow-sm space-y-3.5">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                 <div class="flex items-center gap-3">
-                    <div id="comerciante-avatar-panel" class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl font-black border border-blue-100 shrink-0">
+                    <div id="comerciante-avatar-panel" class="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-black border border-blue-100 shrink-0">
                         🏪
                     </div>
                     <div>
-                        <h2 id="comerciante-titulo-panel" class="text-base sm:text-lg font-black text-slate-900 uppercase">
+                        <h2 id="comerciante-titulo-panel" class="text-sm sm:text-base font-black text-slate-900 uppercase">
                             Nombre de Mi Tienda
                         </h2>
-                        <span id="badge-vigencia-comerciante" class="text-[10px] font-mono text-emerald-600 font-bold block">
+                        <span id="badge-vigencia-comerciante" class="text-[9.5px] font-mono text-emerald-600 font-bold block">
                             Membresía Activa
                         </span>
                     </div>
                 </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button onclick="window.verMiVitrinaPublica()" class="flex-1 sm:flex-none btn-brand text-xs px-3.5 py-2 flex items-center justify-center gap-1.5 btn-interactive">
-                        <i class="fa-solid fa-eye"></i> <span>Ver Mi Catálogo</span>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="window.verMiVitrinaPublica()" class="btn-brand text-xs px-3 py-1.5 flex items-center gap-1 btn-interactive">
+                        <i class="fa-solid fa-eye"></i> <span>Ver Catálogo</span>
                     </button>
-                    <button onclick="window.cerrarSesionUniversal()" class="bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-600 text-xs px-3 py-2 rounded-xl font-bold btn-interactive">
-                        Cerrar Sesión
+                    <button onclick="window.cerrarSesionUniversal()" class="bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-600 text-xs px-2.5 py-1.5 rounded-xl font-bold btn-interactive">
+                        Salir
                     </button>
                 </div>
             </div>
 
-            <!-- SELECTOR DE PESTAÑAS DEL COMERCIANTE -->
+            <!-- TABS DEL COMERCIANTE -->
             <div class="grid grid-cols-3 gap-1.5 font-bold text-xs">
-                <button type="button" id="tab-btn-productos" onclick="window.cambiarTabComerciante('PRODUCTOS')" class="py-2.5 px-1 rounded-xl border border-blue-600 bg-blue-600 text-white font-black shadow-sm flex items-center justify-center gap-1 transition-all text-center">
+                <button type="button" id="tab-btn-productos" onclick="window.cambiarTabComerciante('PRODUCTOS')" class="py-2 px-1 rounded-xl border border-blue-600 bg-blue-600 text-white font-black shadow-sm flex items-center justify-center gap-1 transition-all text-center">
                     <i class="fa-solid fa-boxes-stacked text-[11px]"></i> <span class="truncate">Productos (<span id="cnt-tab-prods">0</span>)</span>
                 </button>
-                <button type="button" id="tab-btn-tasas" onclick="window.cambiarTabComerciante('TASAS')" class="py-2.5 px-1 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 flex items-center justify-center gap-1 hover:bg-slate-100 transition-all text-center">
+                <button type="button" id="tab-btn-tasas" onclick="window.cambiarTabComerciante('TASAS')" class="py-2 px-1 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 flex items-center justify-center gap-1 hover:bg-slate-100 transition-all text-center">
                     <i class="fa-solid fa-calculator text-amber-500 text-[11px]"></i> <span class="truncate">Mis Tasas</span>
                 </button>
-                <button type="button" id="tab-btn-perfil" onclick="window.cambiarTabComerciante('PERFIL')" class="py-2.5 px-1 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 flex items-center justify-center gap-1 hover:bg-slate-100 transition-all text-center">
+                <button type="button" id="tab-btn-perfil" onclick="window.cambiarTabComerciante('PERFIL')" class="py-2 px-1 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 flex items-center justify-center gap-1 hover:bg-slate-100 transition-all text-center">
                     <i class="fa-solid fa-store text-blue-600 text-[11px]"></i> <span class="truncate">Mi Portada</span>
                 </button>
             </div>
 
-            <!-- ENLACE DIRECTO PARA COMPARTIR -->
-            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-2.5">
+            <!-- ENLACE DIRECTO -->
+            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-2">
                 <div class="min-w-0 flex-1 w-full sm:w-auto">
-                    <span class="text-[9.5px] text-blue-700 font-black uppercase tracking-wider block">🔗 Tu Enlace de Catálogo para Clientes:</span>
+                    <span class="text-[9px] text-blue-700 font-black uppercase tracking-wider block">🔗 Tu Enlace de Catálogo:</span>
                     <input type="text" id="inp-enlace-mi-tienda" readonly class="w-full bg-transparent text-xs font-mono text-slate-700 font-bold focus:outline-none">
                 </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto">
+                <div class="flex items-center gap-1.5 w-full sm:w-auto">
                     <button onclick="window.copiarEnlaceMiTienda()" class="flex-1 sm:flex-none bg-white border border-slate-300 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center justify-center gap-1 btn-interactive">
                         <i class="fa-solid fa-copy"></i> Copiar
                     </button>
@@ -394,7 +538,7 @@
 
         <!-- SECCIÓN 1: PRODUCTOS -->
         <div id="seccion-comerciante-productos" class="space-y-4">
-            <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3.5">
+            <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200 shadow-sm space-y-3">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                     <h3 id="titulo-form-producto" class="text-xs font-black uppercase text-slate-800 tracking-wider flex items-center gap-1.5">
                         <i class="fa-solid fa-plus-circle text-blue-600"></i> Agregar Producto a mi Catálogo
@@ -407,52 +551,52 @@
                 <input type="hidden" id="prod-edit-id">
                 <input type="hidden" id="prod-foto-base64">
 
-                <div class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-                    <div id="box-preview-prod-foto" class="w-16 h-16 bg-white rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-2xl overflow-hidden shrink-0 shadow-sm">
+                <div class="flex items-center gap-2.5 bg-slate-50 p-2.5 rounded-2xl border border-slate-200">
+                    <div id="box-preview-prod-foto" class="w-16 h-16 bg-white rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xl overflow-hidden shrink-0 shadow-sm">
                         <i class="fa-solid fa-image"></i>
                     </div>
-                    <div class="space-y-1.5 w-full">
+                    <div class="space-y-1 w-full">
                         <span class="text-[9.5px] text-slate-600 font-bold uppercase block">Foto del Producto (Optimizada &lt; 70 KB)</span>
                         <input type="file" id="inp-camara-prod" accept="image/*" capture="environment" class="hidden" onchange="window.procesarFotoProducto(this)">
                         <input type="file" id="inp-galeria-prod" accept="image/*" class="hidden" onchange="window.procesarFotoProducto(this)">
-                        <div class="grid grid-cols-2 gap-2">
-                            <button type="button" onclick="document.getElementById('inp-camara-prod').click()" class="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs py-2 rounded-xl uppercase flex items-center justify-center gap-1.5 btn-interactive">
-                                <i class="fa-solid fa-camera"></i> Tomar Foto
+                        <div class="grid grid-cols-2 gap-1.5">
+                            <button type="button" onclick="document.getElementById('inp-camara-prod').click()" class="bg-blue-600 hover:bg-blue-500 text-white font-black text-xs py-1.5 rounded-xl uppercase flex items-center justify-center gap-1 btn-interactive">
+                                <i class="fa-solid fa-camera"></i> Cámara
                             </button>
-                            <button type="button" onclick="document.getElementById('inp-galeria-prod').click()" class="bg-white border border-slate-300 text-slate-700 font-bold text-xs py-2 rounded-xl uppercase flex items-center justify-center gap-1.5 btn-interactive">
+                            <button type="button" onclick="document.getElementById('inp-galeria-prod').click()" class="bg-white border border-slate-300 text-slate-700 font-bold text-xs py-1.5 rounded-xl uppercase flex items-center justify-center gap-1 btn-interactive">
                                 <i class="fa-solid fa-images text-amber-500"></i> Galería
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <div class="sm:col-span-2">
-                        <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Nombre del Producto *</label>
-                        <input type="text" id="prod-inp-nombre" placeholder="Ej: Torta de Chocolate / Harina PAN 1kg" class="input-clean">
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Nombre del Producto *</label>
+                        <input type="text" id="prod-inp-nombre" placeholder="Ej: Torta de Chocolate / Harina PAN 1kg" class="input-clean text-xs">
                     </div>
                     <div>
-                        <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Categoría / Ramo *</label>
-                        <input type="text" id="prod-inp-categoria" placeholder="Ej: Panadería, Postres..." class="input-clean">
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Categoría / Ramo *</label>
+                        <input list="lista-sugerencias-ramos" type="text" id="prod-inp-categoria" placeholder="Ej: Panadería, Postres..." class="input-clean text-xs">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <div>
-                        <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Moneda del Precio *</label>
-                        <select id="prod-inp-moneda" class="input-clean text-blue-700 font-bold">
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Moneda en que cargas el precio *</label>
+                        <select id="prod-inp-moneda" class="input-clean text-blue-700 font-bold text-xs">
                             <option value="USD">💵 Dólares ($ USD)</option>
                             <option value="COP">🇨🇴 Pesos (COP)</option>
                             <option value="BS">🇻🇪 Bolívares (Bs.)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Precio de Venta *</label>
-                        <input type="number" step="any" id="prod-inp-precio" placeholder="Ej: 5.00" class="input-clean font-mono font-bold text-emerald-600">
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Precio de Venta *</label>
+                        <input type="number" step="any" id="prod-inp-precio" placeholder="Ej: 5.00" class="input-clean font-mono font-bold text-emerald-600 text-xs">
                     </div>
                     <div>
-                        <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Disponibilidad</label>
-                        <select id="prod-inp-disponible" class="input-clean font-bold">
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Disponibilidad</label>
+                        <select id="prod-inp-disponible" class="input-clean font-bold text-xs">
                             <option value="true">✅ Disponible / En Stock</option>
                             <option value="false">⏸️ Pausado / Agotado</option>
                         </select>
@@ -460,23 +604,22 @@
                 </div>
 
                 <div>
-                    <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Descripción o Detalles (Opcional)</label>
-                    <textarea id="prod-inp-desc" rows="2" placeholder="Detalles de tamaño, porciones, garantía..." class="input-clean no-scrollbar resize-none"></textarea>
+                    <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Descripción (Opcional)</label>
+                    <textarea id="prod-inp-desc" rows="2" placeholder="Detalles de tamaño, porciones, sabores..." class="input-clean no-scrollbar resize-none text-xs"></textarea>
                 </div>
 
-                <button onclick="window.guardarProductoComerciante()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs py-3 rounded-xl uppercase tracking-wider shadow flex items-center justify-center gap-2 btn-interactive">
+                <button onclick="window.guardarProductoComerciante()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs py-3 rounded-xl uppercase tracking-wider shadow flex items-center justify-center gap-1.5 btn-interactive">
                     <i class="fa-solid fa-cloud-arrow-up"></i> <span id="lbl-btn-guardar-prod">Guardar y Publicar Producto</span>
                 </button>
             </div>
 
-            <!-- LISTADO PRODUCTOS -->
-            <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3">
-                <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+            <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200 shadow-sm space-y-2.5">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-1.5">
                     <h3 class="text-xs font-black uppercase text-slate-800 tracking-wider">
                         Productos Registrados (<span id="cnt-mis-productos">0</span>)
                     </h3>
                 </div>
-                <div id="contenedor-mis-productos-lista" class="space-y-2"></div>
+                <div id="contenedor-mis-productos-lista" class="space-y-1.5"></div>
             </div>
         </div>
 
@@ -488,7 +631,7 @@
                         <i class="fa-solid fa-calculator text-amber-500"></i> Fijar Mis Tasas de Cambio del Día
                     </h3>
                     <p class="text-[11px] text-slate-500 font-medium">
-                        Aquí tú defines cómo se convierten tus precios en Dólares, Pesos y Bolívares. Estas tasas quedan <strong>fijas permanentemente</strong> para tu tienda hasta que tú las vuelvas a cambiar.
+                        Define cómo se calculan tus precios. Estas tasas quedan <strong>fijas permanentemente</strong> para tu tienda.
                     </p>
                 </div>
 
@@ -564,24 +707,17 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Municipio / Zona *</label>
-                        <select id="perfil-inp-zona" class="input-clean text-xs font-bold">
-                            <option value="Cordero">Cordero</option>
-                            <option value="Táriba">Táriba</option>
-                            <option value="San Cristóbal">San Cristóbal</option>
-                            <option value="Palmira">Palmira</option>
-                            <option value="Guásimos">Guásimos</option>
-                            <option value="Otro">Otro Sector</option>
-                        </select>
+                        <input list="lista-sugerencias-zonas" id="perfil-inp-zona" class="input-clean text-xs font-bold" placeholder="Ej: Cordero, Táriba, Capacho, San Cristóbal...">
                     </div>
                     <div>
                         <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Rubro o Ramo Comercial *</label>
-                        <input type="text" id="perfil-inp-rubro" class="input-clean text-xs font-bold" placeholder="Ej: Panadería, Repuestos...">
+                        <input list="lista-sugerencias-ramos" id="perfil-inp-rubro" class="input-clean text-xs font-bold" placeholder="Ej: Panadería, Repuestos, Farmacia, Restaurante...">
                     </div>
                 </div>
 
                 <div>
                     <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Dirección Física o Punto de Referencia *</label>
-                    <input type="text" id="perfil-inp-dir" class="input-clean text-xs" placeholder="Ej: Av. Bolívar, frente a la Plaza Bolívar">
+                    <input type="text" id="perfil-inp-dir" class="input-clean text-xs" placeholder="Ej: Av. Bolívar, frente a la Plaza Bolívar, local #4">
                 </div>
 
                 <div>
@@ -602,7 +738,7 @@
     </main>
 
     <!-- ========================================================================= -->
-    <!-- 4. VISTA: PANEL MÁSTER CENTRAL (COMPLETO)                                -->
+    <!-- 5. VISTA: PANEL MÁSTER CENTRAL                                           -->
     <!-- ========================================================================= -->
     <div id="vista-master-admin" class="hidden min-h-screen p-3 sm:p-5 max-w-5xl mx-auto space-y-4 w-full pb-16">
         <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -752,18 +888,11 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <div>
                             <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Municipio / Zona *</label>
-                            <select id="saas-input-zona" class="input-clean text-xs">
-                                <option value="Cordero">Cordero</option>
-                                <option value="Táriba">Táriba</option>
-                                <option value="San Cristóbal">San Cristóbal</option>
-                                <option value="Palmira">Palmira</option>
-                                <option value="Guásimos">Guásimos</option>
-                                <option value="Otro">Otro Municipio</option>
-                            </select>
+                            <input list="lista-sugerencias-zonas" id="saas-input-zona" placeholder="Ej: Cordero, Táriba, Capacho..." class="input-clean text-xs font-bold">
                         </div>
                         <div>
                             <label class="text-[9.5px] text-slate-500 uppercase block mb-0.5">Rubro / Categoría *</label>
-                            <input type="text" id="saas-input-rubro" placeholder="Ej: Panadería, Farmacia..." class="input-clean text-xs">
+                            <input list="lista-sugerencias-ramos" id="saas-input-rubro" placeholder="Ej: Panadería, Farmacia..." class="input-clean text-xs font-bold">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -851,7 +980,7 @@
     </div>
 
     <!-- MODAL TARIFAS SAAS -->
-    <div id="modal-tarifas-saas" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 p-3 flex items-center justify-center hidden no-print">
+    <div id="modal-tarifas-saas" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 p-3 sm:p-4 flex items-center justify-center hidden no-print">
         <div class="bg-white border border-slate-200 w-full max-w-sm rounded-2xl overflow-hidden shadow-2xl flex flex-col">
             <div class="bg-[#0f172a] px-4 py-3 text-white flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-2">
@@ -1054,18 +1183,11 @@
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Municipio / Zona *</label>
-                        <select id="reg-in-zona" class="input-clean text-xs">
-                            <option value="Cordero">Cordero</option>
-                            <option value="Táriba">Táriba</option>
-                            <option value="San Cristóbal">San Cristóbal</option>
-                            <option value="Palmira">Palmira</option>
-                            <option value="Guásimos">Guásimos</option>
-                            <option value="Otro">Otro Sector</option>
-                        </select>
+                        <input list="lista-sugerencias-zonas" id="reg-in-zona" required placeholder="Ej: Cordero, Táriba, Capacho..." class="input-clean text-xs font-bold">
                     </div>
                     <div>
                         <label class="text-[9px] text-slate-500 uppercase block mb-0.5">Rubro Principal *</label>
-                        <input type="text" id="reg-in-rubro" required placeholder="Ej: Panadería, Repuestos..." class="input-clean text-xs">
+                        <input list="lista-sugerencias-ramos" id="reg-in-rubro" required placeholder="Ej: Panadería, Repuestos..." class="input-clean text-xs font-bold">
                     </div>
                 </div>
                 <div>
@@ -1110,7 +1232,7 @@
         <div class="flex items-center justify-center gap-2 text-slate-900 font-black text-xs uppercase">
             <span>TCL TuZona Comercial</span>
         </div>
-        <p class="text-[10px] text-slate-400">Directorio regional y vitrinas autónomas para comercios locales.</p>
+        <p class="text-[10px] text-slate-400">Directorio regional y vitrinas autónomas para comercios del Estado Táchira.</p>
         <p class="text-[9.5px] text-slate-400 uppercase font-mono">&copy; 2026 TUCOCEL C.A. &bull; Agencia @publionlinemk</p>
     </footer>
 
@@ -1149,6 +1271,7 @@
         let carritoCompras = [];
         let tiendaActivaSlug = null;
         let comercianteSesion = null;
+        let productoSeleccionadoModal = null;
         window.esMasterLogueado = false;
         window.tipoVistaModalActual = 'ACTIVOS';
         window.diasSuscripcionSeleccionados = 180;
@@ -1268,7 +1391,16 @@
                     if (docP.exists && Object.keys(docP.data().mapa || {}).length > 0) productosPorTienda = docP.data().mapa;
                 } catch(e) {}
             }
+
+            // GARANTÍA TOTAL: Asegurar que las tiendas tengan sus productos siempre cargados
+            Object.keys(PRODUCTOS_SEMILLA).forEach(slug => {
+                if (!productosPorTienda[slug] || productosPorTienda[slug].length === 0) {
+                    productosPorTienda[slug] = [...PRODUCTOS_SEMILLA[slug]];
+                }
+            });
+
             window.recalcularTotalesYBadgesComercios();
+            actualizarDatalistsSugerencias();
             renderizarPildorasZonas();
             renderizarPildorasCategorias();
             renderizarDirectorioGuia();
@@ -1286,6 +1418,9 @@
                 } catch(e) {}
             }
             window.recalcularTotalesYBadgesComercios();
+            actualizarDatalistsSugerencias();
+            renderizarPildorasZonas();
+            renderizarPildorasCategorias();
         }
 
         function verificarParametrosURL() {
@@ -1306,7 +1441,11 @@
             window.actualizarNavbarEstado();
 
             tiendaActivaSlug = null;
-            if (actualizarHistorial) window.history.pushState({}, "", window.location.pathname);
+            try {
+                if (actualizarHistorial && window.location.protocol !== 'file:') {
+                    window.history.pushState({}, "", window.location.pathname);
+                }
+            } catch(e) {}
             renderizarDirectorioGuia();
         };
 
@@ -1339,7 +1478,6 @@
             }
         };
 
-        // ENTRAR DIRECTO A LA TIENDA COMO MÁSTER
         window.gestionarTiendaComoMaster = function() {
             if (!window.esMasterLogueado || !tiendaActivaSlug) return;
             const tienda = tiendasEnSistema.find(t => t.slug === tiendaActivaSlug);
@@ -1355,7 +1493,7 @@
             window.navegarAInicioGuia();
         };
 
-        // MATEMÁTICA MULTIMONEDA CON TASAS PROPIAS DE CADA COMERCIO
+        // MATEMÁTICA MULTIMONEDA
         function obtenerTasasActivasTienda(slug) {
             const t = tiendasEnSistema.find(x => x.slug === slug);
             if (t && t.tasas && t.tasas.cop > 0) {
@@ -1402,14 +1540,70 @@
             }
         };
 
+        // NORMALIZACIÓN & AUTO-GENERACIÓN DINÁMICA DE ZONAS Y RAMOS
+        function capitalizarTexto(txt) {
+            if (!txt) return "";
+            return txt.trim()
+                .toLowerCase()
+                .split(/\s+/)
+                .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+                .join(' ');
+        }
+
+        function actualizarDatalistsSugerencias() {
+            const dlZonas = document.getElementById("lista-sugerencias-zonas");
+            const dlRamos = document.getElementById("lista-sugerencias-ramos");
+            if (!dlZonas || !dlRamos) return;
+
+            const zonasSet = new Set(["Cordero", "Táriba", "San Cristóbal", "Palmira", "Capacho", "Guásimos", "Colón", "La Grita", "Rubio", "San Antonio"]);
+            tiendasEnSistema.forEach(t => {
+                if (t.zona && t.zona.trim()) zonasSet.add(capitalizarTexto(t.zona));
+            });
+
+            const ramosSet = new Set(["Panadería", "Repuestos", "Farmacia", "Tecnología", "Restaurante", "Víveres", "Moda & Ropa", "Salud"]);
+            tiendasEnSistema.forEach(t => {
+                if (t.rubro && t.rubro.trim()) ramosSet.add(capitalizarTexto(t.rubro));
+            });
+
+            dlZonas.innerHTML = Array.from(zonasSet).sort().map(z => `<option value="${z}"></option>`).join("");
+            dlRamos.innerHTML = Array.from(ramosSet).sort().map(r => `<option value="${r}"></option>`).join("");
+        }
+
         function renderizarPildorasZonas() {
+            actualizarDatalistsSugerencias();
             const cont = document.getElementById("contenedor-zonas-pildoras");
-            const zonasSet = new Set(["TODOS", "Cordero", "Táriba", "San Cristóbal", "Palmira"]);
-            tiendasEnSistema.forEach(t => { if(t.zona) zonasSet.add(t.zona); });
-            cont.innerHTML = Array.from(zonasSet).map(z => `
-                <button onclick="window.filtrarPorZona('${z}')" class="px-3.5 py-1.5 rounded-xl font-bold uppercase transition-all whitespace-nowrap btn-interactive ${zonaFiltroSeleccionada === z ? 'bg-blue-600 text-white font-black shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-900'}">
-                    📍 ${z}
-                </button>`).join("");
+            if (!cont) return;
+
+            const zonasMap = new Map();
+            tiendasEnSistema.forEach(t => {
+                if ((t.estatus || 'ACTIVO') === 'ACTIVO' && t.zona && t.zona.trim()) {
+                    const zNorm = capitalizarTexto(t.zona);
+                    zonasMap.set(zNorm, (zonasMap.get(zNorm) || 0) + 1);
+                }
+            });
+
+            if (zonasMap.size === 0) {
+                zonasMap.set("Cordero", 0);
+                zonasMap.set("Táriba", 0);
+                zonasMap.set("San Cristóbal", 0);
+            }
+
+            let html = `
+                <button onclick="window.filtrarPorZona('TODOS')" class="px-3 py-1.5 rounded-xl font-bold uppercase transition-all whitespace-nowrap btn-interactive text-xs ${zonaFiltroSeleccionada === 'TODOS' ? 'bg-blue-600 text-white font-black shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-900'}">
+                    📍 Todos
+                </button>
+            `;
+
+            Array.from(zonasMap.keys()).sort().forEach(zona => {
+                const activa = zonaFiltroSeleccionada.toLowerCase() === zona.toLowerCase();
+                html += `
+                    <button onclick="window.filtrarPorZona('${zona}')" class="px-3 py-1.5 rounded-xl font-bold uppercase transition-all whitespace-nowrap btn-interactive text-xs ${activa ? 'bg-blue-600 text-white font-black shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-900'}">
+                        📍 ${zona}
+                    </button>
+                `;
+            });
+
+            cont.innerHTML = html;
         }
 
         window.filtrarPorZona = function(z) {
@@ -1420,12 +1614,38 @@
 
         function renderizarPildorasCategorias() {
             const cont = document.getElementById("contenedor-categorias-pildoras");
-            const catSet = new Set(["TODOS", "Panadería", "Repuestos", "Farmacia", "Tecnología", "Comida", "Ropa", "Víveres"]);
-            tiendasEnSistema.forEach(t => { if(t.rubro) catSet.add(t.rubro); });
-            cont.innerHTML = Array.from(catSet).map(c => `
-                <button onclick="window.filtrarPorRubro('${c}')" class="px-3.5 py-1.5 rounded-xl font-bold uppercase transition-all whitespace-nowrap btn-interactive ${rubroFiltroSeleccionado === c ? 'bg-amber-500 text-slate-950 font-black shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-900'}">
-                    🏷️ ${c}
-                </button>`).join("");
+            if (!cont) return;
+
+            const ramosMap = new Map();
+            tiendasEnSistema.forEach(t => {
+                if ((t.estatus || 'ACTIVO') === 'ACTIVO' && t.rubro && t.rubro.trim()) {
+                    const rNorm = capitalizarTexto(t.rubro);
+                    ramosMap.set(rNorm, (ramosMap.get(rNorm) || 0) + 1);
+                }
+            });
+
+            if (ramosMap.size === 0) {
+                ramosMap.set("Panadería", 0);
+                ramosMap.set("Repuestos", 0);
+                ramosMap.set("Farmacia", 0);
+            }
+
+            let html = `
+                <button onclick="window.filtrarPorRubro('TODOS')" class="px-3 py-1.5 rounded-xl font-bold uppercase transition-all whitespace-nowrap btn-interactive text-xs ${rubroFiltroSeleccionado === 'TODOS' ? 'bg-amber-500 text-slate-950 font-black shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-900'}">
+                    🏷️ Todos
+                </button>
+            `;
+
+            Array.from(ramosMap.keys()).sort().forEach(ramo => {
+                const activa = rubroFiltroSeleccionado.toLowerCase() === ramo.toLowerCase();
+                html += `
+                    <button onclick="window.filtrarPorRubro('${ramo}')" class="px-3 py-1.5 rounded-xl font-bold uppercase transition-all whitespace-nowrap btn-interactive text-xs ${activa ? 'bg-amber-500 text-slate-950 font-black shadow-sm' : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-900'}">
+                        🏷️ ${ramo}
+                    </button>
+                `;
+            });
+
+            cont.innerHTML = html;
         }
 
         window.filtrarPorRubro = function(c) {
@@ -1442,8 +1662,12 @@
             const busq = document.getElementById("buscador-general").value.trim().toLowerCase();
             let lista = tiendasEnSistema.filter(t => (t.estatus || 'ACTIVO') === 'ACTIVO');
 
-            if (zonaFiltroSeleccionada !== "TODOS") lista = lista.filter(t => t.zona === zonaFiltroSeleccionada);
-            if (rubroFiltroSeleccionado !== "TODOS") lista = lista.filter(t => (t.rubro || '').toLowerCase().includes(rubroFiltroSeleccionado.toLowerCase()));
+            if (zonaFiltroSeleccionada !== "TODOS") {
+                lista = lista.filter(t => (t.zona || '').trim().toLowerCase() === zonaFiltroSeleccionada.trim().toLowerCase());
+            }
+            if (rubroFiltroSeleccionado !== "TODOS") {
+                lista = lista.filter(t => (t.rubro || '').trim().toLowerCase() === rubroFiltroSeleccionado.trim().toLowerCase());
+            }
             if (busq) {
                 lista = lista.filter(t => {
                     const matchT = t.nombre.toLowerCase().includes(busq) || (t.rubro && t.rubro.toLowerCase().includes(busq));
@@ -1521,7 +1745,7 @@
             }).join("");
         }
 
-        // APERTURA DE VITRINA INDIVIDUAL
+        // APERTURA DE VITRINA INDIVIDUAL (CON PROTECCIÓN CONTRA FALLOS DE file://)
         window.abrirVitrinaTienda = function(slug, actualizarHistorial = true) {
             const tienda = tiendasEnSistema.find(t => t.slug === slug);
             if (!tienda) return window.navegarAInicioGuia();
@@ -1534,7 +1758,13 @@
             document.getElementById("vista-panel-comerciante").classList.add("hidden");
             document.getElementById("vista-master-admin").classList.add("hidden");
             document.getElementById("vista-vitrina-tienda").classList.remove("hidden");
-            if (actualizarHistorial) window.history.pushState({}, "", `?tienda=${slug}`);
+
+            // SEGURIDAD: Prevenir excepción de seguridad en Android local (file://)
+            try {
+                if (actualizarHistorial && window.location.protocol !== 'file:') {
+                    window.history.pushState({}, "", `?tienda=${slug}`);
+                }
+            } catch(e) {}
 
             document.getElementById("tienda-nombre-titulo").innerText = tienda.nombre;
             document.getElementById("tienda-rubro-sub").innerText = tienda.rubro || 'Comercio';
@@ -1577,6 +1807,10 @@
                 bannerRet.classList.add("hidden");
             }
 
+            // LIMPIAR BÚSQUEDA INTERNA DE LA TIENDA
+            const inBusq = document.getElementById("buscador-tienda-productos");
+            if (inBusq) inBusq.value = "";
+
             window.actualizarNavbarEstado();
             renderizarPildorasCategoriasTienda(slug);
             renderizarProductosTienda(slug);
@@ -1597,6 +1831,7 @@
 
         window.filtrarProductosTiendaActiva = function() { renderizarProductosTienda(tiendaActivaSlug); };
 
+        // RENDERIZADO DE PRODUCTOS CON CLICK PARA VER EN GRANDE (MODAL DETALLE)
         function renderizarProductosTienda(slug, catFiltro = "TODOS") {
             const grid = document.getElementById("grid-productos-tienda");
             const busq = document.getElementById("buscador-tienda-productos").value.trim().toLowerCase();
@@ -1611,7 +1846,7 @@
             }
 
             let html = prods.map(p => `
-                <div class="card-product p-3.5 flex flex-col justify-between space-y-2.5">
+                <div onclick="window.abrirModalDetalleProducto('${p.id}')" class="card-product p-3.5 flex flex-col justify-between space-y-2.5 cursor-pointer active:scale-[0.99] transition-transform">
                     <div class="space-y-2">
                         <div class="w-full h-36 bg-slate-100 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-100">
                             ${p.foto ? `<img src="${p.foto}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-box-open text-slate-300 text-2xl"></i>`}
@@ -1622,7 +1857,7 @@
                             <p class="text-[10px] text-slate-500 line-clamp-2 mt-0.5 font-medium leading-tight">${p.desc || ''}</p>
                         </div>
                     </div>
-                    <div class="space-y-2 pt-1.5 border-t border-slate-100">
+                    <div class="space-y-2 pt-1.5 border-t border-slate-100" onclick="event.stopPropagation()">
                         <strong class="text-sm font-black font-mono text-slate-900 block">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</strong>
                         <button onclick="window.agregarAlCarrito('${p.id}')" class="w-full btn-brand text-[10px] py-2 rounded-xl uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-all btn-interactive">
                             <i class="fa-solid fa-plus text-xs"></i> Agregar Pedido
@@ -1653,6 +1888,116 @@
 
             grid.innerHTML = html;
         }
+
+        // =========================================================================
+        // LÓGICA DEL MODAL DE DETALLE DEL PRODUCTO (EN GRANDE, CONSULTAS & COMPRA)
+        // =========================================================================
+        function obtenerSaludoPorHora() {
+            const hora = new Date().getHours();
+            if (hora >= 5 && hora < 12) return "¡Buenos días!";
+            if (hora >= 12 && hora < 19) return "¡Buenas tardes!";
+            return "¡Buenas noches!";
+        }
+
+        window.abrirModalDetalleProducto = function(prodId) {
+            const prods = productosPorTienda[tiendaActivaSlug] || [];
+            const prod = prods.find(p => p.id === prodId);
+            if (!prod) return;
+
+            productoSeleccionadoModal = prod;
+            const tasas = obtenerTasasActivasTienda(tiendaActivaSlug);
+
+            document.getElementById("det-prod-img").src = prod.foto || 'https://images.unsplash.com/photo-1555421689-491a97ff2040?w=600&auto=format&fit=crop&q=80';
+            document.getElementById("det-prod-categoria").innerText = prod.categoria || 'GENERAL';
+            document.getElementById("det-prod-nombre").innerText = prod.nombre;
+            document.getElementById("det-prod-desc").innerText = prod.desc || 'Producto disponible en catálogo oficial.';
+            
+            const badgeDisp = document.getElementById("det-prod-badge-disp");
+            if (prod.disponible) {
+                badgeDisp.className = "absolute bottom-3 left-3 bg-emerald-500 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
+                badgeDisp.innerText = "● En Stock";
+            } else {
+                badgeDisp.className = "absolute bottom-3 left-3 bg-rose-500 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
+                badgeDisp.innerText = "○ Pausado / Agotado";
+            }
+
+            // Precios calculados
+            const pUSD = prod.precio;
+            const pCOP = Math.round(pUSD * tasas.cop).toLocaleString("es-CO");
+            const pBs = (pUSD * tasas.bs).toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            document.getElementById("det-prod-precio-principal").innerText = convertirMonto(pUSD, monedaTiendaActiva, tiendaActivaSlug);
+            document.getElementById("det-prod-precio-ref").innerText = `Ref: ${pCOP} COP | ${pBs} Bs.`;
+
+            // Botón agregar carrito desde modal
+            document.getElementById("det-btn-add-carrito").onclick = function() {
+                window.agregarAlCarrito(prod.id);
+                alert("🛒 ¡Producto agregado a tu carrito!");
+            };
+
+            // Ocultar formulario de compra directa por defecto
+            document.getElementById("det-box-compra-directa").classList.add("hidden");
+            document.getElementById("modal-detalle-producto").classList.remove("hidden");
+        };
+
+        window.cerrarModalDetalleProducto = function() {
+            document.getElementById("modal-detalle-producto").classList.add("hidden");
+            productoSeleccionadoModal = null;
+        };
+
+        window.mostrarFormularioCompraDirecta = function() {
+            const box = document.getElementById("det-box-compra-directa");
+            box.classList.remove("hidden");
+            box.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.consultarProductoWhatsAppModal = function() {
+            if (!productoSeleccionadoModal || !tiendaActivaSlug) return;
+            const tienda = tiendasEnSistema.find(t => t.slug === tiendaActivaSlug);
+            if (!tienda) return;
+
+            const saludo = obtenerSaludoPorHora();
+            const msg = `${saludo} Acabo de ver el producto *${productoSeleccionadoModal.nombre}* en su tienda de *TCL TuZona Comercial* y quisiera consultar disponibilidad e información. 🙌`;
+            abrirWhatsAppDirecto(tienda.telefono, msg);
+        };
+
+        window.confirmarCompraDirectaWhatsApp = function() {
+            if (!productoSeleccionadoModal || !tiendaActivaSlug) return;
+            const tienda = tiendasEnSistema.find(t => t.slug === tiendaActivaSlug);
+            if (!tienda) return;
+
+            const nom = document.getElementById("dir-in-nombre").value.trim().toUpperCase();
+            const dir = document.getElementById("dir-in-direccion").value.trim();
+            const entrega = document.getElementById("dir-in-entrega").value;
+            const pago = document.getElementById("dir-in-pago").value;
+
+            if (!nom || !dir) {
+                alert("⚠️ Por favor ingresa tu nombre y dirección o punto de referencia.");
+                return;
+            }
+
+            const saludo = obtenerSaludoPorHora();
+            const tasas = obtenerTasasActivasTienda(tiendaActivaSlug);
+            const pUSD = productoSeleccionadoModal.precio;
+            const pCOP = Math.round(pUSD * tasas.cop).toLocaleString("es-CO");
+            const pBs = (pUSD * tasas.bs).toFixed(2);
+
+            let msg = `🛍️ *PEDIDO DIRECTO — ${tienda.nombre}*
+
+${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL TuZona Comercial*:
+
+📦 *PRODUCTO:* ${productoSeleccionadoModal.nombre}
+💰 *PRECIO:* $${pUSD.toFixed(2)} USD | ${pCOP} COP | ${pBs} Bs.
+👤 *CLIENTE:* ${nom}
+📍 *DIRECCIÓN:* ${dir}
+🛵 *ENTREGA:* ${entrega}
+💳 *FORMA DE PAGO:* ${pago}
+
+¿Me confirman disponibilidad para coordinar la entrega? 🙌`;
+
+            window.cerrarModalDetalleProducto();
+            abrirWhatsAppDirecto(tienda.telefono, msg);
+        };
 
         window.agregarAlCarrito = function(prodId) {
             const prods = productosPorTienda[tiendaActivaSlug] || [];
@@ -1733,9 +2078,25 @@
             const totalCOP = Math.round(totalUSD * tasas.cop).toLocaleString("es-CO");
             const totalBs = (totalUSD * tasas.bs).toFixed(2);
 
-            let msg = `🛍️ *NUEVO PEDIDO DESDE TU VITRINA DIGITAL*\n🏢 *Comercio:* ${tienda.nombre}\n\n👤 *Cliente:* ${nombreCli}\n📍 *Dirección:* ${dirCli}\n🛵 *Entrega:* ${entrega}\n💳 *Pago:* ${pago}\n━━━━━━━━━━━━━━━━━━━━━\n*PRODUCTOS:*\n`;
-            items.forEach(it => { msg += `▪️ ${it.cant}x ${it.nombre} ($${(it.precio * it.cant).toFixed(2)})\n`; });
-            msg += `━━━━━━━━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR:*\n💵 $${totalUSD.toFixed(2)} USD\n🇨🇴 ${totalCOP} COP\n🇻🇪 ${totalBs} Bs.\n\n¡Hola! Acabo de hacer mi pedido a través de su vitrina en TCL TuZona Comercial. ¿Me confirman para coordinar? 🙌`;
+            let msg = `🛍️ *NUEVO PEDIDO DESDE TU VITRINA DIGITAL*
+🏢 *Comercio:* ${tienda.nombre}
+
+👤 *Cliente:* ${nombreCli}
+📍 *Dirección:* ${dirCli}
+🛵 *Entrega:* ${entrega}
+💳 *Pago:* ${pago}
+━━━━━━━━━━━━━━━━━━━━━
+*PRODUCTOS:*
+`;
+            items.forEach(it => { msg += `▪️ ${it.cant}x ${it.nombre} ($${(it.precio * it.cant).toFixed(2)})
+`; });
+            msg += `━━━━━━━━━━━━━━━━━━━━━
+💰 *TOTAL A PAGAR:*
+💵 $${totalUSD.toFixed(2)} USD
+🇨🇴 ${totalCOP} COP
+🇻🇪 ${totalBs} Bs.
+
+¡Hola! Acabo de hacer mi pedido a través de su vitrina en TCL TuZona Comercial. ¿Me confirman para coordinar? 🙌`;
 
             carritoCompras = carritoCompras.filter(it => it.tiendaSlug !== tiendaActivaSlug);
             actualizarBarraCarrito();
@@ -1845,26 +2206,31 @@
             }
 
             await guardarEnNube();
-            alert(`✅ ¡Tus tasas fijas han sido guardadas con éxito!\n\n• 1 USD = ${cop.toLocaleString("es-CO")} COP\n• 1 USD = ${bs.toFixed(2)} Bs\n\nTodos tus productos se calcularán con estas tasas fijas.`);
+            alert(`✅ ¡Tus tasas fijas han sido guardadas con éxito!
+
+• 1 USD = ${cop.toLocaleString("es-CO")} COP
+• 1 USD = ${bs.toFixed(2)} Bs
+
+Todos tus productos se calcularán con estas tasas fijas.`);
             window.cambiarTabComerciante('PRODUCTOS');
         };
 
-        // GUARDAR PERFIL DEL COMERCIANTE
+        // GUARDAR PERFIL DEL COMERCIANTE CON ZONA Y RAMO NORMALIZADOS
         window.guardarPerfilComerciante = async function() {
             if (!comercianteSesion) return;
             const slug = comercianteSesion.slug;
 
             const nuevoNombre = document.getElementById("perfil-inp-nombre").value.trim();
             const nuevoWa = document.getElementById("perfil-inp-wa").value.trim();
-            const nuevaZona = document.getElementById("perfil-inp-zona").value;
-            const nuevoRubro = document.getElementById("perfil-inp-rubro").value.trim();
+            const nuevaZona = capitalizarTexto(document.getElementById("perfil-inp-zona").value);
+            const nuevoRubro = capitalizarTexto(document.getElementById("perfil-inp-rubro").value);
             const nuevaDir = document.getElementById("perfil-inp-dir").value.trim();
             const nuevoLink = document.getElementById("perfil-inp-link").value.trim();
             const nuevaDesc = document.getElementById("perfil-inp-desc").value.trim();
             const nuevaPortada = document.getElementById("perfil-foto-portada-base64").value;
 
             if (!nuevoNombre || !nuevoWa || !nuevaZona || !nuevoRubro) {
-                alert("⚠️ Por favor completa los campos requeridos.");
+                alert("⚠️ Por favor completa los campos requeridos (Nombre, WhatsApp, Zona y Ramo).");
                 return;
             }
 
@@ -1885,7 +2251,12 @@
 
             await guardarEnNube();
             document.getElementById("comerciante-titulo-panel").innerText = nuevoNombre;
-            alert("✨ ¡Información de tu negocio y portada guardadas con éxito!");
+            alert(`✨ ¡Información de tu negocio guardada con éxito!
+
+Zona registrada: ${nuevaZona}
+Ramo registrado: ${nuevoRubro}
+
+Se han actualizado automáticamente en la Guía Comercial.`);
             window.cambiarTabComerciante('PRODUCTOS');
         };
 
@@ -1894,7 +2265,7 @@
             const slug = comercianteSesion.slug;
             const editId = document.getElementById("prod-edit-id").value;
             const nombre = document.getElementById("prod-inp-nombre").value.trim();
-            const categoria = document.getElementById("prod-inp-categoria").value.trim().toUpperCase() || "GENERAL";
+            const categoria = capitalizarTexto(document.getElementById("prod-inp-categoria").value) || "General";
             const moneda = document.getElementById("prod-inp-moneda").value;
             let precio = parseFloat(document.getElementById("prod-inp-precio").value) || 0;
             const disponible = (document.getElementById("prod-inp-disponible").value === "true");
@@ -1995,7 +2366,10 @@
         window.compartirCatalogoWhatsAppComerciante = function() {
             if (!comercianteSesion) return;
             const urlT = `${window.location.origin}${window.location.pathname}?tienda=${comercianteSesion.slug}`;
-            const msg = `🛍️ *CATÁLOGO EN VIVO — ${comercianteSesion.nombre.toUpperCase()}*\n\nHola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido directo al WhatsApp:\n🔗 ${urlT}`;
+            const msg = `🛍️ *CATÁLOGO EN VIVO — ${comercianteSesion.nombre.toUpperCase()}*
+
+Hola! Te invitamos a ver nuestros productos actualizados y hacer tu pedido directo al WhatsApp:
+🔗 ${urlT}`;
             window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
         };
 
@@ -2050,6 +2424,7 @@
                 document.getElementById("saas-input-nombre").value = "";
                 document.getElementById("saas-input-responsable").value = "";
                 document.getElementById("saas-input-wa").value = "";
+                document.getElementById("saas-input-zona").value = "";
                 document.getElementById("saas-input-user").value = "";
                 document.getElementById("saas-input-pass").value = "";
                 document.getElementById("saas-input-rubro").value = "";
@@ -2076,7 +2451,7 @@
 
         window.autogenerarUsuarioSlug = function() {
             const nom = document.getElementById("saas-input-nombre").value;
-            const slug = nom.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+            const slug = nom.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
             document.getElementById("saas-input-user").value = slug;
             document.getElementById("saas-link-generado").value = `${window.location.origin}${window.location.pathname}?tienda=${slug}`;
         };
@@ -2113,13 +2488,13 @@
             const nombre = document.getElementById("saas-input-nombre").value.trim();
             const responsable = document.getElementById("saas-input-responsable").value.trim();
             const wa = document.getElementById("saas-input-wa").value.trim();
-            const zona = document.getElementById("saas-input-zona").value;
-            const rubro = document.getElementById("saas-input-rubro").value.trim() || "Comercio";
+            const zona = capitalizarTexto(document.getElementById("saas-input-zona").value);
+            const rubro = capitalizarTexto(document.getElementById("saas-input-rubro").value) || "Comercio";
             const user = document.getElementById("saas-input-user").value.trim().toLowerCase();
             const pass = document.getElementById("saas-input-pass").value.trim();
             const dias = window.diasSuscripcionSeleccionados || 180;
 
-            if (!nombre || !user || !pass || !wa) return alert("Complete los campos obligatorios.");
+            if (!nombre || !user || !pass || !wa || !zona) return alert("Complete los campos obligatorios (Nombre, Usuario, Clave, WhatsApp y Zona).");
 
             if (idEdit) {
                 const idx = tiendasEnSistema.findIndex(t => t.slug === idEdit);
@@ -2158,9 +2533,24 @@
             const link = document.getElementById("saas-link-generado").value;
             let text = "";
             if (tipo === 'activacion') {
-                text = `¡Hola, *${nom}*! 🎉\n\nTu catálogo oficial en *TCL TuZona Comercial* ya está activo.\n\n🔗 *Enlace de tu vitrina:* ${link}\n👤 *Usuario:* \`${user}\`\n🔑 *Contraseña:* \`${pass}\`\n\n💡 Para gestionar productos, fijar tus tasas de cambio y cambiar tu foto de portada, entra a tu enlace, presiona el candado superior e ingresa tus credenciales.\n\n¡Mucho éxito! 🚀`;
+                text = `¡Hola, *${nom}*! 🎉
+
+Tu catálogo oficial en *TCL TuZona Comercial* ya está activo.
+
+🔗 *Enlace de tu vitrina:* ${link}
+👤 *Usuario:* \`${user}\`
+🔑 *Contraseña:* \`${pass}\`
+
+💡 Para gestionar productos, fijar tus tasas de cambio y cambiar tu foto de portada, entra a tu enlace, presiona el candado superior e ingresa tus credenciales.
+
+¡Mucho éxito! 🚀`;
             } else {
-                text = `🔄 *RENOVACIÓN — TCL TUZONA COMERCIAL*\n\nEstimado *${nom}*, tu suscripción ha sido renovada con éxito.\n🔗 *Tu Vitrina:* ${link}\n\n*Respaldo TUCOCEL C.A. & PublionlineMK*`;
+                text = `🔄 *RENOVACIÓN — TCL TUZONA COMERCIAL*
+
+Estimado *${nom}*, tu suscripción ha sido renovada con éxito.
+🔗 *Tu Vitrina:* ${link}
+
+*Respaldo TUCOCEL C.A. & PublionlineMK*`;
             }
             abrirWhatsAppDirecto(wa, text);
         };
@@ -2232,7 +2622,19 @@
         window.cerrarModalZonaPropuesta = function() { document.getElementById("modal-zona-propuesta").classList.add("hidden"); };
         window.accionPropuestaWhatsApp = function() {
             const url = `${window.location.origin}${window.location.pathname}`;
-            const msg = `🚀 *PROPUESTA COMERCIAL — TCL TUZONA COMERCIAL*\n\n¡Moderniza tu negocio con tu propio Catálogo Digital y presencia en la Guía Comercial regional!\n\n📦 *Incluye:*\n• Vitrina Web 24/7 con fotos y precios\n• Pedidos directos a tu WhatsApp con carrito\n• Presencia en el directorio por municipio\n\n👉 Consulta la plataforma aquí:\n🔗 ${url}\n\n🏛️ *Respaldo TUCOCEL C.A. & @publionlinemk*`;
+            const msg = `🚀 *PROPUESTA COMERCIAL — TCL TUZONA COMERCIAL*
+
+¡Moderniza tu negocio con tu propio Catálogo Digital y presencia en la Guía Comercial regional!
+
+📦 *Incluye:*
+• Vitrina Web 24/7 con fotos y precios
+• Pedidos directos a tu WhatsApp con carrito
+• Presencia en el directorio por municipio
+
+👉 Consulta la plataforma aquí:
+🔗 ${url}
+
+🏛️ *Respaldo TUCOCEL C.A. & @publionlinemk*`;
             abrirWhatsAppDirecto("", msg);
         };
 
@@ -2284,17 +2686,20 @@
             if (el) el.type = el.type === "password" ? "text" : "password";
         };
 
-        // AUTO-REGISTRO 7 DÍAS
+        // AUTO-REGISTRO 7 DÍAS CON ZONA Y RUBRO DINÁMICOS
         window.abrirModalRegistroComercio = function() { document.getElementById("modal-registro-comercio").classList.remove("hidden"); };
         window.procesarAutoRegistroTienda = async function() {
             const nom = document.getElementById("reg-in-nombre").value.trim();
             const wa = document.getElementById("reg-in-wa").value.trim();
-            const zona = document.getElementById("reg-in-zona").value;
-            const rubro = document.getElementById("reg-in-rubro").value.trim();
+            const zona = capitalizarTexto(document.getElementById("reg-in-zona").value);
+            const rubro = capitalizarTexto(document.getElementById("reg-in-rubro").value) || "Comercio";
             const pass = document.getElementById("reg-in-pass").value.trim();
-            if (!nom || !wa || !pass) return;
+            if (!nom || !wa || !pass || !zona) {
+                alert("⚠️ Por favor completa los campos requeridos (Nombre, WhatsApp, Zona y Clave).");
+                return;
+            }
 
-            const slug = nom.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
+            const slug = nom.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-");
             const nueva = { slug, user: slug, nombre: nom, rubro, zona, direccion: `${zona} (Comercio Local)`, telefono: wa, pass, dias: 7, estatus: "ACTIVO", fechaCreacion: Date.now(), desc: `Productos en ${zona}. Pedidos a WhatsApp.`, tasas: { cop: 3600, bs: 45.0 } };
 
             tiendasEnSistema.push(nueva);
@@ -2303,7 +2708,10 @@
             document.getElementById("modal-registro-comercio").classList.add("hidden");
             comercianteSesion = nueva;
             abrirPanelComerciante(nueva);
-            alert(`🎉 ¡FELICITACIONES!\n\nTu tienda [${nom}] ha sido activada con 7 días gratis.\nPuedes fijar tus tasas de cambio y subir productos ahora.`);
+            alert(`🎉 ¡FELICITACIONES!
+
+Tu tienda [${nom}] ha sido activada con 7 días gratis en la zona [${zona}].
+Puedes fijar tus tasas de cambio y subir productos ahora.`);
         };
 
         // LOGIN
@@ -2376,4 +2784,3 @@
     </script>
 </body>
 </html>
-
