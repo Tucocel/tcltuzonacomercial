@@ -331,6 +331,15 @@
                     Catálogo oficial en vivo. Agrega tus productos al carrito y envíanos tu pedido con un solo toque directo a WhatsApp.
                 </p>
 
+                <!-- MÓDULO VISUAL DE HORARIOS EN VITRINA (SE MUESTRA SOLO SI ESTÁ CONFIGURADO) -->
+                <div id="tienda-box-horarios-vitrina" class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2 hidden">
+                    <div class="flex items-center justify-between text-slate-800 text-xs font-black uppercase">
+                        <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-blue-600"></i> Horario de Atención</span>
+                        <span id="tienda-dias-badge-vitrina" class="bg-blue-100 text-blue-700 text-[9.5px] font-mono px-2 py-0.5 rounded-md font-bold">Lun - Sáb</span>
+                    </div>
+                    <div id="tienda-turnos-tags" class="flex flex-wrap gap-1.5 text-[10px]"></div>
+                </div>
+
                 <button id="btn-tienda-wa-directo" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs py-2.5 rounded-xl uppercase tracking-wider shadow flex items-center justify-center gap-2 active:scale-95 transition-all btn-interactive">
                     <i class="fa-brands fa-whatsapp text-base"></i>
                     <span>Contactar por WhatsApp</span>
@@ -444,7 +453,7 @@
                         <i class="fa-solid fa-cart-plus text-blue-600"></i> <span>Agregar al Carrito</span>
                     </button>
 
-                    <button onclick="window.mostrarFormularioCompraDirecta()" class="w-full btn-brand py-3 rounded-xl uppercase text-xs font-black tracking-wider flex items-center justify-center gap-2 shadow-md btn-interactive">
+                    <button id="det-btn-comprar-ahora" onclick="window.mostrarFormularioCompraDirecta()" class="w-full btn-brand py-3 rounded-xl uppercase text-xs font-black tracking-wider flex items-center justify-center gap-2 shadow-md btn-interactive">
                         <i class="fa-solid fa-bolt text-amber-300"></i> <span>Comprar Este Producto Ahora</span>
                     </button>
 
@@ -612,9 +621,9 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
                     <div>
-                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Moneda en que cargas el precio *</label>
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Moneda en que cargas *</label>
                         <select id="prod-inp-moneda" class="input-clean text-blue-700 font-bold text-xs">
                             <option value="USD">💵 Dólares ($ USD)</option>
                             <option value="COP">🇨🇴 Pesos (COP)</option>
@@ -626,10 +635,15 @@
                         <input type="number" step="any" id="prod-inp-precio" placeholder="Ej: 5.00" class="input-clean font-mono font-bold text-emerald-600 text-xs">
                     </div>
                     <div>
-                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Disponibilidad</label>
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Cantidad (Stock) *</label>
+                        <input type="number" id="prod-inp-stock" min="0" value="10" placeholder="Ej: 15" class="input-clean font-mono font-bold text-blue-700 text-xs">
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Estado / Disponibilidad</label>
                         <select id="prod-inp-disponible" class="input-clean font-bold text-xs">
-                            <option value="true">✅ Disponible / En Stock</option>
-                            <option value="false">⏸️ Pausado / Agotado</option>
+                            <option value="DISPONIBLE">✅ Disponible (En Stock)</option>
+                            <option value="PAUSADO">⏸️ No Disponible (Pausado)</option>
+                            <option value="AGOTADO">🚫 Agotado (Sin Existencia)</option>
                         </select>
                     </div>
                 </div>
@@ -779,6 +793,70 @@
                 <div>
                     <label class="text-[9.5px] text-blue-700 uppercase font-black block mb-1">🔗 Enlace Externo Opcional (Instagram, TikTok o Web)</label>
                     <input type="url" id="perfil-inp-link" class="input-clean text-xs font-mono" placeholder="https://instagram.com/tutienda">
+                </div>
+
+                <!-- SECCIÓN DE DÍAS Y HORARIOS LABORABLES (OPCIONAL / PERSONALIZABLE) -->
+                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-200/80 pb-1.5">
+                        <span class="text-[10px] font-black uppercase text-slate-800 tracking-wider flex items-center gap-1.5">
+                            <i class="fa-regular fa-clock text-blue-600"></i> Días & Horarios de Atención (Opcional)
+                        </span>
+                        <span class="text-[9px] text-slate-400 font-bold uppercase">Personalizable</span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label class="text-[9.5px] text-slate-600 uppercase font-bold block mb-0.5">
+                            📅 Días Laborables (De Lunes a Domingo):
+                        </label>
+                        <div class="flex flex-wrap gap-1.5 pt-0.5" id="perfil-dias-semana-box">
+                            <label class="inline-flex items-center gap-1 bg-white border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700 cursor-pointer hover:border-blue-400 select-none">
+                                <input type="checkbox" id="chk-dia-lun" value="Lun" class="accent-blue-600" checked> Lun
+                            </label>
+                            <label class="inline-flex items-center gap-1 bg-white border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700 cursor-pointer hover:border-blue-400 select-none">
+                                <input type="checkbox" id="chk-dia-mar" value="Mar" class="accent-blue-600" checked> Mar
+                            </label>
+                            <label class="inline-flex items-center gap-1 bg-white border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700 cursor-pointer hover:border-blue-400 select-none">
+                                <input type="checkbox" id="chk-dia-mie" value="Mié" class="accent-blue-600" checked> Mié
+                            </label>
+                            <label class="inline-flex items-center gap-1 bg-white border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700 cursor-pointer hover:border-blue-400 select-none">
+                                <input type="checkbox" id="chk-dia-jue" value="Jue" class="accent-blue-600" checked> Jue
+                            </label>
+                            <label class="inline-flex items-center gap-1 bg-white border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700 cursor-pointer hover:border-blue-400 select-none">
+                                <input type="checkbox" id="chk-dia-vie" value="Vie" class="accent-blue-600" checked> Vie
+                            </label>
+                            <label class="inline-flex items-center gap-1 bg-white border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700 cursor-pointer hover:border-blue-400 select-none">
+                                <input type="checkbox" id="chk-dia-sab" value="Sáb" class="accent-blue-600" checked> Sáb
+                            </label>
+                            <label class="inline-flex items-center gap-1 bg-white border border-slate-200 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700 cursor-pointer hover:border-blue-400 select-none">
+                                <input type="checkbox" id="chk-dia-dom" value="Dom" class="accent-blue-600"> Dom
+                            </label>
+                        </div>
+                        <input type="text" id="perfil-inp-dias-txt" placeholder="O escribe días personalizado (Ej: Lunes a Sábado, Fines de semana...)" class="input-clean text-xs mt-1.5">
+                    </div>
+
+                    <!-- TURNOS / HORARIOS: MAÑANA, TARDE, NOCHE -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+                        <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1">
+                            <span class="text-[9px] font-black uppercase text-amber-600 flex items-center gap-1">
+                                ☀️ Turno Mañana
+                            </span>
+                            <input type="text" id="perfil-inp-horario-manana" placeholder="Ej: 7:30 AM - 12:00 PM" class="input-clean text-[11px] py-1">
+                        </div>
+
+                        <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1">
+                            <span class="text-[9px] font-black uppercase text-blue-600 flex items-center gap-1">
+                                ⛅ Turno Tarde
+                            </span>
+                            <input type="text" id="perfil-inp-horario-tarde" placeholder="Ej: 2:00 PM - 6:00 PM" class="input-clean text-[11px] py-1">
+                        </div>
+
+                        <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1">
+                            <span class="text-[9px] font-black uppercase text-indigo-700 flex items-center gap-1">
+                                🌙 Turno Noche / Corrido
+                            </span>
+                            <input type="text" id="perfil-inp-horario-noche" placeholder="Ej: 6:00 PM - 11:30 PM" class="input-clean text-[11px] py-1">
+                        </div>
+                    </div>
                 </div>
 
                 <div>
@@ -982,6 +1060,35 @@
                                 <span class="bg-white text-slate-800 px-2 py-0.5 rounded-lg border border-purple-200">📍 Táriba</span>
                                 <span class="bg-white text-slate-800 px-2 py-0.5 rounded-lg border border-purple-200">📍 San Cristóbal</span>
                                 <span class="bg-white text-slate-800 px-2 py-0.5 rounded-lg border border-purple-200">📍 Capacho</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pilar 5: Días y Horarios Laborables Flexibles -->
+                <div class="card-store overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between sm:col-span-2">
+                    <div class="relative w-full h-44 bg-slate-100 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1508963493744-76fce69379c0?w=800&auto=format&fit=crop&q=80" alt="Horarios Laborables" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/20 to-transparent"></div>
+                        <span class="absolute top-2.5 left-2.5 bg-rose-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+                            Beneficio 5
+                        </span>
+                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">
+                            🕒 Días & Horarios de Atención Dinámicos (Mañana, Tarde y Noche)
+                        </span>
+                    </div>
+                    <div class="p-4 space-y-3 flex-grow flex flex-col justify-between">
+                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
+                            Comunica con total transparencia tus días laborables (de lunes a domingo) y tus turnos de servicio. Ideal para panaderías, restaurantes, farmacias o tiendas con turnos matutinos, vespertinos o nocturnos para delivery.
+                        </p>
+                        <!-- Mini Ejemplo Visual -->
+                        <div class="bg-slate-50 p-2.5 rounded-2xl border border-slate-200 space-y-1.5">
+                            <span class="text-[9px] font-black uppercase text-slate-700 block">⏰ Ejemplo Visual en tu Vitrina:</span>
+                            <div class="flex flex-wrap items-center gap-1.5 text-[10px] font-mono">
+                                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">📅 Lun - Sáb</span>
+                                <span class="bg-amber-100 text-amber-900 px-2 py-0.5 rounded-md font-bold">☀️ 7:30 AM - 12:00 PM</span>
+                                <span class="bg-blue-100 text-blue-900 px-2 py-0.5 rounded-md font-bold">⛅ 2:00 PM - 6:00 PM</span>
+                                <span class="bg-indigo-100 text-indigo-900 px-2 py-0.5 rounded-md font-bold">🌙 6:00 PM - 11:30 PM</span>
                             </div>
                         </div>
                     </div>
@@ -1760,10 +1867,21 @@
                 </button>
             </div>
 
-            <!-- Vista previa del asunto/mensaje -->
-            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 text-left space-y-1">
-                <span class="text-[9px] font-black uppercase text-slate-400 block">Detalle de la solicitud:</span>
-                <p id="despacho-preview-txt" class="text-[10px] text-slate-700 font-mono line-clamp-3 leading-snug"></p>
+            <!-- Casilla de WhatsApp Opcional para enviar a cliente específico -->
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 text-left space-y-2">
+                <div>
+                    <label class="text-[9.5px] font-black uppercase text-slate-600 block mb-1">
+                        📱 WhatsApp del Cliente (Opcional):
+                    </label>
+                    <input type="tel" id="despacho-in-tlf" placeholder="Ej: 04141234567 o 584141234567" class="input-clean text-xs font-mono">
+                    <span class="text-[8.5px] text-slate-400 font-medium block mt-1 leading-tight">
+                        💡 Si lo dejas vacío, WhatsApp se abrirá permitiéndote <strong>elegir el chat, cliente o grupo</strong> al que deseas enviarlo.
+                    </span>
+                </div>
+                <div class="border-t border-slate-200 pt-1.5">
+                    <span class="text-[9px] font-black uppercase text-slate-400 block">Vista previa del mensaje:</span>
+                    <p id="despacho-preview-txt" class="text-[10px] text-slate-700 font-mono line-clamp-2 leading-snug mt-0.5"></p>
+                </div>
             </div>
 
             <!-- OPCIONES DIRECTAS: WHATSAPP O CORREO -->
@@ -1881,7 +1999,14 @@
                 logo: "🥖",
                 link: "",
                 desc: "Pan caliente campesino, hojaldres recién horneados, tortas para eventos y café express.",
-                tasas: { cop: 3600, bs: 45.0 }
+                tasas: { cop: 3600, bs: 45.0 },
+                horarios: {
+                    dias: "Lunes a Domingo",
+                    diasArr: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
+                    manana: "6:30 AM - 12:00 PM",
+                    tarde: "2:00 PM - 6:00 PM",
+                    noche: "6:00 PM - 9:30 PM"
+                }
             },
             { 
                 slug: "tcl_multirepuestos", 
@@ -2490,6 +2615,28 @@
                 boxLink.classList.add("hidden");
             }
 
+            // Renderizar horarios en vitrina
+            const boxHorarios = document.getElementById("tienda-box-horarios-vitrina");
+            const badgeDias = document.getElementById("tienda-dias-badge-vitrina");
+            const tagsTurnos = document.getElementById("tienda-turnos-tags");
+
+            if (boxHorarios && badgeDias && tagsTurnos) {
+                const h = tienda.horarios;
+                const tieneHorario = h && (h.dias || h.manana || h.tarde || h.noche);
+                if (tieneHorario) {
+                    boxHorarios.classList.remove("hidden");
+                    badgeDias.innerText = h.dias ? `📅 ${h.dias}` : "Horario Habitual";
+                    
+                    let tagsHTML = "";
+                    if (h.manana) tagsHTML += `<span class="bg-amber-100/80 text-amber-900 border border-amber-200 px-2 py-0.5 rounded-lg font-bold">☀️ Mañana: ${h.manana}</span>`;
+                    if (h.tarde) tagsHTML += `<span class="bg-blue-100/80 text-blue-900 border border-blue-200 px-2 py-0.5 rounded-lg font-bold">⛅ Tarde: ${h.tarde}</span>`;
+                    if (h.noche) tagsHTML += `<span class="bg-indigo-100/80 text-indigo-900 border border-indigo-200 px-2 py-0.5 rounded-lg font-bold">🌙 Noche: ${h.noche}</span>`;
+                    tagsTurnos.innerHTML = tagsHTML;
+                } else {
+                    boxHorarios.classList.add("hidden");
+                }
+            }
+
             document.getElementById("btn-tienda-wa-directo").onclick = () => window.abrirWhatsAppTienda(tienda.telefono, tienda.nombre);
 
             // CONTROL DE BLOQUEO POR SUSPENSIÓN O VENCIMIENTO (ESPEJO BORROSO)
@@ -2564,11 +2711,35 @@
                 return;
             }
 
-            let html = prods.map(p => `
-                <div onclick="window.abrirModalDetalleProducto('${p.id}')" class="card-product p-3.5 flex flex-col justify-between space-y-2.5 cursor-pointer active:scale-[0.99] transition-transform">
+            let html = prods.map(p => {
+                const stockVal = p.stock !== undefined ? p.stock : 10;
+                const esAgotado = (p.estado === 'AGOTADO' || stockVal <= 0);
+                const esPausado = (p.estado === 'PAUSADO' || (!p.disponible && !esAgotado));
+                
+                let badgeHTML = "";
+                let botonHTML = "";
+
+                if (esAgotado) {
+                    badgeHTML = `<span class="bg-rose-100 text-rose-700 text-[8.5px] font-black px-2 py-0.5 rounded-md uppercase border border-rose-200">🚫 Agotado</span>`;
+                    botonHTML = `<button disabled class="w-full bg-slate-200 text-slate-400 text-[10px] py-2 rounded-xl uppercase font-black tracking-wider cursor-not-allowed">🚫 Sin Existencia</button>`;
+                } else if (esPausado) {
+                    badgeHTML = `<span class="bg-amber-100 text-amber-800 text-[8.5px] font-black px-2 py-0.5 rounded-md uppercase border border-amber-200">⏸️ No disponible</span>`;
+                    botonHTML = `<button disabled class="w-full bg-slate-200 text-slate-400 text-[10px] py-2 rounded-xl uppercase font-black tracking-wider cursor-not-allowed">⏸️ No Disponible</button>`;
+                } else {
+                    badgeHTML = `<span class="bg-emerald-50 text-emerald-700 text-[8.5px] font-black px-2 py-0.5 rounded-md uppercase border border-emerald-200">🟢 En Stock (${stockVal})</span>`;
+                    botonHTML = `<button onclick="window.agregarAlCarrito('${p.id}')" class="w-full btn-brand text-[10px] py-2 rounded-xl uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-all btn-interactive">
+                        <i class="fa-solid fa-plus text-xs"></i> Agregar Pedido
+                    </button>`;
+                }
+
+                return `
+                <div onclick="window.abrirModalDetalleProducto('${p.id}')" class="card-product p-3.5 flex flex-col justify-between space-y-2.5 cursor-pointer active:scale-[0.99] transition-transform ${esAgotado ? 'opacity-85' : ''}">
                     <div class="space-y-2">
-                        <div class="w-full h-36 bg-slate-100 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-100">
+                        <div class="relative w-full h-36 bg-slate-100 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-100">
                             ${p.foto ? `<img src="${p.foto}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-box-open text-slate-300 text-2xl"></i>`}
+                            <div class="absolute top-2 left-2">
+                                ${badgeHTML}
+                            </div>
                         </div>
                         <div>
                             <span class="text-[9.5px] text-blue-600 uppercase font-black tracking-wider block">${p.categoria || 'General'}</span>
@@ -2578,11 +2749,10 @@
                     </div>
                     <div class="space-y-2 pt-1.5 border-t border-slate-100" onclick="event.stopPropagation()">
                         <strong class="text-sm font-black font-mono text-slate-900 block">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</strong>
-                        <button onclick="window.agregarAlCarrito('${p.id}')" class="w-full btn-brand text-[10px] py-2 rounded-xl uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-all btn-interactive">
-                            <i class="fa-solid fa-plus text-xs"></i> Agregar Pedido
-                        </button>
+                        ${botonHTML}
                     </div>
-                </div>`).join("");
+                </div>`;
+            }).join("");
 
             // RELLENO ESTÉTICO AUTOMÁTICO EN CASO IMPAR
             if (prods.length % 2 !== 0) {
@@ -2629,13 +2799,57 @@
             document.getElementById("det-prod-nombre").innerText = prod.nombre;
             document.getElementById("det-prod-desc").innerText = prod.desc || 'Producto disponible en catálogo oficial.';
             
+            const stockVal = prod.stock !== undefined ? prod.stock : 10;
+            const esAgotado = (prod.estado === 'AGOTADO' || stockVal <= 0);
+            const esPausado = (prod.estado === 'PAUSADO' || (!prod.disponible && !esAgotado));
+
             const badgeDisp = document.getElementById("det-prod-badge-disp");
-            if (prod.disponible) {
-                badgeDisp.className = "absolute bottom-3 left-3 bg-emerald-500 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
-                badgeDisp.innerText = "● En Stock";
+            const btnAdd = document.getElementById("det-btn-add-carrito");
+            const btnComprar = document.getElementById("det-btn-comprar-ahora");
+
+            if (esAgotado) {
+                badgeDisp.className = "absolute bottom-3 left-3 bg-rose-600 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
+                badgeDisp.innerText = "🚫 Agotado / Sin Existencia (0 disp.)";
+                if (btnAdd) {
+                    btnAdd.disabled = true;
+                    btnAdd.className = "w-full bg-slate-100 text-slate-400 font-bold text-xs py-2.5 rounded-xl uppercase tracking-wider cursor-not-allowed";
+                    btnAdd.innerHTML = `<i class="fa-solid fa-ban text-slate-400"></i> <span>Agotado</span>`;
+                }
+                if (btnComprar) {
+                    btnComprar.disabled = true;
+                    btnComprar.className = "w-full bg-slate-200 text-slate-400 font-bold py-3 rounded-xl uppercase text-xs cursor-not-allowed";
+                    btnComprar.innerHTML = `<span>Producto Sin Existencia</span>`;
+                }
+            } else if (esPausado) {
+                badgeDisp.className = "absolute bottom-3 left-3 bg-amber-600 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
+                badgeDisp.innerText = `⏸️ No disponible / Pausado (${stockVal} disp.)`;
+                if (btnAdd) {
+                    btnAdd.disabled = true;
+                    btnAdd.className = "w-full bg-slate-100 text-slate-400 font-bold text-xs py-2.5 rounded-xl uppercase tracking-wider cursor-not-allowed";
+                    btnAdd.innerHTML = `<i class="fa-solid fa-ban text-slate-400"></i> <span>No Disponible</span>`;
+                }
+                if (btnComprar) {
+                    btnComprar.disabled = true;
+                    btnComprar.className = "w-full bg-slate-200 text-slate-400 font-bold py-3 rounded-xl uppercase text-xs cursor-not-allowed";
+                    btnComprar.innerHTML = `<span>Temporalmente No Disponible</span>`;
+                }
             } else {
-                badgeDisp.className = "absolute bottom-3 left-3 bg-rose-500 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
-                badgeDisp.innerText = "○ Pausado / Agotado";
+                badgeDisp.className = "absolute bottom-3 left-3 bg-emerald-500 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
+                badgeDisp.innerText = `● En Stock (${stockVal} disponibles)`;
+                if (btnAdd) {
+                    btnAdd.disabled = false;
+                    btnAdd.className = "w-full bg-slate-100 hover:bg-slate-200 text-slate-900 font-black text-xs py-2.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-2 transition-all btn-interactive";
+                    btnAdd.innerHTML = `<i class="fa-solid fa-cart-plus text-blue-600"></i> <span>Agregar al Carrito</span>`;
+                    btnAdd.onclick = function() {
+                        window.agregarAlCarrito(prod.id);
+                        alert("🛒 ¡Producto agregado a tu carrito!");
+                    };
+                }
+                if (btnComprar) {
+                    btnComprar.disabled = false;
+                    btnComprar.className = "w-full btn-brand py-3 rounded-xl uppercase text-xs font-black tracking-wider flex items-center justify-center gap-2 shadow-md btn-interactive";
+                    btnComprar.innerHTML = `<i class="fa-solid fa-bolt text-amber-300"></i> <span>Comprar Este Producto Ahora</span>`;
+                }
             }
 
             const pUSD = prod.precio;
@@ -2644,11 +2858,6 @@
 
             document.getElementById("det-prod-precio-principal").innerText = convertirMonto(pUSD, monedaTiendaActiva, tiendaActivaSlug);
             document.getElementById("det-prod-precio-ref").innerText = `Ref: ${pCOP} COP | ${pBs} Bs.`;
-
-            document.getElementById("det-btn-add-carrito").onclick = function() {
-                window.agregarAlCarrito(prod.id);
-                alert("🛒 ¡Producto agregado a tu carrito!");
-            };
 
             document.getElementById("det-box-compra-directa").classList.add("hidden");
             document.getElementById("modal-detalle-producto").classList.remove("hidden");
@@ -2660,6 +2869,12 @@
         };
 
         window.mostrarFormularioCompraDirecta = function() {
+            if (!productoSeleccionadoModal) return;
+            const stockVal = productoSeleccionadoModal.stock !== undefined ? productoSeleccionadoModal.stock : 10;
+            if (productoSeleccionadoModal.estado === 'AGOTADO' || stockVal <= 0 || !productoSeleccionadoModal.disponible) {
+                alert("⚠️ Lo sentimos, este producto se encuentra agotado o temporalmente no disponible.");
+                return;
+            }
             const box = document.getElementById("det-box-compra-directa");
             box.classList.remove("hidden");
             box.scrollIntoView({ behavior: 'smooth' });
@@ -2671,7 +2886,7 @@
             if (!tienda) return;
 
             const saludo = obtenerSaludoPorHora();
-            const msg = `${saludo} Acabo de ver el producto *${productoSeleccionadoModal.nombre}* en su tienda de *TCL TuZona Comercial* y quisiera consultar disponibilidad e información. 🙌`;
+            const msg = `${saludo} Acabo de ver el producto *${productoSeleccionadoModal.nombre}* en su tienda de *TCL TuZona Comercial* y quisiera consultar información y disponibilidad. 🙌`;
             abrirWhatsAppDirecto(tienda.telefono, msg);
         };
 
@@ -2679,6 +2894,12 @@
             if (!productoSeleccionadoModal || !tiendaActivaSlug) return;
             const tienda = tiendasEnSistema.find(t => t.slug === tiendaActivaSlug);
             if (!tienda) return;
+
+            const stockVal = productoSeleccionadoModal.stock !== undefined ? productoSeleccionadoModal.stock : 10;
+            if (productoSeleccionadoModal.estado === 'AGOTADO' || stockVal <= 0 || !productoSeleccionadoModal.disponible) {
+                alert("⚠️ Lo sentimos, este producto se encuentra actualmente agotado.");
+                return;
+            }
 
             const nom = document.getElementById("dir-in-nombre").value.trim().toUpperCase();
             const dir = document.getElementById("dir-in-direccion").value.trim();
@@ -2706,9 +2927,23 @@
             const prods = productosPorTienda[tiendaActivaSlug] || [];
             const prod = prods.find(p => p.id === prodId);
             if (!prod) return;
+
+            const stockVal = prod.stock !== undefined ? prod.stock : 10;
+            if (prod.estado === 'AGOTADO' || stockVal <= 0 || !prod.disponible) {
+                alert("⚠️ Lo sentimos, este producto está agotado y no se puede agregar al pedido.");
+                return;
+            }
+
             const item = carritoCompras.find(it => it.id === prodId);
-            if (item) item.cant += 1;
-            else carritoCompras.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, cant: 1, tiendaSlug: tiendaActivaSlug });
+            if (item) {
+                if (item.cant >= stockVal) {
+                    alert(`⚠️ Solo hay ${stockVal} unidades disponibles en inventario.`);
+                    return;
+                }
+                item.cant += 1;
+            } else {
+                carritoCompras.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, cant: 1, tiendaSlug: tiendaActivaSlug });
+            }
             actualizarBarraCarrito();
         };
 
@@ -2832,12 +3067,15 @@
             window.despacharUniversalmente(telefono, mensaje, 'TCL TuZona Comercial');
         }
 
-        // Modal de selección de respaldo para computadoras de escritorio (WhatsApp o Correo)
+        // Modal de selección de despacho universal (WhatsApp, Correo o Copiar)
         window.abrirModalDespachoUniversal = function(telefono, mensaje, asunto = 'Solicitud Comercial — TCL TuZona') {
-            telefonoDespachoActual = telefono || "584247357549";
+            telefonoDespachoActual = telefono || "";
             mensajeDespachoActual = mensaje || "";
             asuntoDespachoActual = asunto;
             
+            const inTlf = document.getElementById("despacho-in-tlf");
+            if (inTlf) inTlf.value = telefonoDespachoActual;
+
             const preview = document.getElementById("despacho-preview-txt");
             if (preview) preview.innerText = mensajeDespachoActual;
             
@@ -2852,11 +3090,30 @@
         };
 
         window.ejecutarDespachoWhatsAppApp = function() {
-            let tel = String(telefonoDespachoActual || "584247357549").replace(/\D/g, "");
+            const inTlf = document.getElementById("despacho-in-tlf");
+            let tel = inTlf ? inTlf.value.trim() : (telefonoDespachoActual || "");
+            tel = tel.replace(/\D/g, "");
             if (tel.startsWith("04")) tel = "58" + tel.substring(1);
             if (tel.length === 10) tel = "58" + tel;
-            const url = `https://api.whatsapp.com/send?phone=${tel}&text=${encodeURIComponent(mensajeDespachoActual)}`;
-            window.open(url, "_blank");
+
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            const msgEnc = encodeURIComponent(mensajeDespachoActual);
+
+            if (!tel) {
+                // Sin teléfono destino: Abre selector de chats/grupos de WhatsApp sin enviarse a uno mismo
+                if (isAndroid) {
+                    window.location.href = `intent://send?text=${msgEnc}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+                } else {
+                    window.open(`https://api.whatsapp.com/send?text=${msgEnc}`, "_blank");
+                }
+            } else {
+                // Con teléfono de cliente específico
+                if (isAndroid) {
+                    window.location.href = `intent://send?phone=${tel}&text=${msgEnc}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+                } else {
+                    window.open(`https://api.whatsapp.com/send?phone=${tel}&text=${msgEnc}`, "_blank");
+                }
+            }
             window.cerrarModalDespachoUniversal();
         };
 
@@ -3097,6 +3354,25 @@
             const nuevaDesc = document.getElementById("perfil-inp-desc").value.trim();
             const nuevaPortada = document.getElementById("perfil-foto-portada-base64").value;
 
+            // Recoger días seleccionados y horarios
+            const diasArr = [];
+            ['lun', 'mar', 'mie', 'jue', 'vie', 'sab', 'dom'].forEach(d => {
+                const chk = document.getElementById(`chk-dia-${d}`);
+                if (chk && chk.checked) diasArr.push(chk.value);
+            });
+            const diasCustom = document.getElementById("perfil-inp-dias-txt")?.value.trim() || "";
+            const hManana = document.getElementById("perfil-inp-horario-manana")?.value.trim() || "";
+            const hTarde = document.getElementById("perfil-inp-horario-tarde")?.value.trim() || "";
+            const hNoche = document.getElementById("perfil-inp-horario-noche")?.value.trim() || "";
+
+            const horarioData = {
+                dias: diasCustom || (diasArr.length > 0 ? diasArr.join(', ') : ""),
+                diasArr: diasArr,
+                manana: hManana,
+                tarde: hTarde,
+                noche: hNoche
+            };
+
             if (!nuevoNombre || !nuevoWa || !nuevaZona || !nuevoRubro) {
                 alert("⚠️ Por favor completa los campos requeridos (Nombre, WhatsApp, Zona y Ramo).");
                 return;
@@ -3114,6 +3390,7 @@
                 tiendasEnSistema[idx].direccion = nuevaDir;
                 tiendasEnSistema[idx].link = nuevoLink;
                 tiendasEnSistema[idx].desc = nuevaDesc;
+                tiendasEnSistema[idx].horarios = horarioData;
                 if (nuevaPortada) {
                     tiendasEnSistema[idx].portada = nuevaPortada;
                 }
@@ -3156,7 +3433,18 @@
             const categoria = capitalizarTexto(document.getElementById("prod-inp-categoria").value) || "General";
             const moneda = document.getElementById("prod-inp-moneda").value;
             let precio = parseFloat(document.getElementById("prod-inp-precio").value) || 0;
-            const disponible = (document.getElementById("prod-inp-disponible").value === "true");
+            let stock = parseInt(document.getElementById("prod-inp-stock").value);
+            if (isNaN(stock) || stock < 0) stock = 0;
+
+            const estadoSeleccionado = document.getElementById("prod-inp-disponible").value;
+            
+            // Si el stock es 0, automáticamente queda marcado como AGOTADO
+            let estadoFinal = estadoSeleccionado;
+            if (stock === 0 && estadoSeleccionado === "DISPONIBLE") {
+                estadoFinal = "AGOTADO";
+            }
+            const disponible = (estadoFinal === "DISPONIBLE" && stock > 0);
+
             const desc = document.getElementById("prod-inp-desc").value.trim();
             const foto = document.getElementById("prod-foto-base64").value;
 
@@ -3170,9 +3458,33 @@
             if (!productosPorTienda[slug]) productosPorTienda[slug] = [];
             if (editId) {
                 const idx = productosPorTienda[slug].findIndex(p => p.id === editId);
-                if (idx !== -1) productosPorTienda[slug][idx] = { ...productosPorTienda[slug][idx], nombre, categoria, moneda, precio: precioUSD, disponible, desc, foto: foto || productosPorTienda[slug][idx].foto };
+                if (idx !== -1) {
+                    productosPorTienda[slug][idx] = { 
+                        ...productosPorTienda[slug][idx], 
+                        nombre, 
+                        categoria, 
+                        moneda, 
+                        precio: precioUSD, 
+                        stock: stock,
+                        estado: estadoFinal,
+                        disponible: disponible, 
+                        desc, 
+                        foto: foto || productosPorTienda[slug][idx].foto 
+                    };
+                }
             } else {
-                productosPorTienda[slug].push({ id: "p-" + Date.now(), nombre, categoria, moneda, precio: precioUSD, disponible, desc, foto });
+                productosPorTienda[slug].push({ 
+                    id: "p-" + Date.now(), 
+                    nombre, 
+                    categoria, 
+                    moneda, 
+                    precio: precioUSD, 
+                    stock: stock,
+                    estado: estadoFinal,
+                    disponible: disponible, 
+                    desc, 
+                    foto 
+                });
             }
 
             await guardarEnNube();
@@ -3187,9 +3499,13 @@
             document.getElementById("prod-inp-nombre").value = "";
             document.getElementById("prod-inp-categoria").value = "";
             document.getElementById("prod-inp-precio").value = "";
+            document.getElementById("prod-inp-stock").value = "10";
+            document.getElementById("prod-inp-disponible").value = "DISPONIBLE";
             document.getElementById("prod-inp-desc").value = "";
             document.getElementById("box-preview-prod-foto").innerHTML = `<i class="fa-solid fa-image"></i>`;
             document.getElementById("btn-cancelar-edicion-prod").classList.add("hidden");
+            const lblBtn = document.getElementById("lbl-btn-guardar-prod");
+            if (lblBtn) lblBtn.innerText = "Guardar y Publicar Producto";
         };
 
         function renderizarMisProductosComerciante() {
@@ -3202,7 +3518,20 @@
                 cont.innerHTML = `<p class="text-center text-slate-400 py-6 text-xs bg-slate-50 border border-slate-200 rounded-2xl">Aún no has agregado productos.</p>`;
                 return;
             }
-            cont.innerHTML = prods.map(p => `
+            cont.innerHTML = prods.map(p => {
+                const stockVal = p.stock !== undefined ? p.stock : 10;
+                let badgeTxt = `🟢 En Stock (${stockVal} disp.)`;
+                let badgeClass = "text-emerald-600";
+                
+                if (p.estado === 'AGOTADO' || stockVal <= 0) {
+                    badgeTxt = "🚫 Agotado (0 disp.)";
+                    badgeClass = "text-rose-600 font-black";
+                } else if (p.estado === 'PAUSADO' || !p.disponible) {
+                    badgeTxt = `⏸️ No disponible (Pausado)`;
+                    badgeClass = "text-amber-600";
+                }
+
+                return `
                 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex justify-between items-center text-xs">
                     <div class="flex items-center gap-2.5 min-w-0 pr-2">
                         <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center">
@@ -3211,14 +3540,15 @@
                         <div class="min-w-0">
                             <h4 class="text-slate-900 font-black uppercase truncate">${p.nombre}</h4>
                             <span class="text-[10px] text-emerald-600 font-mono font-bold block">${convertirMonto(p.precio, "USD", comercianteSesion.slug)}</span>
-                            <span class="text-[8.5px] ${p.disponible ? 'text-emerald-600' : 'text-rose-500'} font-bold uppercase">${p.disponible ? '● En Stock' : '○ Pausado'}</span>
+                            <span class="text-[9px] ${badgeClass} font-bold uppercase block">${badgeTxt}</span>
                         </div>
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0">
                         <button onclick="window.editarProductoComerciante('${p.id}')" class="bg-blue-600 hover:bg-blue-500 text-white px-2.5 py-1.5 rounded-xl text-xs font-bold btn-interactive"><i class="fa-solid fa-pen"></i></button>
                         <button onclick="window.eliminarProductoComerciante('${p.id}')" class="bg-rose-50 border border-rose-200 text-rose-600 px-2.5 py-1.5 rounded-xl text-xs font-bold btn-interactive"><i class="fa-solid fa-trash-can"></i></button>
                     </div>
-                </div>`).join("");
+                </div>`;
+            }).join("");
         }
 
         window.editarProductoComerciante = function(id) {
@@ -3229,13 +3559,20 @@
             document.getElementById("prod-inp-categoria").value = p.categoria || "";
             document.getElementById("prod-inp-precio").value = p.precio;
             document.getElementById("prod-inp-moneda").value = p.moneda || "USD";
-            document.getElementById("prod-inp-disponible").value = p.disponible ? "true" : "false";
+            document.getElementById("prod-inp-stock").value = (p.stock !== undefined) ? p.stock : 10;
+            
+            let estadoVal = p.estado || (p.disponible ? "DISPONIBLE" : "PAUSADO");
+            if (p.stock === 0) estadoVal = "AGOTADO";
+            document.getElementById("prod-inp-disponible").value = estadoVal;
+
             document.getElementById("prod-inp-desc").value = p.desc || "";
             if (p.foto) {
                 document.getElementById("prod-foto-base64").value = p.foto;
                 document.getElementById("box-preview-prod-foto").innerHTML = `<img src="${p.foto}" class="w-full h-full object-cover">`;
             }
             document.getElementById("btn-cancelar-edicion-prod").classList.remove("hidden");
+            const lblBtn = document.getElementById("lbl-btn-guardar-prod");
+            if (lblBtn) lblBtn.innerText = "Guardar Cambios del Producto";
             window.scrollTo({ top: 0, behavior: "smooth" });
         };
 
@@ -3244,9 +3581,7 @@
             productosPorTienda[comercianteSesion.slug] = (productosPorTienda[comercianteSesion.slug] || []).filter(p => p.id !== id);
             await guardarEnNube();
             renderizarMisProductosComerciante();
-        };
-
-        window.verMiVitrinaPublica = function() { if (comercianteSesion) window.abrirVitrinaTienda(comercianteSesion.slug); };
+        };window.verMiVitrinaPublica = function() { if (comercianteSesion) window.abrirVitrinaTienda(comercianteSesion.slug); };
         window.copiarEnlaceMiTienda = function() {
             navigator.clipboard.writeText(document.getElementById("inp-enlace-mi-tienda").value);
             alert("📋 ¡Enlace copiado al portapapeles!");
@@ -3563,13 +3898,6 @@
 
         window.abrirModalZonaPropuesta = function() { document.getElementById("modal-zona-propuesta").classList.remove("hidden"); };
         window.cerrarModalZonaPropuesta = function() { document.getElementById("modal-zona-propuesta").classList.add("hidden"); };
-        window.accionPropuestaWhatsApp = function() {
-            const urlPropuesta = `${window.location.origin}${window.location.pathname}?propuesta=1`;
-            const msg = `🚀 *PROPUESTA COMERCIAL — TCL TUZONA COMERCIAL*\n\nEstimado comerciante, aquí le presentamos nuestra propuesta oficial de *TCL TuZona Comercial* para digitalizar y modernizar su negocio:\n\n👉 Entre al siguiente link para visualizar la propuesta interactiva y los planes:\n🔗 ${urlPropuesta}\n\n━━━━━━━━━━━━━━━━━━━━━\n📦 *Beneficios de su negocio en TuZona:*\n• Vitrina web 24/7 con fotos y precios\n• Pedidos directos a su WhatsApp con carrito\n• Cero comisiones por venta\n• Multimoneda en Dólares, Pesos y Bolívares\n• Presencia en la guía comercial regional\n\n━━━━━━━━━━━━━━━━━━━━━\n*TCL TuZona Comercial es un proyecto integral de TUCOCEL C.A. y @PublionlineMK, agencia de publicidad de TUCOCEL C.A.*\n📞 Contacto: 0424-7357549`;
-            
-            document.getElementById("modal-zona-propuesta").classList.add("hidden");
-            window.abrirModalDespachoUniversal("", msg);
-        };
 
         window.abrirModalCambioClaveMaster = function() {
             const creds = window.obtenerCredencialesMaster();
@@ -3763,6 +4091,22 @@
             if (prevPortada && tienda.portada) {
                 prevPortada.src = tienda.portada;
             }
+
+            // Cargar días y horarios en el panel
+            const h = tienda.horarios || {};
+            const dArr = h.diasArr || ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+            ['lun', 'mar', 'mie', 'jue', 'vie', 'sab', 'dom'].forEach(d => {
+                const chk = document.getElementById(`chk-dia-${d}`);
+                if (chk) chk.checked = dArr.some(val => val.toLowerCase().startsWith(d.slice(0, 3)));
+            });
+            const inDiasTxt = document.getElementById("perfil-inp-dias-txt");
+            if (inDiasTxt) inDiasTxt.value = h.dias || '';
+            const inHManana = document.getElementById("perfil-inp-horario-manana");
+            if (inHManana) inHManana.value = h.manana || '';
+            const inHTarde = document.getElementById("perfil-inp-horario-tarde");
+            if (inHTarde) inHTarde.value = h.tarde || '';
+            const inHNoche = document.getElementById("perfil-inp-horario-noche");
+            if (inHNoche) inHNoche.value = h.noche || '';
 
             // Cargar tasas fijas del comercio en la pestaña de Tasas
             const tasas = tienda.tasas || { cop: 3600, bs: 45.0 };
