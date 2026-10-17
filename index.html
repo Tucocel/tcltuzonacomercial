@@ -649,8 +649,18 @@
                 </div>
 
                 <div>
-                    <label class="text-[9px] text-slate-500 uppercase font-bold block mb-0.5">Descripción (Opcional)</label>
-                    <textarea id="prod-inp-desc" rows="2" placeholder="Detalles de tamaño, porciones, sabores..." class="input-clean no-scrollbar resize-none text-xs"></textarea>
+                    <div class="flex justify-between items-center mb-0.5">
+                        <label class="text-[9px] text-slate-500 uppercase font-bold">Descripción (Opcional)</label>
+                        <button type="button" onclick="window.abrirModalEditorDescripcionProd()" class="text-blue-600 hover:text-blue-800 text-[10px] font-black flex items-center gap-1 active:scale-95 transition-all">
+                            <i class="fa-solid fa-expand text-[11px]"></i> <span>Escribir en Grande</span>
+                        </button>
+                    </div>
+                    <div onclick="window.abrirModalEditorDescripcionProd()" class="relative cursor-pointer">
+                        <textarea id="prod-inp-desc" rows="2" readonly class="input-clean no-scrollbar text-xs cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors pr-7 leading-relaxed" placeholder="Toca aquí o en 'Escribir en Grande' para redactar detalles..."></textarea>
+                        <span class="absolute right-2.5 top-2.5 text-blue-500 text-xs pointer-events-none">
+                            <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                        </span>
+                    </div>
                 </div>
 
                 <button onclick="window.guardarProductoComerciante()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs py-3 rounded-xl uppercase tracking-wider shadow flex items-center justify-center gap-1.5 btn-interactive">
@@ -860,8 +870,18 @@
                 </div>
 
                 <div>
-                    <label class="text-[9.5px] text-slate-500 uppercase font-bold block mb-1">Descripción o Mensaje de Bienvenida al Cliente</label>
-                    <textarea id="perfil-inp-desc" rows="2" class="input-clean no-scrollbar text-xs" placeholder="Describe qué vendes, horario de atención, delivery, etc."></textarea>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="text-[9.5px] text-slate-500 uppercase font-bold">Descripción o Mensaje de Bienvenida al Cliente</label>
+                        <button type="button" onclick="window.abrirModalEditorDescripcion()" class="text-blue-600 hover:text-blue-800 text-[10.5px] font-black flex items-center gap-1 active:scale-95 transition-all">
+                            <i class="fa-solid fa-expand text-xs"></i> <span>Escribir en Grande</span>
+                        </button>
+                    </div>
+                    <div class="relative cursor-pointer" onclick="window.abrirModalEditorDescripcion()">
+                        <textarea id="perfil-inp-desc" rows="3" readonly class="input-clean no-scrollbar text-xs cursor-pointer bg-slate-50 hover:bg-slate-100/80 transition-colors pr-8 leading-relaxed" placeholder="Toca aquí o en 'Escribir en Grande' para redactar con total espacio y comodidad..."></textarea>
+                        <span class="absolute right-3 top-3 text-blue-500 text-xs pointer-events-none">
+                            <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                        </span>
+                    </div>
                 </div>
 
                 <button onclick="window.guardarPerfilComerciante()" class="w-full btn-brand py-3 text-xs shadow-md flex items-center justify-center gap-2 btn-interactive">
@@ -1917,6 +1937,61 @@
                         <span class="text-[10.5px] uppercase tracking-wide">Copiar Mensaje</span>
                     </div>
                     <span id="badge-copiado-despacho" class="text-[9px] text-emerald-600 font-bold uppercase hidden">¡Copiado!</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+        <!-- MODAL FLOTANTE AMPLIO PARA REDACTAR DESCRIPCIÓN Y MENSAJE DE BIENVENIDA -->
+    <div id="modal-editor-descripcion-flotante" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-[350] p-3 sm:p-5 hidden flex items-center justify-center no-print">
+        <div class="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl border border-slate-200 flex flex-col max-h-[90vh]">
+            <!-- CABECERA -->
+            <div class="bg-slate-900 px-5 py-4 text-white flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-blue-600/30 border border-blue-400/40 text-blue-400 flex items-center justify-center text-base shrink-0">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-xs sm:text-sm uppercase tracking-wide text-white">
+                            Mensaje de Bienvenida & Descripción
+                        </h3>
+                        <span class="text-[9.5px] text-slate-400 font-medium block">
+                            Espacio amplio y cómodo para redactar
+                        </span>
+                    </div>
+                </div>
+                <button type="button" onclick="window.cerrarModalEditorDescripcion(false)" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition-all btn-interactive" title="Cerrar">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- CUERPO DEL EDITOR GRANDE -->
+            <div class="p-4 sm:p-6 space-y-3.5 flex-grow overflow-y-auto no-scrollbar">
+                <div class="space-y-1">
+                    <div class="flex items-center justify-between text-[10px] font-black uppercase text-slate-700 tracking-wider">
+                        <span>¿Qué deseas comunicar a tus clientes?</span>
+                        <span id="lbl-contador-caracteres-desc" class="font-mono text-slate-400 font-bold">0 caracteres</span>
+                    </div>
+                    <textarea id="flotante-textarea-desc" rows="8" oninput="window.actualizarContadorCaracteresDesc()" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-3.5 text-xs sm:text-sm font-medium text-slate-900 focus:bg-white focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all resize-y leading-relaxed placeholder-slate-400" placeholder="Escribe aquí qué vendes, horario de atención, especialidades de la casa, zonas de delivery, o cualquier detalle especial para tus clientes..."></textarea>
+                </div>
+
+                <!-- SUGERENCIA / INSPIRACIÓN -->
+                <div class="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-3 space-y-1 text-slate-700">
+                    <span class="text-[9.5px] font-black uppercase text-blue-800 flex items-center gap-1.5">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i> Ejemplos sugeridos:
+                    </span>
+                    <p class="text-[10px] text-slate-600 leading-relaxed font-medium">
+                        • <em>"Pan caliente campesino y andino, hojaldres recién horneados, tortas para eventos, café express y delivery en toda la zona."</em><br>
+                        • <em>"Especialistas en repuestos originales, lubricantes de alta gama, bujías y atención rápida de lunes a sábado."</em>
+                    </p>
+                </div>
+            </div>
+
+            <!-- PIE CON BOTÓN 'LISTO' -->
+            <div class="p-4 bg-slate-50 border-t border-slate-200 shrink-0">
+                <button type="button" onclick="window.cerrarYAplicarModalDescripcion()" class="w-full btn-brand py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all btn-interactive">
+                    <i class="fa-solid fa-check text-sm"></i>
+                    <span>Listo</span>
                 </button>
             </div>
         </div>
@@ -3581,7 +3656,7 @@
             productosPorTienda[comercianteSesion.slug] = (productosPorTienda[comercianteSesion.slug] || []).filter(p => p.id !== id);
             await guardarEnNube();
             renderizarMisProductosComerciante();
-        };window.verMiVitrinaPublica = function() { if (comercianteSesion) window.abrirVitrinaTienda(comercianteSesion.slug); };
+        };window.verMiVitrinaPublica = function() { const slug = (comercianteSesion && comercianteSesion.slug) || tiendaActivaSlug; if (slug) window.abrirVitrinaTienda(slug); };
         window.copiarEnlaceMiTienda = function() {
             navigator.clipboard.writeText(document.getElementById("inp-enlace-mi-tienda").value);
             alert("📋 ¡Enlace copiado al portapapeles!");
@@ -4052,6 +4127,9 @@
         };
 
         function abrirPanelComerciante(tienda, comoMaster = false) {
+            if (!tienda) return;
+            comercianteSesion = tienda;
+            tiendaActivaSlug = tienda.slug;
             document.getElementById("vista-guia-principal").classList.add("hidden");
             document.getElementById("vista-vitrina-tienda").classList.add("hidden");
             document.getElementById("vista-master-admin").classList.add("hidden");
@@ -4118,6 +4196,68 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
     
+        
+        // FUNCIONES DEL MODAL FLOTANTE AMPLIO PARA REDACTAR DESCRIPCIÓN
+        window.abrirModalEditorDescripcion = function() {
+            const descActual = document.getElementById("perfil-inp-desc")?.value || "";
+            const inFlotante = document.getElementById("flotante-textarea-desc");
+            if (inFlotante) {
+                inFlotante.value = descActual;
+                window.actualizarContadorCaracteresDesc();
+            }
+            const modal = document.getElementById("modal-editor-descripcion-flotante");
+            if (modal) {
+                modal.classList.remove("hidden");
+                setTimeout(() => {
+                    if (inFlotante) inFlotante.focus();
+                }, 100);
+            }
+        };
+
+        window.actualizarContadorCaracteresDesc = function() {
+            const inFlotante = document.getElementById("flotante-textarea-desc");
+            const lbl = document.getElementById("lbl-contador-caracteres-desc");
+            if (inFlotante && lbl) {
+                lbl.innerText = `${inFlotante.value.length} caracteres`;
+            }
+        };
+
+        
+        // Editor flotante para descripción de producto
+        window.abrirModalEditorDescripcionProd = function() {
+            const descActual = document.getElementById("prod-inp-desc")?.value || "";
+            const inFlotante = document.getElementById("flotante-textarea-desc");
+            if (inFlotante) {
+                inFlotante.value = descActual;
+                inFlotante.setAttribute("data-target-input", "prod-inp-desc");
+                window.actualizarContadorCaracteresDesc();
+            }
+            const modal = document.getElementById("modal-editor-descripcion-flotante");
+            if (modal) {
+                modal.classList.remove("hidden");
+                setTimeout(() => { if (inFlotante) inFlotante.focus(); }, 100);
+            }
+        };
+
+window.cerrarYAplicarModalDescripcion = function() {
+            const inFlotante = document.getElementById("flotante-textarea-desc");
+            const targetId = inFlotante?.getAttribute("data-target-input") || "perfil-inp-desc";
+            const inNormal = document.getElementById(targetId);
+            if (inFlotante && inNormal) {
+                inNormal.value = inFlotante.value.trim();
+            }
+            window.cerrarModalEditorDescripcion(true);
+        };
+
+        window.cerrarModalEditorDescripcion = function(aplicado = false) {
+            const modal = document.getElementById("modal-editor-descripcion-flotante");
+            if (modal) modal.classList.add("hidden");
+            const inNormal = document.getElementById("perfil-inp-desc");
+            if (inNormal) {
+                inNormal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        };
+
         // REGISTRO DE SERVICE WORKER PARA PWA (INSTALABLE COMO APP CON ICONO)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
