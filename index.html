@@ -923,46 +923,187 @@
     <!-- ========================================================================= -->
     <!-- VISTA: PROPUESTA COMERCIAL INTERACTIVA (CATÁLOGO DE VENTAS)              -->
     <!-- ========================================================================= -->
+        <!-- ========================================================================= -->
+    <!-- VISTA: PROPUESTA COMERCIAL INTERACTIVA (MAGNETICA & ENGOLOSINADORA)      -->
+    <!-- ========================================================================= -->
     <main id="vista-propuesta-cliente" class="w-full max-w-4xl mx-auto px-3.5 sm:px-5 py-5 space-y-5 flex-grow hidden">
-        <!-- Barra de navegación y retorno -->
+        
+        <!-- Barra de navegación y retorno rápido -->
         <div class="flex justify-between items-center bg-white p-3 rounded-2xl border border-slate-200 shadow-sm">
             <button onclick="window.navegarAInicioGuia()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-black px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all active:scale-95 btn-interactive">
-                <i class="fa-solid fa-arrow-left text-xs"></i> <span>Volver a la Guía Comercial</span>
+                <i class="fa-solid fa-arrow-left text-xs"></i> <span>Volver a la Guía</span>
             </button>
-            <div class="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-xl">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
-                <span>Propuesta Oficial 2026</span>
+            <div class="flex items-center gap-1.5 text-[10.5px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-xl shadow-xs">
+                <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                <span>Propuesta Exclusiva 2026</span>
             </div>
         </div>
 
-        <!-- HERO DE ALTO IMPACTO CORPORATIVO -->
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-[#0a1532] to-slate-950 text-white p-6 sm:p-9 shadow-2xl border border-blue-500/30 text-center space-y-3.5">
-            <div class="absolute -right-14 -top-14 w-56 h-56 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -left-14 -bottom-14 w-56 h-56 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- HERO DE ALTO IMPACTO CORPORATIVO & VISUAL -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-[#091533] to-slate-950 text-white p-6 sm:p-9 shadow-2xl border border-blue-500/40 text-center space-y-4">
+            <div class="absolute -right-14 -top-14 w-60 h-60 bg-blue-500/25 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-14 -bottom-14 w-60 h-60 bg-indigo-500/25 rounded-full blur-3xl pointer-events-none"></div>
 
             <div class="relative z-10 max-w-2xl mx-auto space-y-3">
-                <div class="inline-flex items-center gap-1.5 bg-blue-500/20 border border-blue-400/30 px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-blue-300">
-                    <i class="fa-solid fa-rocket text-amber-400"></i>
-                    <span>Solución Digital Integral Para Comercios</span>
+                <div class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 border border-blue-400/40 px-4 py-1.5 rounded-full text-[10.5px] font-black uppercase tracking-widest text-blue-300 shadow-inner">
+                    <i class="fa-solid fa-rocket text-amber-400 text-xs"></i>
+                    <span>La Nueva Era del Comercio Tachirense</span>
                 </div>
                 
-                <h1 class="text-xl sm:text-3xl font-black tracking-tight uppercase leading-snug">
-                    Moderniza tu Negocio y <span class="text-blue-400">Multiplica tus Ventas</span> en el Táchira
+                <h1 class="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight uppercase leading-snug">
+                    ¡Haz que tu negocio <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-300">EVOLUCIONE</span> y multiplica tus ventas!
                 </h1>
                 
-                <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed max-w-xl mx-auto">
-                    Tu propia vitrina digital autónoma 24/7. Exhibe tu inventario con fotos y precios, recibe pedidos ordenados directamente en tu WhatsApp y quédate con el <strong>100% de tus ganancias sin pagar comisiones por venta</strong>.
+                <p class="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed max-w-xl mx-auto">
+                    Tu propia vitrina digital autónoma <strong>abierta 24 horas al día, los 7 días de la semana</strong>. Tus clientes ven tus productos, fotos y precios en vivo sin descargar aplicaciones pesadas, arman su pedido y te lo envían listo a tu WhatsApp. ¡Quédate con el <strong>100% de tus ganancias sin pagar comisiones</strong>!
                 </p>
 
-                <div class="pt-2 flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold text-blue-200">
-                    <span class="bg-white/10 px-3 py-1 rounded-xl border border-white/10">✨ Cero Comisiones</span>
-                    <span class="bg-white/10 px-3 py-1 rounded-xl border border-white/10">📱 Sin Descargar Apps</span>
-                    <span class="bg-white/10 px-3 py-1 rounded-xl border border-white/10">💱 Multimoneda USD / COP / Bs</span>
+                <div class="pt-2 flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold text-blue-100">
+                    <span class="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15 backdrop-blur-md flex items-center gap-1.5">
+                        <i class="fa-solid fa-bolt text-amber-400"></i> Abre en 1 Segundo
+                    </span>
+                    <span class="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15 backdrop-blur-md flex items-center gap-1.5">
+                        <i class="fa-solid fa-ban text-rose-400"></i> Cero PDFs Pesados
+                    </span>
+                    <span class="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15 backdrop-blur-md flex items-center gap-1.5">
+                        <i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i> 100% Ganancia para ti
+                    </span>
+                    <span class="bg-white/10 px-3 py-1.5 rounded-xl border border-white/15 backdrop-blur-md flex items-center gap-1.5">
+                        <i class="fa-solid fa-coins text-sky-400"></i> Dólares, Pesos y Bs
+                    </span>
                 </div>
             </div>
         </div>
 
-        <!-- 4 PILARES DEL SERVICIO (CATÁLOGO VISUAL INTERACTIVO CON FOTOS Y EJEMPLOS REALES) -->
+        <!-- CÁPSULA COMPARATIVA DE ALTO IMPACTO: EL DOLOR VS LA SOLUCIÓN -->
+        <div class="bg-gradient-to-br from-amber-50 via-white to-blue-50 rounded-3xl p-5 sm:p-6 border border-amber-200 shadow-sm space-y-3.5">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-rose-500 to-amber-500 text-white flex items-center justify-center text-xl shrink-0 shadow-md">
+                    <i class="fa-solid fa-file-circle-xmark"></i>
+                </div>
+                <div>
+                    <span class="text-[9.5px] font-black uppercase tracking-wider text-rose-600 block">¿Te identificas con esto?</span>
+                    <h3 class="text-xs sm:text-base font-black text-slate-900 uppercase">
+                        El 80% de tus clientes NO descarga PDFs ni lee textos eternos
+                    </h3>
+                </div>
+            </div>
+            
+            <p class="text-xs text-slate-600 leading-relaxed font-medium">
+                Enviar catálogos en archivos PDF de 10 MB satura la memoria del celular de tus compradores, se desactualiza al primer cambio de precio y hace que pierdas clientes potenciales. Con <strong>TCL TuZona Comercial</strong>, tu negocio da el salto al comercio web moderno.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs">
+                <!-- Lado Negativo Tradicional -->
+                <div class="bg-white p-3.5 rounded-2xl border-2 border-rose-200/80 shadow-xs space-y-2">
+                    <div class="flex items-center gap-2 text-rose-700 font-black text-xs uppercase">
+                        <i class="fa-solid fa-circle-xmark text-sm text-rose-500"></i>
+                        <span>El Método Antiguo (Pierdes Ventas)</span>
+                    </div>
+                    <ul class="space-y-1.5 text-[11px] text-slate-600 font-medium">
+                        <li class="flex items-start gap-1.5">
+                            <span class="text-rose-500 font-black">&bull;</span>
+                            <span>Clientes no descargan PDFs pesados porque no tienen espacio.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                            <span class="text-rose-500 font-black">&bull;</span>
+                            <span>Horas respondiendo por mensaje: "¿En cuánto tienes esto?", "¿Cuál es la tasa?".</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                            <span class="text-rose-500 font-black">&bull;</span>
+                            <span>Fotos desordenadas en WhatsApp y pérdida de pedidos por confusión.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Lado Positivo TuZona -->
+                <div class="bg-white p-3.5 rounded-2xl border-2 border-emerald-300 shadow-xs space-y-2">
+                    <div class="flex items-center gap-2 text-emerald-800 font-black text-xs uppercase">
+                        <i class="fa-solid fa-circle-check text-sm text-emerald-600"></i>
+                        <span>Con TCL TuZona Comercial (Vendes Rápido)</span>
+                    </div>
+                    <ul class="space-y-1.5 text-[11px] text-slate-700 font-medium">
+                        <li class="flex items-start gap-1.5">
+                            <span class="text-emerald-600 font-black">✔</span>
+                            <span>Un enlace web ligero que abre en 1 segundo en cualquier celular.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                            <span class="text-emerald-600 font-black">✔</span>
+                            <span>Precios actualizados automáticamente con tu tasa del día en Pesos, Dólares y Bs.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                            <span class="text-emerald-600 font-black">✔</span>
+                            <span>El cliente arma su carrito y te llega el pedido estructurado y listo.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIMULADOR INTERACTIVO DEMO (PRUEBA EN VIVO COMO COMPRA EL CLIENTE) -->
+        <div class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-md space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-slate-100 pb-3">
+                <div class="space-y-0.5">
+                    <span class="text-[9.5px] font-black uppercase tracking-widest text-blue-600 flex items-center gap-1">
+                        <i class="fa-solid fa-sparkles text-amber-500"></i> Demostración en Tiempo Real
+                    </span>
+                    <h3 class="text-xs sm:text-base font-black text-slate-900 uppercase">
+                        Toca los botones: Así de fácil navegarán tus clientes
+                    </h3>
+                </div>
+                <!-- Selector de Moneda Demo -->
+                <div class="flex items-center gap-1.5 text-xs font-mono font-bold shrink-0">
+                    <span class="text-[9px] font-sans font-bold text-slate-400 uppercase mr-1">Moneda:</span>
+                    <button type="button" onclick="window.demoCambiarMonedaPropuesta('USD')" id="btn-demo-prop-usd" class="px-2.5 py-1 rounded-xl bg-blue-600 text-white font-black shadow-xs">💵 USD</button>
+                    <button type="button" onclick="window.demoCambiarMonedaPropuesta('COP')" id="btn-demo-prop-cop" class="px-2.5 py-1 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200">🇨🇴 COP</button>
+                    <button type="button" onclick="window.demoCambiarMonedaPropuesta('BS')" id="btn-demo-prop-bs" class="px-2.5 py-1 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200">🇻🇪 Bs</button>
+                </div>
+            </div>
+
+            <!-- TARJETA DE PRODUCTO REAL CON MICROINTERACCIÓN -->
+            <div class="max-w-md mx-auto bg-gradient-to-b from-slate-50 to-white border border-slate-200 rounded-3xl p-4 space-y-3.5 shadow-sm">
+                <div class="relative w-full h-48 bg-slate-100 rounded-2xl overflow-hidden shadow-inner border border-slate-200/80">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80" alt="Producto Demo" class="w-full h-full object-cover">
+                    <span class="absolute top-2.5 left-2.5 bg-emerald-500 text-white text-[9.5px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+                        🟢 En Stock (12 disponibles)
+                    </span>
+                    <span class="absolute bottom-2.5 right-2.5 bg-slate-950/80 backdrop-blur-md text-white text-[9px] font-mono font-bold px-2.5 py-1 rounded-lg">
+                        Categoría: Panadería / Postres
+                    </span>
+                </div>
+
+                <div class="space-y-1">
+                    <span class="text-[9.5px] font-black uppercase text-blue-600 tracking-wider">Especialidad de la Casa</span>
+                    <h4 class="text-sm font-black text-slate-900 uppercase">Torta Familiar Tres Leches Especial</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed font-medium">
+                        Bizcocho esponjoso bañado en tres leches con merengue suizo recién preparado y toque de canela.
+                    </p>
+                </div>
+
+                <div class="flex items-center justify-between pt-2.5 border-t border-slate-100">
+                    <div>
+                        <span class="text-[9px] uppercase font-bold text-slate-400 block">Precio calculado en vivo:</span>
+                        <strong id="demo-prod-prop-precio" class="text-base font-black font-mono text-slate-900">$8.00 USD</strong>
+                    </div>
+                    <button type="button" onclick="window.demoAgregarCarritoPropuesta()" class="btn-brand text-xs px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-md active:scale-95 transition-all btn-interactive">
+                        <i class="fa-solid fa-cart-plus text-xs"></i> <span>+ Agregar al Carrito</span>
+                    </button>
+                </div>
+
+                <!-- NOTIFICACIÓN DEMOSTRATIVA FLOTANTE -->
+                <div id="demo-prop-toast-agregado" class="hidden bg-emerald-600 text-white p-3 rounded-2xl text-center space-y-1 shadow-lg animate-bounce">
+                    <div class="flex items-center justify-center gap-1.5 font-black text-xs uppercase tracking-wide">
+                        <i class="fa-solid fa-circle-check text-white"></i>
+                        <span>¡Agregado al Carrito de Prueba!</span>
+                    </div>
+                    <p class="text-[10px] text-emerald-100 font-medium">
+                        El comprador puede agregar 1, 2 o más artículos y con 1 solo toque te enviará el pedido redactado directamente a tu WhatsApp.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOS BENEFICIOS DE ORO (FOTOS GARANTIZADAS CON FALLBACK AUTOMATICO) -->
         <div class="space-y-3.5">
             <div class="flex items-center justify-between px-1">
                 <h3 class="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
@@ -975,52 +1116,35 @@
                 <!-- Pilar 1: Vitrina Web 24/7 -->
                 <div class="card-store overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div class="relative w-full h-44 bg-slate-100 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=700&auto=format&fit=crop&q=80" alt="Vitrina Digital 24/7" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=700&auto=format&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1555421689-491a97ff2040?w=700&auto=format&fit=crop&q=80';" alt="Vitrina Digital 24/7" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/20 to-transparent"></div>
-                        <span class="absolute top-2.5 left-2.5 bg-blue-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
-                            Beneficio 1
-                        </span>
-                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">
-                            🏪 Vitrina Web 24/7 Autónoma
-                        </span>
+                        <span class="absolute top-2.5 left-2.5 bg-blue-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">Beneficio 1</span>
+                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">🏪 Vitrina Web 24/7 Autónoma</span>
                     </div>
-                    <div class="p-4 space-y-3 flex-grow flex flex-col justify-between">
+                    <div class="p-4 space-y-2 flex-grow">
                         <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Tus clientes no tienen que descargar aplicaciones pesadas. Con solo abrir tu enlace ven tu inventario organizado, fotos panorámicas y precios en vivo desde su teléfono.
+                            Tu mostrador abierto todo el día. Tus clientes entran con tu enlace, ven fotos grandes, descripciones y precios sin descargar aplicaciones pesadas que pongan lento su teléfono.
                         </p>
-                        <!-- Mini Ejemplo Visual -->
-                        <div class="bg-blue-50/70 p-2.5 rounded-2xl border border-blue-100 space-y-1">
-                            <span class="text-[9px] font-black uppercase text-blue-700 block">💡 Ejemplo en tu vitrina:</span>
-                            <div class="flex items-center justify-between bg-white p-2 rounded-xl shadow-xs text-[10.5px]">
-                                <span class="font-bold text-slate-800">🥖 Pan Campesino Dulce</span>
-                                <strong class="font-mono font-black text-emerald-600">$3.00 USD</strong>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <!-- Pilar 2: Pedidos Directos a WhatsApp -->
+                <!-- Pilar 2: Pedidos Directos a WhatsApp (FOTO VERIFICADA CON FALLBACK) -->
                 <div class="card-store overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div class="relative w-full h-44 bg-slate-100 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=700&auto=format&fit=crop&q=80" alt="Pedidos a WhatsApp" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1555421689-491a97ff2040?w=700&auto=format&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=700&auto=format&fit=crop&q=80';" alt="Pedidos a WhatsApp" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/20 to-transparent"></div>
-                        <span class="absolute top-2.5 left-2.5 bg-emerald-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
-                            Beneficio 2
-                        </span>
-                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">
-                            🛵 Pedidos Automatizados a WhatsApp
-                        </span>
+                        <span class="absolute top-2.5 left-2.5 bg-emerald-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">Beneficio 2</span>
+                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">🛵 Pedidos Automatizados a WhatsApp</span>
                     </div>
-                    <div class="p-4 space-y-3 flex-grow flex flex-col justify-between">
+                    <div class="p-4 space-y-2.5 flex-grow">
                         <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Tus compradores arman su carrito y con un solo toque te envían su pedido ya redactado y totalizado. Adiós a perder tiempo preguntando qué quieren comprar.
+                            Tus compradores seleccionan sus productos y el sistema redacta el pedido con nombre, dirección, si es delivery o retiro y forma de pago. ¡Adiós a perder tiempo preguntando detalles!
                         </p>
-                        <!-- Mini Ejemplo Visual WhatsApp Bubble -->
-                        <div class="bg-emerald-50/80 p-2.5 rounded-2xl border border-emerald-100 space-y-1">
-                            <span class="text-[9px] font-black uppercase text-emerald-700 block">💬 Mensaje que recibes:</span>
-                            <div class="bg-white p-2 rounded-xl shadow-xs text-[10px] text-slate-700 font-mono leading-tight">
+                        <div class="bg-emerald-50/80 p-2.5 rounded-2xl border border-emerald-200/80 space-y-1">
+                            <span class="text-[9px] font-black uppercase text-emerald-800 block">💬 Mensaje estructurado que recibes:</span>
+                            <div class="bg-white p-2 rounded-xl text-[10px] text-slate-700 font-mono leading-tight shadow-xs">
                                 <span class="text-emerald-700 font-bold block">🛍️ ¡Nuevo Pedido Web!</span>
-                                <span>2x Torta Tres Leches • Delivery Cordero • Pago: Bolívares Pago Móvil</span>
+                                <span>2x Torta Tres Leches • Delivery Cordero • Pago: Pago Móvil Bs</span>
                             </div>
                         </div>
                     </div>
@@ -1029,23 +1153,18 @@
                 <!-- Pilar 3: Control Multimoneda con Tasas Propias -->
                 <div class="card-store overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div class="relative w-full h-44 bg-slate-100 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?w=700&auto=format&fit=crop&q=80" alt="Multimoneda USD COP Bs" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?w=700&auto=format&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1555421689-491a97ff2040?w=700&auto=format&fit=crop&q=80';" alt="Multimoneda USD COP Bs" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/20 to-transparent"></div>
-                        <span class="absolute top-2.5 left-2.5 bg-amber-500 text-slate-950 font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
-                            Beneficio 3
-                        </span>
-                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">
-                            💱 Control Multimoneda (USD / COP / Bs)
-                        </span>
+                        <span class="absolute top-2.5 left-2.5 bg-amber-500 text-slate-950 font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">Beneficio 3</span>
+                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">💱 Control Multimoneda (USD / COP / Bs)</span>
                     </div>
-                    <div class="p-4 space-y-3 flex-grow flex flex-col justify-between">
+                    <div class="p-4 space-y-2.5 flex-grow">
                         <p class="text-xs text-slate-600 leading-relaxed font-medium">
                             Tú eres el dueño de tus precios. Fijas en tu panel tu tasa en Pesos (COP) y en Bolívares (Bs) del día y el sistema recalcula tus productos al instante sin errores matemáticos.
                         </p>
-                        <!-- Mini Ejemplo Visual -->
-                        <div class="bg-amber-50/70 p-2.5 rounded-2xl border border-amber-200/80 space-y-1">
-                            <span class="text-[9px] font-black uppercase text-amber-800 block">💵 Conversión Automática en Vivo:</span>
-                            <div class="flex items-center justify-between text-center bg-white p-2 rounded-xl shadow-xs text-[10px] font-mono font-black">
+                        <div class="bg-amber-50/70 p-2.5 rounded-2xl border border-amber-200/80 text-center">
+                            <span class="text-[9px] font-black uppercase text-amber-800 block mb-1">Conversión Automática en Vivo:</span>
+                            <div class="flex items-center justify-between bg-white p-1.5 rounded-xl text-[10px] font-mono font-black shadow-xs">
                                 <span class="text-blue-600">$10 USD</span>
                                 <span class="text-slate-400">⇄</span>
                                 <span class="text-slate-800">36.000 COP</span>
@@ -1056,170 +1175,174 @@
                     </div>
                 </div>
 
-                <!-- Pilar 4: Presencia en la Guía Comercial Regional -->
+                <!-- Pilar 4: Presencia Regional Estado Táchira -->
                 <div class="card-store overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
                     <div class="relative w-full h-44 bg-slate-100 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=700&auto=format&fit=crop&q=80" alt="Presencia Regional Táchira" class="w-full h-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=700&auto=format&fit=crop&q=80" onerror="this.src='https://images.unsplash.com/photo-1555421689-491a97ff2040?w=700&auto=format&fit=crop&q=80';" alt="Presencia Regional Táchira" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/20 to-transparent"></div>
-                        <span class="absolute top-2.5 left-2.5 bg-purple-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
-                            Beneficio 4
-                        </span>
-                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">
-                            📍 Presencia Regional (Estado Táchira)
-                        </span>
+                        <span class="absolute top-2.5 left-2.5 bg-purple-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">Beneficio 4</span>
+                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">📍 Presencia Regional (Estado Táchira)</span>
                     </div>
-                    <div class="p-4 space-y-3 flex-grow flex flex-col justify-between">
+                    <div class="p-4 space-y-2 flex-grow">
                         <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Tu tienda aparece organizada por municipio en la Guía Comercial. Clientes de Cordero, Táriba, San Cristóbal o Capacho te encontrarán fácilmente al filtrar por zona o ramo.
+                            Tu comercio aparece destacado en el directorio municipal. Compradores de Cordero, Táriba, San Cristóbal, Palmira o Capacho te encuentran con facilidad al filtrar por zona o ramo.
                         </p>
-                        <!-- Mini Ejemplo Visual -->
-                        <div class="bg-purple-50/70 p-2.5 rounded-2xl border border-purple-100 space-y-1">
-                            <span class="text-[9px] font-black uppercase text-purple-700 block">🗺️ Filtro Automático Municipal:</span>
-                            <div class="flex flex-wrap gap-1 text-[9px] font-bold">
-                                <span class="bg-white text-slate-800 px-2 py-0.5 rounded-lg border border-purple-200">📍 Cordero</span>
-                                <span class="bg-white text-slate-800 px-2 py-0.5 rounded-lg border border-purple-200">📍 Táriba</span>
-                                <span class="bg-white text-slate-800 px-2 py-0.5 rounded-lg border border-purple-200">📍 San Cristóbal</span>
-                                <span class="bg-white text-slate-800 px-2 py-0.5 rounded-lg border border-purple-200">📍 Capacho</span>
-                            </div>
+                        <div class="flex flex-wrap gap-1 text-[9px] font-bold pt-1">
+                            <span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded-md border border-purple-200">Cordero</span>
+                            <span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded-md border border-purple-200">Táriba</span>
+                            <span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded-md border border-purple-200">San Cristóbal</span>
+                            <span class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded-md border border-purple-200">Capacho</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Pilar 5: Días y Horarios Laborables Flexibles -->
+                <!-- Pilar 5: Cero Comisiones por Venta -->
                 <div class="card-store overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between sm:col-span-2">
-                    <div class="relative w-full h-44 bg-slate-100 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1508963493744-76fce69379c0?w=800&auto=format&fit=crop&q=80" alt="Horarios Laborables" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-black/20 to-transparent"></div>
-                        <span class="absolute top-2.5 left-2.5 bg-rose-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
-                            Beneficio 5
-                        </span>
-                        <span class="absolute bottom-2.5 left-3 text-white font-extrabold text-xs uppercase drop-shadow">
-                            🕒 Días & Horarios de Atención Dinámicos (Mañana, Tarde y Noche)
-                        </span>
-                    </div>
-                    <div class="p-4 space-y-3 flex-grow flex flex-col justify-between">
-                        <p class="text-xs text-slate-600 leading-relaxed font-medium">
-                            Comunica con total transparencia tus días laborables (de lunes a domingo) y tus turnos de servicio. Ideal para panaderías, restaurantes, farmacias o tiendas con turnos matutinos, vespertinos o nocturnos para delivery.
-                        </p>
-                        <!-- Mini Ejemplo Visual -->
-                        <div class="bg-slate-50 p-2.5 rounded-2xl border border-slate-200 space-y-1.5">
-                            <span class="text-[9px] font-black uppercase text-slate-700 block">⏰ Ejemplo Visual en tu Vitrina:</span>
-                            <div class="flex flex-wrap items-center gap-1.5 text-[10px] font-mono">
-                                <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-bold">📅 Lun - Sáb</span>
-                                <span class="bg-amber-100 text-amber-900 px-2 py-0.5 rounded-md font-bold">☀️ 7:30 AM - 12:00 PM</span>
-                                <span class="bg-blue-100 text-blue-900 px-2 py-0.5 rounded-md font-bold">⛅ 2:00 PM - 6:00 PM</span>
-                                <span class="bg-indigo-100 text-indigo-900 px-2 py-0.5 rounded-md font-bold">🌙 6:00 PM - 11:30 PM</span>
+                    <div class="p-4 sm:p-5 bg-gradient-to-r from-emerald-50 via-teal-50 to-blue-50 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-2xl shrink-0 shadow-md">
+                                <i class="fa-solid fa-shield-heart"></i>
                             </div>
+                            <div class="space-y-0.5">
+                                <span class="text-[9.5px] font-black uppercase tracking-wider text-emerald-700 block">Beneficio 5 &bull; 100% de Ganancia Neta</span>
+                                <h4 class="text-sm sm:text-base font-black text-slate-900 uppercase">Cero Comisiones por Pedido o Venta</h4>
+                                <p class="text-xs text-slate-600 font-medium leading-relaxed max-w-lg">
+                                    A diferencia de las aplicaciones que te quitan el 15% o 20% de cada pedido, en TuZona todo el dinero entra directo a tu cuenta o tu caja. ¡Cero descuentos a terceros!
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-center bg-white border border-emerald-200 px-4 py-2.5 rounded-2xl shadow-xs shrink-0 w-full sm:w-auto">
+                            <span class="text-xl font-black font-mono text-emerald-600 block">0% COMISIÓN</span>
+                            <span class="text-[9px] font-bold text-slate-400 uppercase">100% Para Tu Negocio</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TABULADOR DE PLANES Y TARIFAS SAAS SINCRONIZADAS -->
+        <!-- PLANES DE SUSCRIPCIÓN ESTILIZADOS (CON INSIGNIA 180 DÍAS 100% VISIBLE SIN RECORTES) -->
         <div class="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-4">
             <div class="text-center max-w-lg mx-auto space-y-1">
-                <span class="text-[10px] font-black uppercase tracking-widest text-blue-600 block">Tarifas Transparentes</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-blue-600 block">Tarifas Transparentes &bull; Sin Contratos Forzosos</span>
                 <h3 class="text-base sm:text-xl font-black text-slate-900 uppercase">Planes de Suscripción Oficiales</h3>
-                <p class="text-xs text-slate-500 font-medium">Sin contratos forzosos. Elige el plan que mejor se adapte a tu ritmo de ventas.</p>
+                <p class="text-xs text-slate-500 font-medium">Elige el plan que mejor se adapte a tu ritmo de ventas y mantén tu mostrador activo.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
-                <!-- Plan 30 Días -->
-                <div class="card-store p-4 flex flex-col justify-between space-y-3 border-slate-200 text-center">
-                    <div class="space-y-1">
-                        <span class="text-[9px] font-black uppercase text-slate-400 tracking-wider block">Plan Básico</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-3">
+                <!-- Plan 30 Días (Básico) -->
+                <div class="card-store p-4 flex flex-col justify-between space-y-3.5 border-slate-200 text-center bg-slate-50/60 rounded-3xl">
+                    <div class="space-y-1.5">
+                        <span class="inline-block bg-slate-200 text-slate-700 text-[9px] font-black uppercase px-2.5 py-0.5 rounded-lg">Básico / 1 Mes</span>
                         <h4 class="text-xs font-black text-slate-900 uppercase">30 Días (1 Mes)</h4>
-                        <div class="pt-2">
-                            <strong id="prop-tarifa-usd-30" class="text-xl font-black font-mono text-blue-600 block">$25 USD</strong>
+                        <div class="pt-1.5 border-t border-slate-200/80">
+                            <strong id="prop-tarifa-usd-30" class="text-2xl font-black font-mono text-slate-900 block">$25 USD</strong>
                             <span id="prop-tarifa-cop-30" class="text-[10px] font-mono font-bold text-slate-500 block">90.000 COP</span>
                             <span id="prop-tarifa-bs-30" class="text-[10px] font-mono font-bold text-emerald-600 block">27.272 Bs</span>
                         </div>
+                        <span class="text-[9.5px] text-slate-400 font-bold block pt-1">~$0.83 por día</span>
                     </div>
                     <button onclick="window.contratarPlanDesdePropuesta('Plan 30 Días (1 Mes)')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-black text-[10.5px] py-2.5 rounded-xl uppercase tracking-wider shadow-sm active:scale-95 transition-all btn-interactive">
                         Contratar Plan
                     </button>
                 </div>
 
-                <!-- Plan 90 Días -->
-                <div class="card-store p-4 flex flex-col justify-between space-y-3 border-slate-200 text-center">
-                    <div class="space-y-1">
-                        <span class="text-[9px] font-black uppercase text-slate-400 tracking-wider block">Trimestral</span>
+                <!-- Plan 90 Días (Trimestral) -->
+                <div class="card-store p-4 flex flex-col justify-between space-y-3.5 border-slate-200 text-center bg-slate-50/60 rounded-3xl">
+                    <div class="space-y-1.5">
+                        <span class="inline-block bg-blue-100 text-blue-700 text-[9px] font-black uppercase px-2.5 py-0.5 rounded-lg">Trimestral &bull; Ahorro</span>
                         <h4 class="text-xs font-black text-slate-900 uppercase">90 Días (3 Meses)</h4>
-                        <div class="pt-2">
-                            <strong id="prop-tarifa-usd-90" class="text-xl font-black font-mono text-blue-600 block">$60 USD</strong>
+                        <div class="pt-1.5 border-t border-slate-200/80">
+                            <strong id="prop-tarifa-usd-90" class="text-2xl font-black font-mono text-slate-900 block">$60 USD</strong>
                             <span id="prop-tarifa-cop-90" class="text-[10px] font-mono font-bold text-slate-500 block">216.000 COP</span>
                             <span id="prop-tarifa-bs-90" class="text-[10px] font-mono font-bold text-emerald-600 block">65.454 Bs</span>
                         </div>
+                        <span class="text-[9.5px] text-blue-600 font-bold block pt-1">Solo ~$0.66 por día</span>
                     </div>
                     <button onclick="window.contratarPlanDesdePropuesta('Plan 90 Días (3 Meses)')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-black text-[10.5px] py-2.5 rounded-xl uppercase tracking-wider shadow-sm active:scale-95 transition-all btn-interactive">
                         Contratar Plan
                     </button>
                 </div>
 
-                <!-- Plan 180 Días (Destacado) -->
-                <div class="card-store p-4 flex flex-col justify-between space-y-3 border-2 border-blue-600 relative text-center shadow-lg bg-blue-50/20">
-                    <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[8px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-sm">
-                        Más Popular
-                    </span>
-                    <div class="space-y-1 pt-1">
-                        <span class="text-[9px] font-black uppercase text-blue-700 tracking-wider block">Semestral</span>
+                <!-- Plan 180 Días (DESTACADO Y SIN RECORTE EN LA INSIGNIA) -->
+                <div class="card-store !overflow-visible relative mt-4 p-4 flex flex-col justify-between space-y-3.5 border-2 border-blue-600 rounded-3xl shadow-xl bg-gradient-to-b from-blue-50/70 via-white to-blue-50/30 text-center ring-4 ring-blue-500/15">
+                    <!-- INSIGNIA FLOTANTE COMPLETA Y VISIBLE -->
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white text-[9.5px] font-black uppercase tracking-wider px-4 py-1 rounded-full shadow-lg border-2 border-white flex items-center gap-1.5 whitespace-nowrap">
+                        <span class="text-amber-300 text-xs">🔥</span>
+                        <span>MÁS ELEGIDO &bull; RECOMENDADO</span>
+                    </div>
+
+                    <div class="space-y-1.5 pt-2">
+                        <span class="inline-block bg-blue-600 text-white text-[9px] font-black uppercase px-2.5 py-0.5 rounded-lg shadow-xs">Semestral &bull; Preferido</span>
                         <h4 class="text-xs font-black text-slate-900 uppercase">180 Días (6 Meses)</h4>
-                        <div class="pt-2">
-                            <strong id="prop-tarifa-usd-180" class="text-xl font-black font-mono text-blue-600 block">$90 USD</strong>
-                            <span id="prop-tarifa-cop-180" class="text-[10px] font-mono font-bold text-slate-500 block">324.000 COP</span>
+                        <div class="pt-1.5 border-t border-blue-200">
+                            <strong id="prop-tarifa-usd-180" class="text-2xl font-black font-mono text-blue-700 block">$90 USD</strong>
+                            <span id="prop-tarifa-cop-180" class="text-[10px] font-mono font-bold text-slate-600 block">324.000 COP</span>
                             <span id="prop-tarifa-bs-180" class="text-[10px] font-mono font-bold text-emerald-600 block">98.181 Bs</span>
                         </div>
+                        <span class="text-[9.5px] text-blue-700 font-black block pt-1">Solo ~$0.50 por día &bull; 40% Ahorro</span>
                     </div>
                     <button onclick="window.contratarPlanDesdePropuesta('Plan 180 Días (6 Meses)')" class="w-full btn-brand text-[10.5px] py-2.5 rounded-xl uppercase tracking-wider shadow-md active:scale-95 transition-all btn-interactive">
-                        Contratar Plan
+                        Contratar Plan ⭐
                     </button>
                 </div>
 
-                <!-- Plan 365 Días -->
-                <div class="card-store p-4 flex flex-col justify-between space-y-3 border-slate-200 text-center">
-                    <div class="space-y-1">
-                        <span class="text-[9px] font-black uppercase text-amber-600 tracking-wider block">Máximo Ahorro</span>
+                <!-- Plan 365 Días (MÁXIMO AHORRO) -->
+                <div class="card-store !overflow-visible relative mt-4 p-4 flex flex-col justify-between space-y-3.5 border-2 border-amber-400 rounded-3xl shadow-lg bg-gradient-to-b from-amber-50/50 via-white to-amber-50/20 text-center ring-2 ring-amber-400/20">
+                    <!-- INSIGNIA FLOTANTE ANUAL -->
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 text-slate-950 text-[9.5px] font-black uppercase tracking-wider px-4 py-1 rounded-full shadow-lg border-2 border-white flex items-center gap-1.5 whitespace-nowrap">
+                        <span>👑</span>
+                        <span>MÁXIMO AHORRO &bull; TARIFA CONGELADA</span>
+                    </div>
+
+                    <div class="space-y-1.5 pt-2">
+                        <span class="inline-block bg-amber-200 text-amber-900 text-[9px] font-black uppercase px-2.5 py-0.5 rounded-lg shadow-xs">Anual &bull; Máximo Rendimiento</span>
                         <h4 class="text-xs font-black text-slate-900 uppercase">365 Días (1 Año)</h4>
-                        <div class="pt-2">
-                            <strong id="prop-tarifa-usd-365" class="text-xl font-black font-mono text-blue-600 block">$160 USD</strong>
+                        <div class="pt-1.5 border-t border-slate-200/80">
+                            <strong id="prop-tarifa-usd-365" class="text-2xl font-black font-mono text-slate-900 block">$160 USD</strong>
                             <span id="prop-tarifa-cop-365" class="text-[10px] font-mono font-bold text-slate-500 block">576.000 COP</span>
                             <span id="prop-tarifa-bs-365" class="text-[10px] font-mono font-bold text-emerald-600 block">174.545 Bs</span>
                         </div>
+                        <span class="text-[9.5px] text-amber-700 font-bold block pt-1">Solo ~$0.43 por día &bull; Ahorro 45%</span>
                     </div>
                     <button onclick="window.contratarPlanDesdePropuesta('Plan 365 Días (1 Año)')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-black text-[10.5px] py-2.5 rounded-xl uppercase tracking-wider shadow-sm active:scale-95 transition-all btn-interactive">
-                        Contratar Plan
+                        Contratar Anual 🚀
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- CÁPSULA DE CIERRE DE VENTA (CALL TO ACTION) -->
-        <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 rounded-3xl p-5 sm:p-7 text-white text-center space-y-3 shadow-xl">
-            <h3 class="text-base sm:text-xl font-black uppercase tracking-tight">¿Deseas Probar la Plataforma Sin Costo?</h3>
-            <p class="text-xs text-emerald-100 font-medium max-w-lg mx-auto leading-relaxed">
-                Inicia hoy mismo con tu <strong>prueba gratuita de 7 días</strong>. Carga tus productos, comparte tu catálogo con tus clientes y comprueba la agilidad de las ventas sin comisiones.
+        <!-- CÁPSULA DE CIERRE IRRESISTIBLE: PRUEBA GRATIS 7 DÍAS -->
+        <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 rounded-3xl p-6 sm:p-8 text-white text-center space-y-3.5 shadow-xl">
+            <div class="inline-flex items-center gap-2 bg-white/20 px-3.5 py-1 rounded-full text-[10.5px] font-black uppercase tracking-wider text-emerald-100">
+                <span>🎁 Sin Tarjeta ni Pagos Adelantados</span>
+            </div>
+            <h3 class="text-lg sm:text-2xl font-black uppercase tracking-tight">¿Deseas Probar la Plataforma Sin Costo?</h3>
+            <p class="text-xs sm:text-sm text-emerald-100 font-medium max-w-lg mx-auto leading-relaxed">
+                Inicia hoy mismo con tu <strong>prueba gratuita de 7 días</strong>. Carga tus productos, comparte tu catálogo con tus clientes habituales y comprueba cómo agiliza tus ventas antes de pagar un solo centavo.
             </p>
-            <div class="pt-1.5 flex items-center justify-center max-w-md mx-auto">
-                <button onclick="window.abrirModalRegistroComercio()" class="w-full bg-white hover:bg-slate-100 text-slate-950 font-black text-[11px] sm:text-xs px-5 py-3.5 rounded-2xl uppercase tracking-wider shadow-lg active:scale-95 transition-all btn-interactive flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-sparkles text-amber-500 text-sm"></i>
+            <div class="pt-2 flex items-center justify-center max-w-md mx-auto">
+                <button onclick="window.abrirModalRegistroComercio()" class="w-full bg-white hover:bg-slate-100 text-slate-950 font-black text-xs sm:text-sm px-6 py-4 rounded-2xl uppercase tracking-wider shadow-2xl active:scale-95 transition-all btn-interactive flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-sparkles text-amber-500 text-base"></i>
                     <span>Solicitar Prueba Gratis de 7 Días</span>
                 </button>
             </div>
         </div>
 
-        <!-- SELLO DE RESPALDO INSTITUCIONAL -->
-        <div class="bg-gradient-to-r from-slate-100 via-blue-50 to-slate-100 rounded-2xl p-4 border border-blue-200/60 text-center space-y-1.5 shadow-xs">
-            <div class="flex items-center justify-center gap-2 text-slate-900 font-black text-xs uppercase">
-                <i class="fa-solid fa-shield-halved text-blue-600"></i>
+        <!-- SELLO DE RESPALDO INSTITUCIONAL OFICIAL -->
+        <div class="bg-gradient-to-r from-slate-100 via-blue-50 to-slate-100 rounded-3xl p-5 border border-blue-200/80 text-center space-y-2 shadow-xs">
+            <div class="flex items-center justify-center gap-2 text-slate-900 font-black text-xs uppercase tracking-wider">
+                <i class="fa-solid fa-shield-halved text-blue-600 text-sm"></i>
                 <span>Garantía y Respaldo Institucional</span>
             </div>
-            <p class="text-[11px] text-slate-600 font-medium">
-                Un proyecto integral de <strong>TUCOCEL C.A.</strong> & <strong>@PublionlineMK</strong>, agencia de publicidad de TUCOCEL C.A.
+            <p class="text-xs text-slate-700 font-medium leading-relaxed max-w-lg mx-auto">
+                Un desarrollo tecnológico integral de <strong>tucocel C.A.</strong> & <strong>@PublionlineMK</strong>, agencia de publicidad de tucocel C.A.
             </p>
-            <p class="text-[11px] text-blue-700 font-black font-mono pt-0.5">
-                📞 Atención Comercial Directa: 0424-7357549
-            </p>
+            <div class="pt-1 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <a href="https://wa.me/584247357549?text=%C2%A1Hola%20tucocel%20C.A.!%20Deseo%20m%C3%A1s%20informaci%C3%B3n%20sobre%20TCL%20TuZona%20Comercial" target="_blank" class="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black font-mono text-xs px-4 py-2 rounded-xl shadow-xs transition-all active:scale-95">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>Atención Comercial: 0424-7357549</span>
+                </a>
+            </div>
         </div>
     </main>
 
@@ -1498,7 +1621,7 @@
     </div>
 
     <!-- MODAL TARIFAS SAAS -->
-    <div id="modal-tarifas-saas" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 p-3 sm:p-4 flex items-center justify-center hidden no-print">
+    <div id="modal-tarifas-saas" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[120] p-3 sm:p-4 flex items-center justify-center hidden no-print">
         <div class="bg-white border border-slate-200 w-full max-w-sm rounded-2xl overflow-hidden shadow-2xl flex flex-col">
             <div class="bg-[#0f172a] px-4 py-3 text-white flex justify-between items-center shrink-0">
                 <div class="flex items-center gap-2">
@@ -1613,7 +1736,7 @@
     </div>
 
     <!-- MODAL CAMBIO CLAVE MASTER -->
-    <div id="modal-cambio-clave-master" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 p-4 flex items-center justify-center hidden no-print">
+    <div id="modal-cambio-clave-master" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-[120] p-4 flex items-center justify-center hidden no-print">
         <div class="bg-white border border-slate-200 w-full max-w-sm rounded-2xl overflow-hidden shadow-2xl p-5 space-y-3">
             <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                 <div class="flex items-center gap-2 text-slate-900 font-black text-xs uppercase">
@@ -2557,7 +2680,7 @@
         function renderizarDirectorioGuia() {
             const grid = document.getElementById("grid-comercios-guia");
             const busq = document.getElementById("buscador-general").value.trim().toLowerCase();
-            let lista = tiendasEnSistema.filter(t => (t.estatus || 'ACTIVO') === 'ACTIVO');
+            let lista = tiendasEnSistema.filter(t => (t.estatus || 'ACTIVO') === 'ACTIVO' && !isTiendaExpirada(t));
 
             if (zonaFiltroSeleccionada !== "TODOS") {
                 lista = lista.filter(t => (t.zona || '').trim().toLowerCase() === zonaFiltroSeleccionada.trim().toLowerCase());
@@ -3120,20 +3243,39 @@
             mensajeDespachoActual = mensaje || "";
             asuntoDespachoActual = titulo;
 
-            // 1. INVOCAR SIEMPRE EL MENÚ COMPARTIR NATIVO DEL SISTEMA DEL CELULAR
+            let tel = (telefono || "").replace(/\D/g, "");
+            if (tel.startsWith("04")) tel = "58" + tel.substring(1);
+            if (tel.length === 10) tel = "58" + tel;
+
+            // Si hay teléfono de destino (pedido, consulta directa a tienda o máster), abrir WhatsApp directo
+            if (tel) {
+                const isAndroid = /Android/i.test(navigator.userAgent);
+                const msgEnc = encodeURIComponent(mensajeDespachoActual);
+                if (isAndroid) {
+                    window.location.href = `intent://send?phone=${tel}&text=${msgEnc}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+                    setTimeout(() => {
+                        window.open(`https://wa.me/${tel}?text=${msgEnc}`, "_blank");
+                    }, 800);
+                } else {
+                    window.open(`https://wa.me/${tel}?text=${msgEnc}`, "_blank");
+                }
+                return;
+            }
+
+            // Si no hay teléfono (difusión a grupos o compartir catálogo), usar el menú compartir del teléfono
             if (navigator.share) {
                 try {
                     await navigator.share({
                         title: titulo,
                         text: mensajeDespachoActual
                     });
-                    return; // Menú del celular desplegado y atendido por el usuario
+                    return;
                 } catch(err) {
-                    if (err.name === 'AbortError') return; // El usuario simplemente cerró la ventana de compartir
+                    if (err.name === 'AbortError') return;
                 }
             }
 
-            // 2. FALLBACK EXCLUSIVO PARA COMPUTADORAS DE ESCRITORIO (SIN navigator.share)
+            // Fallback en PC o si el usuario cancela
             window.abrirModalDespachoUniversal(telefono, mensajeDespachoActual, titulo);
         };
 
@@ -3209,36 +3351,56 @@
         // ACCIÓN 1 (MÁSTER): ENVIAR PROPUESTA A UN CLIENTE (ABRE BANDEJA DEL CELULAR)
         window.accionPropuestaWhatsApp = function() {
             const urlPropuesta = `${window.location.origin}${window.location.pathname}?propuesta=1`;
-            const msg = `🚀 *PROPUESTA COMERCIAL — TCL TUZONA COMERCIAL*\n\nEstimado comerciante, aquí le presentamos nuestra propuesta oficial de *TCL TuZona Comercial* para digitalizar y modernizar su mostrador:\n\n👉 Entre al siguiente link para visualizar la propuesta interactiva y los planes:\n🔗 ${urlPropuesta}\n\n━━━━━━━━━━━━━━━━━━━━━\n📦 *Beneficios de su negocio en TuZona:*
-• Vitrina web 24/7 con fotos y precios\n• Pedidos directos a su WhatsApp con carrito\n• Cero comisiones por venta\n• Multimoneda en Dólares, Pesos y Bolívares\n• Presencia en la guía comercial regional\n\n━━━━━━━━━━━━━━━━━━━━━\n*TCL TuZona Comercial es un proyecto integral de TUCOCEL C.A. y @PublionlineMK, agencia de publicidad de TUCOCEL C.A.*\n📞 Contacto: 0424-7357549`;
+            const msg = `🚀 *¡HAZ QUE TU NEGOCIO EVOLUCIONE CON TCL TUZONA COMERCIAL!* 🏪✨\n\n` +
+                        `Estimado comerciante / emprendedor:\n` +
+                        `¿Sabías que el *80% de tus clientes no abre PDFs pesados* ni lee listas de precios interminables por WhatsApp?\n\n` +
+                        `Le presentamos nuestra *Propuesta Comercial Oficial 2026*, la herramienta diseñada para modernizar su mostrador y vender en automático:\n\n` +
+                        `👉 *Toque el siguiente enlace para abrir la propuesta interactiva con demo en vivo y planes:*\n` +
+                        `🔗 ${urlPropuesta}\n\n` +
+                        `━━━━━━━━━━━━━━━━━━━━━\n` +
+                        `💎 *¿POR QUÉ TU NEGOCIO DEBE ESTAR EN TUZONA?*\n` +
+                        `🚫 *Cero PDFs pesados:* Su vitrina abre en 1 segundo en cualquier celular.\n` +
+                        `🏪 *Vitrina Web 24/7:* Fotos nítidas, inventario organizado y precios en vivo.\n` +
+                        `🛵 *Pedidos listos a WhatsApp:* El cliente arma su carrito y le llega el pedido totalizado con nombre, dirección y pago.\n` +
+                        `💱 *Control Multimoneda:* Precios en Dólares ($), Pesos (COP) y Bolívares (Bs) con sus propias tasas del día.\n` +
+                        `📍 *Presencia Regional:* Clientes de su municipio lo encuentran por zona y ramo.\n` +
+                        `💰 *100% Ganancia para usted:* ¡Cero cobro de comisiones por venta!\n\n` +
+                        `🎁 *¡Pruébelo 7 Días GRATIS sin ningún compromiso!*\n` +
+                        `Cargue sus productos hoy mismo y compruebe cómo agiliza sus ventas.\n\n` +
+                        `━━━━━━━━━━━━━━━━━━━━━\n` +
+                        `🏛️ *Un desarrollo tecnológico de tucocel C.A. & @PublionlineMK*\n` +
+                        `📞 *Atención Comercial Directa:* 0424-7357549`;
             
             document.getElementById("modal-zona-propuesta").classList.add("hidden");
-            window.despacharUniversalmente("", msg, "Propuesta Comercial — TCL TuZona Comercial");
+            window.despacharUniversalmente("", msg, "Propuesta Oficial — TCL TuZona Comercial");
         };
 
-        // ACCIÓN 3 (MÁSTER): DIFUSIÓN PARA GRUPOS DE WHATSAPP (ABRE BANDEJA DEL CELULAR)
+        // ACCIÓN 3 (MÁSTER): DIFUSIÓN PARA GRUPOS DE WHATSAPP (CAPTACIÓN MASIVA CON CHISPA)
         window.accionDifusionGruposWhatsApp = function() {
             const urlGuia = `${window.location.origin}${window.location.pathname}`;
-            const msg = `🚀 *¡IMPULSA Y DIGITALIZA TU NEGOCIO EN EL TÁCHIRA SIN PAGAR COMISIONES!* 🏪✨\n\n` +
-                        `¿Tienes un comercio, tienda física o emprendimiento en *Cordero, Táriba, San Cristóbal, Capacho o municipios vecinos*?\n\n` +
-                        `Te presentamos *TCL TuZona Comercial*, la plataforma digital diseñada para que modernices tu mostrador y aumentes tus ventas:\n\n` +
-                        `✅ *Tu Propia Vitrina Web 24/7:* Tus clientes ven fotos, descripciones y precios reales sin descargar aplicaciones pesadas.\n` +
-                        `✅ *Pedidos Directos a tu WhatsApp:* Recibe pedidos estructurados con nombre, dirección, delivery y método de pago con 1 solo toque.\n` +
-                        `✅ *Precios en Multimoneda:* Muestra automáticamente tus productos en Dólares ($), Pesos (COP) y Bolívares (Bs) con tus propias tasas fijas.\n` +
-                        `✅ *Presencia en la Guía Comercial:* Aparece destacado por municipio para que nuevos clientes de tu zona te encuentren de inmediato.\n` +
-                        `✅ *100% de Ganancia para ti:* ¡Cero cobro de comisiones por tus ventas!\n\n` +
-                        `🎁 *¡Pruébalo totalmente GRATIS por 7 días!*
-` +
-                        `Sin contratos ni compromisos. Carga tus productos y comprueba cómo agiliza tus ventas.\n\n` +
-                        `👉 *Ingresa y solicita tus 7 días gratis de prueba aquí:*
-` +
+            const urlPropuesta = `${window.location.origin}${window.location.pathname}?propuesta=1`;
+            const msg = `🔥 *¡ATENCIÓN COMERCIANTES Y EMPRENDEDORES DEL TÁCHIRA!* 🏪🚀\n\n` +
+                        `¿Sigues perdiendo clientes enviando listas de precios eternas o PDFs pesados de 10 MB que nadie descarga?\n\n` +
+                        `¡Es hora de que tu negocio *EVOLUCIONE* con *TCL TuZona Comercial*!\n\n` +
+                        `La plataforma creada para que tiendas físicas y comercios de *Cordero, Táriba, San Cristóbal, Capacho y municipios vecinos* vendan más rápido y sin intermediarios:\n\n` +
+                        `✨ *LO QUE OBTIENE TU NEGOCIO:*\n` +
+                        `1️⃣ *Tu Vitrina Web 24/7:* Tus clientes ven tu catálogo con fotos nítidas y precios al día desde su celular.\n` +
+                        `2️⃣ *Pedidos Automáticos a WhatsApp:* El cliente arma su carrito y te envía el pedido listo con nombre, delivery y método de pago.\n` +
+                        `3️⃣ *Precios Multimoneda:* Muestra tus productos en Dólares ($), Pesos (COP) y Bolívares (Bs) calculados con tus tasas fijas.\n` +
+                        `4️⃣ *Presencia en la Guía Comercial:* Destácate por municipio para que nuevos clientes te encuentren de inmediato.\n` +
+                        `5️⃣ *CERO COMISIONES:* ¡El 100% de tus ganancias es tuyo! No pagas porcentajes por venta.\n\n` +
+                        `🎁 *¡PRUÉBALO TOTALMENTE GRATIS POR 7 DÍAS!* 🎁\n` +
+                        `Sin pagos por adelantado, sin contratos forzosos. Carga tus productos y comprueba cómo agiliza tus ventas.\n\n` +
+                        `👉 *Entra aquí y solicita tus 7 días gratis de prueba:*\n` +
                         `🔗 ${urlGuia}\n\n` +
+                        `👉 *O revisa la propuesta interactiva completa con demo en vivo aquí:*\n` +
+                        `🔗 ${urlPropuesta}\n\n` +
                         `━━━━━━━━━━━━━━━━━━━━━\n` +
-                        `🏛️ *Un desarrollo tecnológico de TUCOCEL C.A. & @PublionlineMK*\n` +
-                        `📞 *Atención Comercial:* 0424-7357549`;
+                        `🏛️ *Un desarrollo tecnológico de tucocel C.A. & @PublionlineMK*\n` +
+                        `📞 *Atención Comercial Directa:* 0424-7357549`;
 
             document.getElementById("modal-zona-propuesta").classList.add("hidden");
-            window.despacharUniversalmente("", msg, "Promoción TCL TuZona Comercial");
+            window.despacharUniversalmente("", msg, "Evoluciona tu Negocio — TCL TuZona Comercial");
         };
 
         // =========================================================================
@@ -3265,15 +3427,48 @@
             window.scrollTo({ top: 0, behavior: "smooth" });
         };
 
+        // CONTROL INTERACTIVO DEL DEMO EN LA PROPUESTA
+        let demoMonedaPropuesta = 'USD';
+        window.demoCambiarMonedaPropuesta = function(moneda) {
+            demoMonedaPropuesta = moneda;
+            const cop = tasasGlobales.cop || 3600;
+            const par = tasasGlobales.paridadBs || 3.3;
+            const bs = cop / par;
+            
+            ['usd', 'cop', 'bs'].forEach(m => {
+                const btn = document.getElementById(`btn-demo-prop-${m}`);
+                if (btn) {
+                    btn.className = (m === moneda.toLowerCase()) 
+                        ? "px-2.5 py-1 rounded-xl bg-blue-600 text-white font-black shadow-xs" 
+                        : "px-2.5 py-1 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200";
+                }
+            });
+
+            const elPrecio = document.getElementById("demo-prod-prop-precio");
+            if (!elPrecio) return;
+            if (moneda === 'USD') elPrecio.innerText = "$8.00 USD";
+            else if (moneda === 'COP') elPrecio.innerText = `${Math.round(8 * cop).toLocaleString("es-CO")} COP`;
+            else if (moneda === 'BS') elPrecio.innerText = `${(8 * bs).toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Bs`;
+        };
+
+        window.demoAgregarCarritoPropuesta = function() {
+            const toast = document.getElementById("demo-prop-toast-agregado");
+            if (toast) {
+                toast.classList.remove("hidden");
+                setTimeout(() => toast.classList.add("hidden"), 3500);
+            }
+        };
+
         window.recalcularPreciosPropuesta = function() {
             const cop = tasasGlobales.cop || 3600;
             const par = tasasGlobales.paridadBs || 3.3;
+            const tarifasSaasGuardadas = tasasGlobales.tarifasSaas || { 30: 25, 90: 60, 180: 90, 365: 160 };
 
             const tarifas = {
-                30: parseFloat(document.getElementById("input-tarifas-30")?.value) || 25,
-                90: parseFloat(document.getElementById("input-tarifas-90")?.value) || 60,
-                180: parseFloat(document.getElementById("input-tarifas-180")?.value) || 90,
-                365: parseFloat(document.getElementById("input-tarifas-365")?.value) || 160
+                30: parseFloat(document.getElementById("input-tarifas-30")?.value) || tarifasSaasGuardadas[30] || 25,
+                90: parseFloat(document.getElementById("input-tarifas-90")?.value) || tarifasSaasGuardadas[90] || 60,
+                180: parseFloat(document.getElementById("input-tarifas-180")?.value) || tarifasSaasGuardadas[180] || 90,
+                365: parseFloat(document.getElementById("input-tarifas-365")?.value) || tarifasSaasGuardadas[365] || 160
             };
 
             [30, 90, 180, 365].forEach(d => {
@@ -3632,7 +3827,18 @@
             document.getElementById("prod-edit-id").value = p.id;
             document.getElementById("prod-inp-nombre").value = p.nombre;
             document.getElementById("prod-inp-categoria").value = p.categoria || "";
-            document.getElementById("prod-inp-precio").value = p.precio;
+
+            const tasas = obtenerTasasActivasTienda(comercianteSesion.slug);
+            let precioMostrar = p.precio;
+            if (p.moneda === "COP") {
+                precioMostrar = Math.round(p.precio * tasas.cop);
+            } else if (p.moneda === "BS") {
+                precioMostrar = +(p.precio * tasas.bs).toFixed(2);
+            } else {
+                precioMostrar = +p.precio.toFixed(2);
+            }
+
+            document.getElementById("prod-inp-precio").value = precioMostrar;
             document.getElementById("prod-inp-moneda").value = p.moneda || "USD";
             document.getElementById("prod-inp-stock").value = (p.stock !== undefined) ? p.stock : 10;
             
@@ -3966,9 +4172,17 @@
             });
         };
 
-        window.guardarTarifasSaas = function() {
+        window.guardarTarifasSaas = async function() {
+            const t30 = parseFloat(document.getElementById("input-tarifas-30").value) || 25;
+            const t90 = parseFloat(document.getElementById("input-tarifas-90").value) || 60;
+            const t180 = parseFloat(document.getElementById("input-tarifas-180").value) || 90;
+            const t365 = parseFloat(document.getElementById("input-tarifas-365").value) || 160;
+
+            tasasGlobales.tarifasSaas = { 30: t30, 90: t90, 180: t180, 365: t365 };
+            await guardarEnNube();
+            window.recalcularPreciosPropuesta();
             document.getElementById("modal-tarifas-saas").classList.add("hidden");
-            alert("✨ Tarifas guardadas.");
+            alert("✨ Tarifas SaaS actualizadas y guardadas con éxito.");
         };
 
         window.abrirModalZonaPropuesta = function() { document.getElementById("modal-zona-propuesta").classList.remove("hidden"); };
@@ -4203,6 +4417,7 @@
             const inFlotante = document.getElementById("flotante-textarea-desc");
             if (inFlotante) {
                 inFlotante.value = descActual;
+                inFlotante.setAttribute("data-target-input", "perfil-inp-desc");
                 window.actualizarContadorCaracteresDesc();
             }
             const modal = document.getElementById("modal-editor-descripcion-flotante");
@@ -4252,7 +4467,9 @@ window.cerrarYAplicarModalDescripcion = function() {
         window.cerrarModalEditorDescripcion = function(aplicado = false) {
             const modal = document.getElementById("modal-editor-descripcion-flotante");
             if (modal) modal.classList.add("hidden");
-            const inNormal = document.getElementById("perfil-inp-desc");
+            const inFlotante = document.getElementById("flotante-textarea-desc");
+            const targetId = inFlotante?.getAttribute("data-target-input") || "perfil-inp-desc";
+            const inNormal = document.getElementById(targetId);
             if (inNormal) {
                 inNormal.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
