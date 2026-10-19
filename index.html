@@ -347,8 +347,8 @@
             </div>
         </div>
 
-        <!-- SELECTOR DE MONEDA DE LA TIENDA -->
-        <div class="bg-white rounded-2xl p-2.5 border border-slate-200 flex items-center justify-between gap-2 shadow-sm">
+        <!-- SELECTOR DE MONEDA DE LA TIENDA (ADAPTATIVO) -->
+        <div id="barra-selector-monedas-tienda" class="bg-white rounded-2xl p-2.5 border border-slate-200 flex items-center justify-between gap-2 shadow-sm">
             <span class="text-[10.5px] font-black uppercase text-slate-600 flex items-center gap-1.5 shrink-0">
                 <i class="fa-solid fa-coins text-amber-500"></i> Ver Precios en:
             </span>
@@ -701,6 +701,33 @@
                     </p>
                 </div>
 
+                <!-- CASILLAS DE VERIFICACIÓN / CHULITOS PARA MOSTRAR PRECIO EN MONEDAS (POR EQUIPO / PRODUCTO) -->
+                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[9.5px] font-black uppercase text-slate-700 tracking-wider flex items-center gap-1.5">
+                            <i class="fa-solid fa-coins text-amber-500"></i> Mostrar Precio en este Producto / Equipo:
+                        </span>
+                        <span class="text-[9px] text-slate-400 font-bold">Personalizable</span>
+                    </div>
+                    <p class="text-[8.5px] text-slate-500 font-medium leading-tight">
+                        Por defecto está tildado Dólares. Si deseas que solo se muestre el producto y la referencia sin precio, puedes desmarcar todos los chulos (incluso Dólares).
+                    </p>
+                    <div class="grid grid-cols-3 gap-2 pt-0.5">
+                        <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border border-slate-200 cursor-pointer select-none hover:border-blue-400">
+                            <input type="checkbox" id="prod-chk-usd" checked class="accent-blue-600 w-4 h-4 rounded cursor-pointer">
+                            <span class="text-[11px] font-black text-slate-800">💵 Dólares</span>
+                        </label>
+                        <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border border-slate-200 cursor-pointer select-none hover:border-blue-400">
+                            <input type="checkbox" id="prod-chk-cop" checked class="accent-blue-600 w-4 h-4 rounded cursor-pointer">
+                            <span class="text-[11px] font-black text-slate-800">🇨🇴 Pesos</span>
+                        </label>
+                        <label class="flex items-center gap-1.5 bg-white p-2 rounded-xl border border-slate-200 cursor-pointer select-none hover:border-blue-400">
+                            <input type="checkbox" id="prod-chk-bs" checked class="accent-blue-600 w-4 h-4 rounded cursor-pointer">
+                            <span class="text-[11px] font-black text-slate-800">🇻🇪 Bolívares</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div>
                     <div class="flex justify-between items-center mb-0.5">
                         <label class="text-[9px] text-slate-500 uppercase font-bold">Descripción (Opcional)</label>
@@ -731,38 +758,72 @@
             </div>
         </div>
 
-        <!-- SECCIÓN 2: FIJAR TASAS FIJAS DE CAMBIO (PERSONALIZADAS POR TIENDA) -->
+        <!-- SECCIÓN 2: FIJAR TASAS FIJAS & MONEDAS VISIBLES (LÓGICA FRONTERIZA REAL TÁCHIRA) -->
         <div id="seccion-comerciante-tasas" class="space-y-4 hidden">
-            <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3.5">
+            <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-4">
                 <div class="border-b border-slate-100 pb-2">
                     <h3 class="text-xs font-black uppercase text-slate-800 tracking-wider flex items-center gap-1.5">
-                        <i class="fa-solid fa-calculator text-amber-500"></i> Fijar Mis Tasas de Cambio del Día
+                        <i class="fa-solid fa-calculator text-amber-500"></i> Fijar Mis Tasas de Cambio & Monedas Aceptadas
                     </h3>
                     <p class="text-[11px] text-slate-500 font-medium">
-                        Define cómo se convierten tus precios en Dólares, Pesos y Bolívares. Estas tasas quedan <strong>fijas permanentemente</strong> para tu tienda hasta que tú las vuelvas a cambiar.
+                        Configura tu paridad fronteriza real (Táchira) y selecciona con casillas cuáles monedas deseas aceptar y mostrar en tu vitrina pública.
                     </p>
                 </div>
 
+                <!-- SELECCIÓN DE MONEDAS VISIBLES GENERALES DE LA VITRINA (CHULITOS) -->
+                <div class="bg-blue-50/70 p-3.5 rounded-2xl border border-blue-200 space-y-2">
+                    <span class="text-[10px] font-black uppercase text-blue-900 tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-coins text-amber-500"></i> Monedas Aceptadas en tu Vitrina Pública:
+                    </span>
+                    <p class="text-[9.5px] text-slate-600 font-medium">
+                        Marca con chulito las monedas que deseas mostrar. Por defecto está marcado Dólares, pero si deseas desmarcarlo también para dejar la vitrina pura de productos y referencia, puedes desmarcarlo con total libertad:
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+                        <label class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs cursor-pointer select-none hover:border-blue-400">
+                            <input type="checkbox" id="chk-moneda-usd" checked class="accent-blue-600 w-4 h-4 rounded cursor-pointer">
+                            <div class="leading-tight">
+                                <span class="text-xs font-black text-slate-900 block">💵 Dólares ($ USD)</span>
+                                <span class="text-[8.5px] text-slate-500 font-medium">Marcable / Desmarcable</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs cursor-pointer select-none hover:border-blue-400">
+                            <input type="checkbox" id="chk-moneda-cop" checked class="accent-blue-600 w-4 h-4 rounded cursor-pointer">
+                            <div class="leading-tight">
+                                <span class="text-xs font-black text-slate-900 block">🇨🇴 Pesos (COP)</span>
+                                <span class="text-[8.5px] text-slate-500 font-medium">Marcable / Desmarcable</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs cursor-pointer select-none hover:border-blue-400">
+                            <input type="checkbox" id="chk-moneda-bs" checked class="accent-blue-600 w-4 h-4 rounded cursor-pointer">
+                            <div class="leading-tight">
+                                <span class="text-xs font-black text-slate-900 block">🇻🇪 Bolívares (Bs)</span>
+                                <span class="text-[8.5px] text-slate-500 font-medium">Marcable / Desmarcable</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- LÓGICA DE TASAS FRONTERIZAS: TASA COP Y FACTOR PARIDAD BS -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                     <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-1">
                         <label class="text-[10px] font-black uppercase text-slate-700 block">
                             🇨🇴 Tasa Pesos (COP por $1 USD):
                         </label>
-                        <input type="number" id="tienda-tasa-cop-inp" placeholder="Ej: 3600 o 4000" class="input-clean font-mono font-black text-blue-700 text-sm">
-                        <span class="text-[9px] text-slate-400 block font-medium">Ejemplo: Si un producto cuesta $5 USD, a 4.000 COP se cobrará en 20.000 COP.</span>
+                        <input type="number" id="tienda-tasa-cop-inp" placeholder="Ej: 3300 o 3600" class="input-clean font-mono font-black text-blue-700 text-sm">
+                        <span class="text-[9px] text-slate-400 block font-medium">Fórmula: COP = round(USD × Tasa COP)</span>
                     </div>
 
                     <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-1">
                         <label class="text-[10px] font-black uppercase text-slate-700 block">
-                            🇻🇪 Tasa Bolívares (Bs por $1 USD):
+                            🇻🇪 Factor de Paridad Bolívares (Pesos / Bs):
                         </label>
-                        <input type="number" step="any" id="tienda-tasa-bs-inp" placeholder="Ej: 45.5 o 50.0" class="input-clean font-mono font-black text-emerald-700 text-sm">
-                        <span class="text-[9px] text-slate-400 block font-medium">Multiplicador directo: Si cuesta $10 USD y tu tasa es 50, se mostrará en 500,00 Bs.</span>
+                        <input type="number" step="any" id="tienda-tasa-factor-bs-inp" placeholder="Ej: 3 o 3.3" class="input-clean font-mono font-black text-emerald-700 text-sm">
+                        <span class="text-[9px] text-slate-400 block font-medium">Fórmula: Bs = round(COP / Factor Bs) [Cero decimales]</span>
                     </div>
                 </div>
 
                 <button onclick="window.guardarTasasComerciante()" class="w-full btn-brand py-3 text-xs shadow flex items-center justify-center gap-2 btn-interactive">
-                    <i class="fa-solid fa-lock"></i> Guardar Mis Tasas Fijas
+                    <i class="fa-solid fa-lock"></i> Guardar Mis Tasas & Monedas
                 </button>
             </div>
         </div>
@@ -2225,7 +2286,7 @@
         let zonaFiltroSeleccionada = "TODOS";
         let rubroFiltroSeleccionado = "TODOS";
         let monedaTiendaActiva = "USD";
-        let tasasGlobales = JSON.parse(localStorage.getItem("tcl_tz_tasas")) || { cop: 3600, paridadBs: 3.3 };
+        let tasasGlobales = JSON.parse(localStorage.getItem("tcl_tz_tasas")) || { cop: 3300, paridadBs: 3.0 };
         window.tasasConfig = tasasGlobales;
 
         // FOTOS REALES Y DATOS SEMILLA CON FECHAS Y RIF
@@ -2250,7 +2311,7 @@
                 logo: "🥖",
                 link: "",
                 desc: "Pan caliente campesino, hojaldres recién horneados, tortas para eventos y café express.",
-                tasas: { cop: 3600, bs: 45.0 },
+                tasas: { cop: 3300, factorBs: 3.0 }, monedasVisibles: { usd: true, cop: true, bs: true },
                 horarios: {
                     dias: "Lunes a Domingo",
                     diasArr: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
@@ -2279,7 +2340,7 @@
                 logo: "🚗",
                 link: "",
                 desc: "Repuestos automotrices garantizados, aceites 20W50, bujías, filtros y baterías.",
-                tasas: { cop: 4000, bs: 50.0 }
+                tasas: { cop: 3300, factorBs: 3.0 }, monedasVisibles: { usd: true, cop: true, bs: true }
             },
             { 
                 slug: "tcl_farmacialasalud", 
@@ -2301,7 +2362,7 @@
                 logo: "💊",
                 link: "",
                 desc: "Medicamentos genéricos y de marca, cuidado personal, fórmulas y delivery express.",
-                tasas: { cop: 3800, bs: 48.0 }
+                tasas: { cop: 3300, factorBs: 3.0 }, monedasVisibles: { usd: true, cop: true, bs: true }
             },
             { 
                 slug: "tcl_tucocel", 
@@ -2323,7 +2384,7 @@
                 logo: "📱",
                 link: "",
                 desc: "Smartphones sellados, cargadores originales, servicio técnico profesional y eSIM.",
-                tasas: { cop: 3600, bs: 45.0 }
+                tasas: { cop: 3300, factorBs: 3.0 }, monedasVisibles: { usd: true, cop: true, bs: true }
             }
         ];
 
@@ -2371,6 +2432,17 @@
                 if (!productosPorTienda[slug] || productosPorTienda[slug].length === 0) {
                     productosPorTienda[slug] = [...PRODUCTOS_SEMILLA[slug]];
                 }
+            });
+
+            // Normalizar tasas fronterizas para tiendas (asegurando paridad real COP y Factor Bs)
+            tiendasEnSistema.forEach(t => {
+                if (!t.tasas) t.tasas = { cop: 3300, factorBs: 3.0 };
+                if (t.tasas.factorBs === undefined || t.tasas.factorBs === null) {
+                    if (t.tasas.bs && t.tasas.bs < 15) t.tasas.factorBs = parseFloat(t.tasas.bs);
+                    else t.tasas.factorBs = 3.0;
+                }
+                if (!t.tasas.cop) t.tasas.cop = 3300;
+                if (!t.monedasVisibles) t.monedasVisibles = { usd: true, cop: true, bs: true };
             });
 
             window.recalcularTotalesYBadgesComercios();
@@ -2566,18 +2638,29 @@
             window.navegarAInicioGuia();
         };
 
-        // MATEMÁTICA MULTIMONEDA CON TASAS PROPIAS DE CADA COMERCIO
+        // MATEMÁTICA MULTIMONEDA CON TASAS FRONTERIZAS REALES (TÁCHIRA)
         function obtenerTasasActivasTienda(slug) {
             const t = tiendasEnSistema.find(x => x.slug === slug);
-            if (t && t.tasas && t.tasas.cop > 0) {
-                return {
-                    cop: parseFloat(t.tasas.cop) || 3600,
-                    bs: parseFloat(t.tasas.bs) || ((parseFloat(t.tasas.cop) || 3600) / 3.3)
-                };
+            let cop = parseFloat(tasasGlobales.cop) || 3300;
+            let factorBs = parseFloat(tasasGlobales.paridadBs) || 3.0;
+
+            if (t && t.tasas) {
+                if (parseFloat(t.tasas.cop) > 0) cop = parseFloat(t.tasas.cop);
+                if (parseFloat(t.tasas.factorBs) > 0) {
+                    factorBs = parseFloat(t.tasas.factorBs);
+                } else if (parseFloat(t.tasas.bs) > 0) {
+                    const vBs = parseFloat(t.tasas.bs);
+                    factorBs = (vBs < 15) ? vBs : 3.0;
+                }
             }
             return {
-                cop: parseFloat(tasasGlobales.cop) || 3600,
-                bs: ((parseFloat(tasasGlobales.cop) || 3600) / (parseFloat(tasasGlobales.paridadBs) || 3.3))
+                cop: cop,
+                factorBs: factorBs,
+                calcularCOP: (usd) => Math.round(usd * cop),
+                calcularBS: (usd) => {
+                    const copTotal = Math.round(usd * cop);
+                    return Math.round(copTotal / factorBs); // Cero decimales siempre
+                }
             };
         }
 
@@ -2585,37 +2668,84 @@
             const tasas = obtenerTasasActivasTienda(slug || tiendaActivaSlug);
             if (monedaDestino === "USD") return `$${precioUSD.toFixed(2)} USD`;
             if (monedaDestino === "COP") {
-                const cop = Math.round(precioUSD * tasas.cop);
+                const cop = tasas.calcularCOP(precioUSD);
                 return `${cop.toLocaleString("es-CO")} COP`;
             }
             if (monedaDestino === "BS") {
-                const bs = Math.round(precioUSD * tasas.bs);
+                const bs = tasas.calcularBS(precioUSD); // Cero decimales
                 return `${bs.toLocaleString("es-VE")} Bs`;
             }
             return `$${precioUSD.toFixed(2)}`;
         }
 
         function obtenerInfoEquivalencia(precioUSD, monedaActual, slug = null) {
-            const tasas = obtenerTasasActivasTienda(slug || tiendaActivaSlug);
+            const s = slug || tiendaActivaSlug;
+            const t = tiendasEnSistema.find(x => x.slug === s);
+            const mVis = (t && t.monedasVisibles) || { usd: true, cop: true, bs: true };
+            const tasas = obtenerTasasActivasTienda(s);
+            const cop = tasas.calcularCOP(precioUSD);
+            const bs = tasas.calcularBS(precioUSD);
+
             if (monedaActual === "USD") {
-                const cop = Math.round(precioUSD * tasas.cop);
-                return {
-                    label: "🇨🇴 En Pesos:",
-                    monto: `${cop.toLocaleString("es-CO")} COP`,
-                    sub: "Tasa del día"
-                };
+                if (mVis.cop !== false) {
+                    return {
+                        label: "🇨🇴 En Pesos:",
+                        monto: `${cop.toLocaleString("es-CO")} COP`,
+                        sub: "Tasa del día"
+                    };
+                } else if (mVis.bs !== false) {
+                    return {
+                        label: "🇻🇪 En Bs:",
+                        monto: `${bs.toLocaleString("es-VE")} Bs`,
+                        sub: "Tasa del día"
+                    };
+                } else {
+                    return {
+                        label: "💵 Precio Fijo:",
+                        monto: `$${precioUSD.toFixed(2)} USD`,
+                        sub: "Moneda base"
+                    };
+                }
             } else if (monedaActual === "COP") {
-                return {
-                    label: "💵 En Dólares:",
-                    monto: `$${precioUSD.toFixed(2)} USD`,
-                    sub: "Tasa del día"
-                };
+                if (mVis.usd !== false) {
+                    return {
+                        label: "💵 En Dólares:",
+                        monto: `$${precioUSD.toFixed(2)} USD`,
+                        sub: "Tasa del día"
+                    };
+                } else if (mVis.bs !== false) {
+                    return {
+                        label: "🇻🇪 En Bs:",
+                        monto: `${bs.toLocaleString("es-VE")} Bs`,
+                        sub: "Tasa del día"
+                    };
+                } else {
+                    return {
+                        label: "🇨🇴 En Pesos:",
+                        monto: `${cop.toLocaleString("es-CO")} COP`,
+                        sub: "Moneda activa"
+                    };
+                }
             } else {
-                return {
-                    label: "💵 En Dólares:",
-                    monto: `$${precioUSD.toFixed(2)} USD`,
-                    sub: "Tasa del día"
-                };
+                if (mVis.usd !== false) {
+                    return {
+                        label: "💵 En Dólares:",
+                        monto: `$${precioUSD.toFixed(2)} USD`,
+                        sub: "Tasa del día"
+                    };
+                } else if (mVis.cop !== false) {
+                    return {
+                        label: "🇨🇴 En Pesos:",
+                        monto: `${cop.toLocaleString("es-CO")} COP`,
+                        sub: "Tasa del día"
+                    };
+                } else {
+                    return {
+                        label: "🇻🇪 En Bs:",
+                        monto: `${bs.toLocaleString("es-VE")} Bs`,
+                        sub: "Moneda activa"
+                    };
+                }
             }
         }
 
@@ -2947,6 +3077,38 @@
             const inBusq = document.getElementById("buscador-tienda-productos");
             if (inBusq) inBusq.value = "";
 
+            // COMPORTAMIENTO ADAPTATIVO DEL SELECTOR DE MONEDAS
+            const mVisibles = tienda.monedasVisibles || { usd: true, cop: true, bs: true };
+            const aceptaUSD = (mVisibles.usd !== false);
+            const aceptaCop = (mVisibles.cop !== false);
+            const aceptaBs = (mVisibles.bs !== false);
+
+            const barraSelector = document.getElementById("barra-selector-monedas-tienda");
+            const btnUSD = document.getElementById("btn-tienda-moneda-usd");
+            const btnCop = document.getElementById("btn-tienda-moneda-cop");
+            const btnBs = document.getElementById("btn-tienda-moneda-bs");
+
+            if (btnUSD) btnUSD.classList.toggle("hidden", !aceptaUSD);
+            if (btnCop) btnCop.classList.toggle("hidden", !aceptaCop);
+            if (btnBs) btnBs.classList.toggle("hidden", !aceptaBs);
+
+            const totalActivas = (aceptaUSD ? 1 : 0) + (aceptaCop ? 1 : 0) + (aceptaBs ? 1 : 0);
+
+            // Si hay 1 o 0 monedas activas (o si desmarcó todas para exhibición pura), ocultar la barra
+            if (totalActivas <= 1) {
+                if (barraSelector) barraSelector.classList.add("hidden");
+                if (aceptaUSD) monedaTiendaActiva = "USD";
+                else if (aceptaCop) monedaTiendaActiva = "COP";
+                else if (aceptaBs) monedaTiendaActiva = "BS";
+                else monedaTiendaActiva = "USD";
+            } else {
+                if (barraSelector) barraSelector.classList.remove("hidden");
+                if (monedaTiendaActiva === "USD" && !aceptaUSD) monedaTiendaActiva = aceptaCop ? "COP" : "BS";
+                if (monedaTiendaActiva === "COP" && !aceptaCop) monedaTiendaActiva = aceptaUSD ? "USD" : "BS";
+                if (monedaTiendaActiva === "BS" && !aceptaBs) monedaTiendaActiva = aceptaUSD ? "USD" : "COP";
+            }
+            window.cambiarMonedaTienda(monedaTiendaActiva);
+
             window.actualizarNavbarEstado();
             renderizarPildorasCategoriasTienda(slug);
             renderizarProductosTienda(slug);
@@ -2990,7 +3152,16 @@
                 const stockVal = p.stock !== undefined ? p.stock : 10;
                 const esAgotado = (p.estado === 'AGOTADO' || stockVal <= 0);
                 const esPausado = (p.estado === 'PAUSADO' || (!p.disponible && !esAgotado));
+
+                // Monedas permitidas en este producto y en la tienda:
+                const tiendaRef = tiendasEnSistema.find(t => t.slug === slug);
+                const mTienda = (tiendaRef && tiendaRef.monedasVisibles) || { usd: true, cop: true, bs: true };
                 
+                const aceptaUSD = (p.mostrarUSD !== false) && (mTienda.usd !== false);
+                const aceptaCOP = (p.mostrarCOP !== false) && (mTienda.cop !== false);
+                const aceptaBS = (p.mostrarBS !== false) && (mTienda.bs !== false);
+                const esSoloReferencia = (!aceptaUSD && !aceptaCOP && !aceptaBS);
+
                 let photoOverlayHTML = "";
                 let botonHTML = "";
 
@@ -3001,6 +3172,10 @@
                 } else if (esPausado) {
                     photoOverlayHTML = `<div class="absolute inset-0 bg-slate-950/50 backdrop-blur-[2px] flex items-center justify-center p-2"><span class="bg-amber-600 text-white font-black text-[9px] px-2.5 py-1 rounded-xl shadow uppercase tracking-wider">⏸️ No Disponible</span></div>`;
                     botonHTML = `<button disabled class="w-full bg-slate-200 text-slate-400 text-[10px] py-2.5 rounded-xl uppercase font-black tracking-wider cursor-not-allowed">⏸️ No Disponible</button>`;
+                } else if (esSoloReferencia) {
+                    botonHTML = `<button onclick="window.consultarProductoWhatsAppCard('${p.id}')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-[10.5px] py-2.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-all btn-interactive shadow-sm font-black">
+                        <i class="fa-brands fa-whatsapp text-xs"></i> Consultar
+                    </button>`;
                 } else {
                     botonHTML = `<button onclick="window.agregarAlCarrito('${p.id}')" class="w-full btn-brand text-[10.5px] py-2.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-all btn-interactive shadow-sm">
                         <i class="fa-solid fa-plus text-xs"></i> Agregar Pedido
@@ -3012,43 +3187,93 @@
                     ? `<span class="bg-indigo-50 text-indigo-700 border border-indigo-200/80 text-[8.5px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">⏳ Bajo Pedido</span>`
                     : `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[8.5px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">⚡ Disponible</span>`;
 
-                // Bloque de precios simétrico, limpio, idéntico en altura y sin palabras confusas
+                // Bloque de precios simétrico y limpio
                 let precioBloqueHTML = "";
-                if (p.tieneMayor && p.precioMayor > 0) {
+                if (esSoloReferencia) {
                     precioBloqueHTML = `
-                    <div class="bg-gradient-to-r from-blue-50/90 to-indigo-50/50 rounded-2xl p-2 sm:p-2.5 border border-blue-200/90 flex flex-col justify-between min-h-[62px] space-y-1.5 shadow-xs">
-                        <div class="flex items-baseline justify-between leading-none">
-                            <span class="text-[9px] font-black uppercase tracking-wider text-slate-500">Detal:</span>
-                            <span class="whitespace-nowrap text-[12px] sm:text-sm font-black font-mono text-slate-900 tracking-tight">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</span>
-                        </div>
-                        <div class="flex items-baseline justify-between border-t border-blue-200/70 pt-1.5 leading-none">
-                            <span class="text-[9px] font-black uppercase tracking-wider text-blue-700 flex items-center gap-1">
-                                <i class="fa-solid fa-boxes-packing text-amber-500 text-[9.5px]"></i> Al Mayor:
-                            </span>
-                            <div class="text-right leading-tight">
-                                <span class="whitespace-nowrap text-xs font-black font-mono text-blue-700 block">${convertirMonto(p.precioMayor, monedaTiendaActiva, slug)}</span>
-                                <span class="text-[8px] text-slate-500 font-bold block">(Mín. ${p.minMayor || 3} un.)</span>
-                            </div>
-                        </div>
+                    <div class="bg-slate-50/90 rounded-2xl p-2 sm:p-2.5 border border-slate-200/90 flex flex-col justify-center items-center min-h-[62px] space-y-0.5 shadow-xs text-center">
+                        <span class="text-[9.5px] font-black uppercase text-slate-500 tracking-wider">Referencia de Catálogo</span>
+                        <span class="text-[10.5px] font-bold text-blue-700 leading-tight">Consultar disponibilidad</span>
                     </div>`;
                 } else {
-                    const eqInfo = obtenerInfoEquivalencia(p.precio, monedaTiendaActiva, slug);
-                    precioBloqueHTML = `
-                    <div class="bg-slate-50/90 rounded-2xl p-2 sm:p-2.5 border border-slate-200/90 flex flex-col justify-between min-h-[62px] space-y-1.5 shadow-xs">
-                        <div class="flex items-baseline justify-between leading-none">
-                            <span class="text-[9px] font-black uppercase tracking-wider text-slate-500">Detal:</span>
-                            <span class="whitespace-nowrap text-[12px] sm:text-sm font-black font-mono text-slate-900 tracking-tight">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</span>
-                        </div>
-                        <div class="flex items-baseline justify-between border-t border-slate-200/70 pt-1.5 leading-none">
-                            <span class="text-[9px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1">
-                                ${eqInfo.label}
-                            </span>
-                            <div class="text-right leading-tight">
-                                <span class="whitespace-nowrap text-xs font-black font-mono text-emerald-700 block">${eqInfo.monto}</span>
-                                <span class="text-[8px] text-slate-400 font-bold block">${eqInfo.sub}</span>
+                    // Determinar qué moneda usar para este producto según lo que eligió el visitante y lo que acepta el producto
+                    let monedaEfectiva = monedaTiendaActiva;
+                    if (monedaEfectiva === 'USD' && !aceptaUSD) monedaEfectiva = aceptaCOP ? 'COP' : 'BS';
+                    if (monedaEfectiva === 'COP' && !aceptaCOP) monedaEfectiva = aceptaUSD ? 'USD' : 'BS';
+                    if (monedaEfectiva === 'BS' && !aceptaBS) monedaEfectiva = aceptaUSD ? 'USD' : 'COP';
+
+                    const tasas = obtenerTasasActivasTienda(slug);
+
+                    if (p.tieneMayor && p.precioMayor > 0) {
+                        precioBloqueHTML = `
+                        <div class="bg-gradient-to-r from-blue-50/90 to-indigo-50/50 rounded-2xl p-2 sm:p-2.5 border border-blue-200/90 flex flex-col justify-between min-h-[62px] space-y-1.5 shadow-xs">
+                            <div class="flex items-baseline justify-between leading-none">
+                                <span class="text-[9px] font-black uppercase tracking-wider text-slate-500">Detal:</span>
+                                <span class="whitespace-nowrap text-[12px] sm:text-sm font-black font-mono text-slate-900 tracking-tight">${convertirMonto(p.precio, monedaEfectiva, slug)}</span>
                             </div>
-                        </div>
-                    </div>`;
+                            <div class="flex items-baseline justify-between border-t border-blue-200/70 pt-1.5 leading-none">
+                                <span class="text-[9px] font-black uppercase tracking-wider text-blue-700 flex items-center gap-1">
+                                    <i class="fa-solid fa-boxes-packing text-amber-500 text-[9.5px]"></i> Al Mayor:
+                                </span>
+                                <div class="text-right leading-tight">
+                                    <span class="whitespace-nowrap text-xs font-black font-mono text-blue-700 block">${convertirMonto(p.precioMayor, monedaEfectiva, slug)}</span>
+                                    <span class="text-[8px] text-slate-500 font-bold block">(Mín. ${p.minMayor || 3} un.)</span>
+                                </div>
+                            </div>
+                        </div>`;
+                    } else {
+                        // Calcular etiqueta de referencia secundaria
+                        let refLabel = "";
+                        let refMonto = "";
+                        let refSub = "Tasa del día";
+
+                        if (monedaEfectiva === 'USD') {
+                            if (aceptaCOP) {
+                                refLabel = "🇨🇴 En Pesos:";
+                                refMonto = `${tasas.calcularCOP(p.precio).toLocaleString("es-CO")} COP`;
+                            } else if (aceptaBS) {
+                                refLabel = "🇻🇪 En Bs:";
+                                refMonto = `${tasas.calcularBS(p.precio).toLocaleString("es-VE")} Bs`;
+                            } else {
+                                refLabel = "💵 En Dólares:";
+                                refMonto = `$${p.precio.toFixed(2)} USD`;
+                                refSub = "Moneda base";
+                            }
+                        } else if (monedaEfectiva === 'COP') {
+                            if (aceptaUSD) {
+                                refLabel = "💵 En Dólares:";
+                                refMonto = `$${p.precio.toFixed(2)} USD`;
+                            } else if (aceptaBS) {
+                                refLabel = "🇻🇪 En Bs:";
+                                refMonto = `${tasas.calcularBS(p.precio).toLocaleString("es-VE")} Bs`;
+                            }
+                        } else if (monedaEfectiva === 'BS') {
+                            if (aceptaUSD) {
+                                refLabel = "💵 En Dólares:";
+                                refMonto = `$${p.precio.toFixed(2)} USD`;
+                            } else if (aceptaCOP) {
+                                refLabel = "🇨🇴 En Pesos:";
+                                refMonto = `${tasas.calcularCOP(p.precio).toLocaleString("es-CO")} COP`;
+                            }
+                        }
+
+                        precioBloqueHTML = `
+                        <div class="bg-slate-50/90 rounded-2xl p-2 sm:p-2.5 border border-slate-200/90 flex flex-col justify-between min-h-[62px] space-y-1.5 shadow-xs">
+                            <div class="flex items-baseline justify-between leading-none">
+                                <span class="text-[9px] font-black uppercase tracking-wider text-slate-500">Detal:</span>
+                                <span class="whitespace-nowrap text-[12px] sm:text-sm font-black font-mono text-slate-900 tracking-tight">${convertirMonto(p.precio, monedaEfectiva, slug)}</span>
+                            </div>
+                            <div class="flex items-baseline justify-between border-t border-slate-200/70 pt-1.5 leading-none">
+                                <span class="text-[9px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1">
+                                    ${refLabel || '💵 Ref:'}
+                                </span>
+                                <div class="text-right leading-tight">
+                                    <span class="whitespace-nowrap text-xs font-black font-mono text-emerald-700 block">${refMonto || convertirMonto(p.precio, 'USD', slug)}</span>
+                                    <span class="text-[8px] text-slate-400 font-bold block">${refSub}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                    }
                 }
 
                 return `
@@ -3108,6 +3333,17 @@
             if (hora >= 12 && hora < 19) return "¡Buenas tardes!";
             return "¡Buenas noches!";
         }
+
+                window.consultarProductoWhatsAppCard = function(prodId) {
+            const prods = productosPorTienda[tiendaActivaSlug] || [];
+            const prod = prods.find(p => p.id === prodId);
+            if (!prod || !tiendaActivaSlug) return;
+            const tienda = tiendasEnSistema.find(t => t.slug === tiendaActivaSlug);
+            if (!tienda) return;
+            const saludo = obtenerSaludoPorHora();
+            const msg = `${saludo} Hola ${tienda.nombre}, quisiera consultar disponibilidad y precio del producto *${prod.nombre}* que vi en su catálogo de TCL TuZona Comercial. 🙌`;
+            abrirWhatsAppDirecto(tienda.telefono, msg);
+        };
 
         window.abrirModalDetalleProducto = function(prodId) {
             const prods = productosPorTienda[tiendaActivaSlug] || [];
@@ -3188,11 +3424,27 @@
             }
 
             const pUSD = prod.precio;
-            const pCOP = Math.round(pUSD * tasas.cop).toLocaleString("es-CO");
-            const pBs = Math.round(pUSD * tasas.bs).toLocaleString("es-VE");
+            const pCOP = tasas.calcularCOP(pUSD).toLocaleString("es-CO");
+            const pBs = tasas.calcularBS(pUSD).toLocaleString("es-VE");
 
-            document.getElementById("det-prod-precio-principal").innerText = convertirMonto(pUSD, monedaTiendaActiva, tiendaActivaSlug);
-            document.getElementById("det-prod-precio-ref").innerText = `Ref: ${pCOP} COP | ${pBs} Bs.`;
+            const tiendaRefMod = tiendasEnSistema.find(t => t.slug === tiendaActivaSlug);
+            const mTiendaMod = (tiendaRefMod && tiendaRefMod.monedasVisibles) || { usd: true, cop: true, bs: true };
+            const aceptaUSDMod = (prod.mostrarUSD !== false) && (mTiendaMod.usd !== false);
+            const aceptaCOPMod = (prod.mostrarCOP !== false) && (mTiendaMod.cop !== false);
+            const aceptaBSMod = (prod.mostrarBS !== false) && (mTiendaMod.bs !== false);
+            const soloRefMod = (!aceptaUSDMod && !aceptaCOPMod && !aceptaBSMod);
+
+            if (soloRefMod) {
+                document.getElementById("det-prod-precio-principal").innerText = "Referencia";
+                document.getElementById("det-prod-precio-ref").innerText = "Precio bajo consulta por WhatsApp";
+            } else {
+                let monEf = monedaTiendaActiva;
+                if (monEf === 'USD' && !aceptaUSDMod) monEf = aceptaCOPMod ? 'COP' : 'BS';
+                if (monEf === 'COP' && !aceptaCOPMod) monEf = aceptaUSDMod ? 'USD' : 'BS';
+                if (monEf === 'BS' && !aceptaBSMod) monEf = aceptaUSDMod ? 'USD' : 'COP';
+                document.getElementById("det-prod-precio-principal").innerText = convertirMonto(pUSD, monEf, tiendaActivaSlug);
+                document.getElementById("det-prod-precio-ref").innerText = `Ref: ${pCOP} COP | ${pBs} Bs`;
+            }
 
             // Precio al Mayor en modal detalle
             const boxMayor = document.getElementById("det-prod-box-mayor");
@@ -3263,8 +3515,8 @@
             const saludo = obtenerSaludoPorHora();
             const tasas = obtenerTasasActivasTienda(tiendaActivaSlug);
             const pUSD = productoSeleccionadoModal.precio;
-            const pCOP = Math.round(pUSD * tasas.cop).toLocaleString("es-CO");
-            const pBs = Math.round(pUSD * tasas.bs).toLocaleString("es-VE");
+            const pCOP = tasas.calcularCOP(pUSD).toLocaleString("es-CO");
+            const pBs = tasas.calcularBS(pUSD).toLocaleString("es-VE");
             const modalidadTxt = productoSeleccionadoModal.entregaTipo === 'BAJO_PEDIDO' ? '⏳ Bajo Pedido (Por Encargo)' : '⚡ Entrega Disponible (En Mostrador)';
 
             let msg = `🛍️ *PEDIDO DIRECTO — ${tienda.nombre}*\n\n${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL TuZona Comercial*:\n\n📦 *PRODUCTO:* ${productoSeleccionadoModal.nombre}\n💰 *PRECIO:* $${pUSD.toFixed(2)} USD | ${pCOP} COP | ${pBs} Bs.\n🕒 *MODALIDAD:* ${modalidadTxt}\n👤 *CLIENTE:* ${nom}\n📍 *DIRECCIÓN:* ${dir}\n🛵 *ENTREGA:* ${entrega}\n💳 *FORMA DE PAGO:* ${pago}\n\n¿Me confirman disponibilidad para coordinar la entrega? 🙌`;
@@ -3360,9 +3612,9 @@
                 return acc + (pU * it.cant);
             }, 0);
             document.getElementById("chk-monto-total-usd").innerText = convertirMonto(totalUSD, monedaTiendaActiva, tiendaActivaSlug);
-            const totalCOP = Math.round(totalUSD * tasas.cop).toLocaleString("es-CO");
-            const totalBs = Math.round(totalUSD * tasas.bs).toLocaleString("es-VE");
-            document.getElementById("chk-monto-equivalentes").innerText = `Ref: ${totalCOP} COP | ${totalBs} Bs.`;
+            const totalCOP = tasas.calcularCOP(totalUSD).toLocaleString("es-CO");
+            const totalBs = tasas.calcularBS(totalUSD).toLocaleString("es-VE");
+            document.getElementById("chk-monto-equivalentes").innerText = `Ref: ${totalCOP} COP | ${totalBs} Bs`;
             modal.classList.remove("hidden");
         };
 
@@ -3396,8 +3648,8 @@
                 const pU = aplicaMayor ? it.precioMayor : it.precio;
                 return acc + (pU * it.cant);
             }, 0);
-            const totalCOP = Math.round(totalUSD * tasas.cop).toLocaleString("es-CO");
-            const totalBs = Math.round(totalUSD * tasas.bs).toLocaleString("es-VE");
+            const totalCOP = tasas.calcularCOP(totalUSD).toLocaleString("es-CO");
+            const totalBs = tasas.calcularBS(totalUSD).toLocaleString("es-VE");
 
             let msg = `🛍️ *NUEVO PEDIDO DESDE TU VITRINA DIGITAL*\n🏢 *Comercio:* ${tienda.nombre}\n\n👤 *Cliente:* ${nombreCli}\n📍 *Dirección:* ${dirCli}\n🛵 *Entrega:* ${entrega}\n💳 *Pago:* ${pago}\n━━━━━━━━━━━━━━━━━━━━━\n*PRODUCTOS:*\n`;
             items.forEach(it => {
@@ -3779,22 +4031,39 @@
             }
         };
 
-        // GUARDAR TASAS FIJAS DEL COMERCIANTE
+        // GUARDAR TASAS FIJAS Y MONEDAS VISIBLES DEL COMERCIANTE (FRONTERIZO)
         window.guardarTasasComerciante = async function() {
             if (!comercianteSesion) return;
             const slug = comercianteSesion.slug;
 
-            const cop = parseFloat(document.getElementById("tienda-tasa-cop-inp").value) || 3600;
-            const bs = parseFloat(document.getElementById("tienda-tasa-bs-inp").value) || (cop / 3.3);
+            const cop = parseFloat(document.getElementById("tienda-tasa-cop-inp").value) || 3300;
+            const factorBs = parseFloat(document.getElementById("tienda-tasa-factor-bs-inp").value) || 3.0;
+
+            const chkUSD = document.getElementById("chk-moneda-usd") ? document.getElementById("chk-moneda-usd").checked : true;
+            const chkCop = document.getElementById("chk-moneda-cop") ? document.getElementById("chk-moneda-cop").checked : true;
+            const chkBs = document.getElementById("chk-moneda-bs") ? document.getElementById("chk-moneda-bs").checked : true;
+
+            const monedasVisibles = {
+                usd: chkUSD,
+                cop: chkCop,
+                bs: chkBs
+            };
 
             const idx = tiendasEnSistema.findIndex(t => t.slug === slug);
             if (idx !== -1) {
-                tiendasEnSistema[idx].tasas = { cop, bs };
-                comercianteSesion.tasas = { cop, bs };
+                tiendasEnSistema[idx].tasas = { cop, factorBs };
+                tiendasEnSistema[idx].monedasVisibles = monedasVisibles;
+                comercianteSesion.tasas = { cop, factorBs };
+                comercianteSesion.monedasVisibles = monedasVisibles;
             }
 
             await guardarEnNube();
-            alert(`✅ ¡Tus tasas fijas han sido guardadas con éxito!\n\n• 1 USD = ${cop.toLocaleString("es-CO")} COP\n• 1 USD = ${bs.toFixed(2)} Bs\n\nTodos tus productos se calcularán con estas tasas fijas.`);
+            let listaM = [];
+            if (chkUSD) listaM.push("Dólares ($ USD)");
+            if (chkCop) listaM.push(`Pesos (${cop.toLocaleString("es-CO")} COP)`);
+            if (chkBs) listaM.push(`Bolívares (Factor: ${factorBs} Pesos/Bs, 0 dec)`);
+            const monedasActivasTxt = listaM.length > 0 ? listaM.join(", ") : "Solo Exhibición de Productos y Referencia (Sin precios)";
+            alert(`✅ ¡Tasas y monedas guardadas con éxito!\n\n• Tasa COP: ${cop.toLocaleString("es-CO")}\n• Factor Paridad Bs: ${factorBs}\n• Monedas visibles: ${monedasActivasTxt}`);
             window.cambiarTabComerciante('PRODUCTOS');
         };
 
@@ -3925,18 +4194,27 @@
             const desc = document.getElementById("prod-inp-desc").value.trim();
             const foto = document.getElementById("prod-foto-base64").value;
 
-            if (!nombre || precio <= 0) return alert("Ingrese nombre y precio válido.");
+            // Casillas de verificación de monedas por producto
+            const chkUSD = document.getElementById("prod-chk-usd") ? document.getElementById("prod-chk-usd").checked : true;
+            const chkCOP = document.getElementById("prod-chk-cop") ? document.getElementById("prod-chk-cop").checked : true;
+            const chkBS = document.getElementById("prod-chk-bs") ? document.getElementById("prod-chk-bs").checked : true;
+
+            if (!nombre) return alert("Por favor ingresa el nombre del producto o equipo.");
+
+            if ((chkUSD || chkCOP || chkBS) && precio <= 0) {
+                return alert("Ingresa un precio válido o desmarca todas las casillas de monedas si deseas exhibirlo únicamente como catálogo de referencia.");
+            }
             
             const tasas = obtenerTasasActivasTienda(slug);
             let precioUSD = precio;
             if (moneda === "COP") precioUSD = precio / tasas.cop;
-            if (moneda === "BS") precioUSD = precio / tasas.bs;
+            if (moneda === "BS") precioUSD = (precio * tasas.factorBs) / tasas.cop;
 
             let precioMayorUSD = null;
             if (tieneMayor && precioMayor > 0) {
                 precioMayorUSD = precioMayor;
                 if (moneda === "COP") precioMayorUSD = precioMayor / tasas.cop;
-                if (moneda === "BS") precioMayorUSD = precioMayor / tasas.bs;
+                if (moneda === "BS") precioMayorUSD = (precioMayor * tasas.factorBs) / tasas.cop;
             }
 
             const datosProd = {
@@ -3951,6 +4229,9 @@
                 tieneMayor: tieneMayor && (precioMayorUSD > 0),
                 precioMayor: tieneMayor ? precioMayorUSD : null,
                 minMayor: tieneMayor ? minMayor : null,
+                mostrarUSD: chkUSD,
+                mostrarCOP: chkCOP,
+                mostrarBS: chkBS,
                 desc,
                 foto
             };
@@ -3992,6 +4273,9 @@
             document.getElementById("prod-inp-precio-mayor").value = "";
             document.getElementById("prod-inp-min-mayor").value = "3";
             document.getElementById("prod-inp-desc").value = "";
+            if (document.getElementById("prod-chk-usd")) document.getElementById("prod-chk-usd").checked = true;
+            if (document.getElementById("prod-chk-cop")) document.getElementById("prod-chk-cop").checked = true;
+            if (document.getElementById("prod-chk-bs")) document.getElementById("prod-chk-bs").checked = true;
             document.getElementById("box-preview-prod-foto").innerHTML = `<i class="fa-solid fa-image"></i>`;
             document.getElementById("btn-cancelar-edicion-prod").classList.add("hidden");
             const lblBtn = document.getElementById("lbl-btn-guardar-prod");
@@ -4065,9 +4349,21 @@
             if (p.moneda === "COP") {
                 precioMostrar = Math.round(p.precio * tasas.cop);
             } else if (p.moneda === "BS") {
-                precioMostrar = +(p.precio * tasas.bs).toFixed(2);
+                const cop = Math.round(p.precio * tasas.cop);
+                precioMostrar = Math.round(cop / tasas.factorBs);
             } else {
                 precioMostrar = +p.precio.toFixed(2);
+            }
+
+            // Casillas de verificación de monedas del producto
+            if (document.getElementById("prod-chk-usd")) {
+                document.getElementById("prod-chk-usd").checked = (p.mostrarUSD !== false);
+            }
+            if (document.getElementById("prod-chk-cop")) {
+                document.getElementById("prod-chk-cop").checked = (p.mostrarCOP !== false);
+            }
+            if (document.getElementById("prod-chk-bs")) {
+                document.getElementById("prod-chk-bs").checked = (p.mostrarBS !== false);
             }
 
             document.getElementById("prod-inp-precio").value = precioMostrar;
@@ -4314,7 +4610,7 @@
                     estatus: 'ACTIVO', 
                     fechaCreacion: Date.now(), 
                     desc: `Productos y catálogo digital en ${zona}.`, 
-                    tasas: { cop: 3600, bs: 45.0 } 
+                    tasas: { cop: 3300, factorBs: 3.0 }, monedasVisibles: { usd: true, cop: true, bs: true } 
                 });
                 if (!productosPorTienda[user]) productosPorTienda[user] = [];
             }
@@ -4652,10 +4948,27 @@
             const inHNoche = document.getElementById("perfil-inp-horario-noche");
             if (inHNoche) inHNoche.value = h.noche || '';
 
-            // Cargar tasas fijas del comercio en la pestaña de Tasas
-            const tasas = tienda.tasas || { cop: 3600, bs: 45.0 };
-            document.getElementById("tienda-tasa-cop-inp").value = tasas.cop || 3600;
-            document.getElementById("tienda-tasa-bs-inp").value = tasas.bs || 45.0;
+            // Cargar tasas fijas del comercio en la pestaña de Tasas (Lógica Fronteriza)
+            const tasas = tienda.tasas || { cop: 3300, factorBs: 3.0 };
+            document.getElementById("tienda-tasa-cop-inp").value = tasas.cop || 3300;
+            let fBs = tasas.factorBs !== undefined ? tasas.factorBs : 3.0;
+            if (fBs === undefined || fBs === null) {
+                if (tasas.bs && tasas.bs < 15) fBs = tasas.bs;
+                else fBs = 3.0;
+            }
+            document.getElementById("tienda-tasa-factor-bs-inp").value = fBs;
+
+            // Cargar casillas de verificación (chulitos) de monedas visibles
+            const mVis = tienda.monedasVisibles || { usd: true, cop: true, bs: true };
+            if (document.getElementById("chk-moneda-usd")) {
+                document.getElementById("chk-moneda-usd").checked = (mVis.usd !== false);
+            }
+            if (document.getElementById("chk-moneda-cop")) {
+                document.getElementById("chk-moneda-cop").checked = (mVis.cop !== false);
+            }
+            if (document.getElementById("chk-moneda-bs")) {
+                document.getElementById("chk-moneda-bs").checked = (mVis.bs !== false);
+            }
 
             renderizarMisProductosComerciante();
             window.cambiarTabComerciante('PRODUCTOS');
