@@ -432,6 +432,9 @@
                 <div id="det-prod-badge-disp" class="absolute bottom-3 left-3 bg-emerald-500 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md">
                     ● En Stock
                 </div>
+                <div id="det-prod-badge-entrega" class="absolute bottom-3 right-3 bg-indigo-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md">
+                    ⚡ Entrega Inmediata
+                </div>
             </div>
 
             <div class="p-4 sm:p-5 overflow-y-auto space-y-3.5 no-scrollbar flex-grow">
@@ -441,6 +444,15 @@
                     <div class="mt-2 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
                         <strong id="det-prod-precio-principal" class="text-xl font-black font-mono text-slate-900">$0.00 USD</strong>
                         <span id="det-prod-precio-ref" class="text-xs font-mono text-slate-400 font-bold block">Ref: 0 COP | 0.00 Bs</span>
+                    </div>
+                    <div id="det-prod-box-mayor" class="hidden mt-2 bg-blue-50 border border-blue-200 p-2.5 rounded-2xl flex items-center justify-between text-xs">
+                        <span class="text-blue-800 font-black uppercase text-[10px] flex items-center gap-1.5">
+                            <i class="fa-solid fa-boxes-packing text-amber-500"></i> Precio al Mayor:
+                        </span>
+                        <div class="text-right">
+                            <strong id="det-prod-precio-mayor-txt" class="font-mono font-black text-blue-900 text-sm block">$0.00 USD</strong>
+                            <span id="det-prod-min-mayor-txt" class="text-[9px] text-slate-500 block font-bold font-mono">A partir de 3 unidades</span>
+                        </div>
                     </div>
                 </div>
 
@@ -646,6 +658,47 @@
                             <option value="AGOTADO">🚫 Agotado (Sin Existencia)</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- MODALIDAD DE ENTREGA & PRECIO AL MAYOR -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 bg-slate-50 p-2.5 rounded-2xl border border-slate-200">
+                    <div>
+                        <label class="text-[9px] text-slate-600 uppercase font-bold block mb-0.5">Modalidad de Entrega *</label>
+                        <select id="prod-inp-entrega-tipo" class="input-clean font-bold text-xs">
+                            <option value="INMEDIATA">⚡ Entrega Inmediata (En Mostrador)</option>
+                            <option value="BAJO_PEDIDO">⏳ Bajo Pedido (Por Encargo / Catálogo)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[9px] text-slate-600 uppercase font-bold block mb-0.5">¿Venta al Mayor? (Opcional)</label>
+                        <select id="prod-select-tiene-mayor" onchange="window.togglePrecioMayorForm(this.value)" class="input-clean font-bold text-xs">
+                            <option value="NO">❌ Solo precio al detal (Normal)</option>
+                            <option value="SI">📦 Activar precio al mayor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- CAJA DE CONFIGURACIÓN PRECIO AL MAYOR (DINÁMICA) -->
+                <div id="box-campos-mayor" class="hidden bg-blue-50/70 p-3 rounded-2xl border border-blue-200 space-y-2">
+                    <div class="flex items-center justify-between border-b border-blue-200/60 pb-1">
+                        <span class="text-[9.5px] font-black uppercase text-blue-900 flex items-center gap-1">
+                            <i class="fa-solid fa-boxes-packing text-amber-500"></i> Configuración de Precio al Mayor
+                        </span>
+                        <span class="text-[9px] text-blue-600 font-bold">Misma moneda seleccionada arriba</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[9px] text-slate-600 uppercase font-bold block mb-0.5">Precio al Mayor *</label>
+                            <input type="number" step="any" id="prod-inp-precio-mayor" placeholder="Ej: 4.20" class="input-clean font-mono font-bold text-blue-800 text-xs bg-white">
+                        </div>
+                        <div>
+                            <label class="text-[9px] text-slate-600 uppercase font-bold block mb-0.5">Cantidad Mínima para Mayor *</label>
+                            <input type="number" id="prod-inp-min-mayor" min="2" value="3" placeholder="Ej: 3 o 6" class="input-clean font-mono font-bold text-slate-800 text-xs bg-white">
+                        </div>
+                    </div>
+                    <p class="text-[8.5px] text-slate-500 leading-tight">
+                        💡 Si se activa, en la vitrina aparecerá la pastilla con el precio al mayor y el descuento se aplicará automáticamente cuando el cliente agregue esa cantidad o más.
+                    </p>
                 </div>
 
                 <div>
@@ -2914,39 +2967,75 @@
                 const esAgotado = (p.estado === 'AGOTADO' || stockVal <= 0);
                 const esPausado = (p.estado === 'PAUSADO' || (!p.disponible && !esAgotado));
                 
-                let badgeHTML = "";
+                let photoOverlayHTML = "";
                 let botonHTML = "";
 
+                // La foto se mantiene 100% limpia sin etiquetas invasivas. Solo si está agotado o pausado se muestra un aviso translúcido.
                 if (esAgotado) {
-                    badgeHTML = `<span class="bg-rose-100 text-rose-700 text-[8.5px] font-black px-2 py-0.5 rounded-md uppercase border border-rose-200">🚫 Agotado</span>`;
+                    photoOverlayHTML = `<div class="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] flex items-center justify-center p-2"><span class="bg-rose-600 text-white font-black text-[9px] px-2.5 py-1 rounded-xl shadow uppercase tracking-wider">🚫 Agotado</span></div>`;
                     botonHTML = `<button disabled class="w-full bg-slate-200 text-slate-400 text-[10px] py-2 rounded-xl uppercase font-black tracking-wider cursor-not-allowed">🚫 Sin Existencia</button>`;
                 } else if (esPausado) {
-                    badgeHTML = `<span class="bg-amber-100 text-amber-800 text-[8.5px] font-black px-2 py-0.5 rounded-md uppercase border border-amber-200">⏸️ No disponible</span>`;
+                    photoOverlayHTML = `<div class="absolute inset-0 bg-slate-950/50 backdrop-blur-[2px] flex items-center justify-center p-2"><span class="bg-amber-600 text-white font-black text-[9px] px-2.5 py-1 rounded-xl shadow uppercase tracking-wider">⏸️ No Disponible</span></div>`;
                     botonHTML = `<button disabled class="w-full bg-slate-200 text-slate-400 text-[10px] py-2 rounded-xl uppercase font-black tracking-wider cursor-not-allowed">⏸️ No Disponible</button>`;
                 } else {
-                    badgeHTML = `<span class="bg-emerald-50 text-emerald-700 text-[8.5px] font-black px-2 py-0.5 rounded-md uppercase border border-emerald-200">🟢 En Stock (${stockVal})</span>`;
-                    botonHTML = `<button onclick="window.agregarAlCarrito('${p.id}')" class="w-full btn-brand text-[10px] py-2 rounded-xl uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-all btn-interactive">
+                    botonHTML = `<button onclick="window.agregarAlCarrito('${p.id}')" class="w-full btn-brand text-[10.5px] py-2.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-all btn-interactive shadow-sm">
                         <i class="fa-solid fa-plus text-xs"></i> Agregar Pedido
                     </button>`;
                 }
 
-                return `
-                <div onclick="window.abrirModalDetalleProducto('${p.id}')" class="card-product p-3.5 flex flex-col justify-between space-y-2.5 cursor-pointer active:scale-[0.99] transition-transform ${esAgotado ? 'opacity-85' : ''}">
-                    <div class="space-y-2">
-                        <div class="relative w-full h-36 bg-slate-100 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-100">
-                            ${p.foto ? `<img src="${p.foto}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-box-open text-slate-300 text-2xl"></i>`}
-                            <div class="absolute top-2 left-2">
-                                ${badgeHTML}
+                // Modalidad de Entrega organizada fuera de la imagen
+                const entregaBadge = (p.entregaTipo === 'BAJO_PEDIDO')
+                    ? `<span class="bg-indigo-50 text-indigo-700 border border-indigo-200/80 text-[8.5px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">⏳ Bajo Pedido</span>`
+                    : `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[8.5px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">⚡ Inmediata</span>`;
+
+                // Bloque de Precio Detal y Mayor espacioso, legible y sin colisiones
+                let precioBloqueHTML = "";
+                if (p.tieneMayor && p.precioMayor > 0) {
+                    precioBloqueHTML = `
+                    <div class="bg-gradient-to-r from-blue-50/90 to-indigo-50/50 rounded-2xl p-2.5 border border-blue-200/90 space-y-1.5 my-1 shadow-xs">
+                        <div class="flex items-baseline justify-between leading-none">
+                            <span class="text-[9px] font-black uppercase tracking-wider text-slate-500">Detal:</span>
+                            <strong class="text-xs font-black font-mono text-slate-900">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</strong>
+                        </div>
+                        <div class="flex items-baseline justify-between border-t border-blue-200/60 pt-1.5 leading-none">
+                            <span class="text-[9px] font-black uppercase tracking-wider text-blue-700 flex items-center gap-1">
+                                <i class="fa-solid fa-boxes-packing text-amber-500 text-[10px]"></i> Al Mayor:
+                            </span>
+                            <div class="text-right leading-tight">
+                                <strong class="text-xs font-black font-mono text-blue-700 block">${convertirMonto(p.precioMayor, monedaTiendaActiva, slug)}</strong>
+                                <span class="text-[8px] text-slate-500 font-bold block">(Mín. ${p.minMayor || 3} unid.)</span>
                             </div>
                         </div>
-                        <div>
-                            <span class="text-[9.5px] text-blue-600 uppercase font-black tracking-wider block">${p.categoria || 'General'}</span>
+                    </div>`;
+                } else {
+                    precioBloqueHTML = `
+                    <div class="py-1">
+                        <strong class="text-sm sm:text-base font-black font-mono text-slate-900 block">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</strong>
+                    </div>`;
+                }
+
+                return `
+                <div onclick="window.abrirModalDetalleProducto('${p.id}')" class="card-product p-3 sm:p-3.5 flex flex-col justify-between space-y-2.5 cursor-pointer active:scale-[0.99] transition-transform ${esAgotado ? 'opacity-85' : ''}">
+                    <div class="space-y-2">
+                        <!-- FOTO LIMPIA (LA ESTRELLA DEL PRODUCTO) -->
+                        <div class="relative w-full h-36 sm:h-40 bg-slate-100 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-100 shadow-inner">
+                            ${p.foto ? `<img src="${p.foto}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-box-open text-slate-300 text-2xl"></i>`}
+                            ${photoOverlayHTML}
+                        </div>
+                        
+                        <!-- INFORMACIÓN DEL PRODUCTO: CATEGORÍA Y ENTREGA ORGANIZADOS -->
+                        <div class="space-y-1">
+                            <div class="flex items-center justify-between gap-1.5 leading-none">
+                                <span class="text-[9.5px] text-blue-600 uppercase font-black tracking-wider truncate">${p.categoria || 'General'}</span>
+                                ${entregaBadge}
+                            </div>
                             <h4 class="text-xs font-extrabold text-slate-900 uppercase line-clamp-2 leading-snug">${p.nombre}</h4>
-                            <p class="text-[10px] text-slate-500 line-clamp-2 mt-0.5 font-medium leading-tight">${p.desc || ''}</p>
+                            <p class="text-[10px] text-slate-500 line-clamp-2 font-medium leading-tight">${p.desc || ''}</p>
                         </div>
                     </div>
-                    <div class="space-y-2 pt-1.5 border-t border-slate-100" onclick="event.stopPropagation()">
-                        <strong class="text-sm font-black font-mono text-slate-900 block">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</strong>
+
+                    <div class="space-y-1.5 pt-1 border-t border-slate-100" onclick="event.stopPropagation()">
+                        ${precioBloqueHTML}
                         ${botonHTML}
                     </div>
                 </div>`;
@@ -2976,7 +3065,6 @@
             grid.innerHTML = html;
         }
 
-        // LÓGICA DEL MODAL DE DETALLE DEL PRODUCTO
         function obtenerSaludoPorHora() {
             const hora = new Date().getHours();
             if (hora >= 5 && hora < 12) return "¡Buenos días!";
@@ -3004,6 +3092,18 @@
             const badgeDisp = document.getElementById("det-prod-badge-disp");
             const btnAdd = document.getElementById("det-btn-add-carrito");
             const btnComprar = document.getElementById("det-btn-comprar-ahora");
+
+            // Modalidad de Entrega en modal
+            const badgeEntrega = document.getElementById("det-prod-badge-entrega");
+            if (badgeEntrega) {
+                if (prod.entregaTipo === 'BAJO_PEDIDO') {
+                    badgeEntrega.className = "absolute bottom-3 right-3 bg-indigo-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
+                    badgeEntrega.innerText = "⏳ Bajo Pedido";
+                } else {
+                    badgeEntrega.className = "absolute bottom-3 right-3 bg-emerald-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
+                    badgeEntrega.innerText = "⚡ Entrega Inmediata";
+                }
+            }
 
             if (esAgotado) {
                 badgeDisp.className = "absolute bottom-3 left-3 bg-rose-600 text-white font-black text-[9.5px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
@@ -3056,6 +3156,20 @@
 
             document.getElementById("det-prod-precio-principal").innerText = convertirMonto(pUSD, monedaTiendaActiva, tiendaActivaSlug);
             document.getElementById("det-prod-precio-ref").innerText = `Ref: ${pCOP} COP | ${pBs} Bs.`;
+
+            // Precio al Mayor en modal detalle
+            const boxMayor = document.getElementById("det-prod-box-mayor");
+            const txtMayor = document.getElementById("det-prod-precio-mayor-txt");
+            const minMayorTxt = document.getElementById("det-prod-min-mayor-txt");
+            if (boxMayor && txtMayor && minMayorTxt) {
+                if (prod.tieneMayor && prod.precioMayor > 0) {
+                    boxMayor.classList.remove("hidden");
+                    txtMayor.innerText = convertirMonto(prod.precioMayor, monedaTiendaActiva, tiendaActivaSlug);
+                    minMayorTxt.innerText = `A partir de ${prod.minMayor || 3} unidades`;
+                } else {
+                    boxMayor.classList.add("hidden");
+                }
+            }
 
             document.getElementById("det-box-compra-directa").classList.add("hidden");
             document.getElementById("modal-detalle-producto").classList.remove("hidden");
@@ -3114,8 +3228,9 @@
             const pUSD = productoSeleccionadoModal.precio;
             const pCOP = Math.round(pUSD * tasas.cop).toLocaleString("es-CO");
             const pBs = (pUSD * tasas.bs).toFixed(2);
+            const modalidadTxt = productoSeleccionadoModal.entregaTipo === 'BAJO_PEDIDO' ? '⏳ Bajo Pedido (Por Encargo)' : '⚡ Entrega Inmediata (En Mostrador)';
 
-            let msg = `🛍️ *PEDIDO DIRECTO — ${tienda.nombre}*\n\n${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL TuZona Comercial*:\n\n📦 *PRODUCTO:* ${productoSeleccionadoModal.nombre}\n💰 *PRECIO:* $${pUSD.toFixed(2)} USD | ${pCOP} COP | ${pBs} Bs.\n👤 *CLIENTE:* ${nom}\n📍 *DIRECCIÓN:* ${dir}\n🛵 *ENTREGA:* ${entrega}\n💳 *FORMA DE PAGO:* ${pago}\n\n¿Me confirman disponibilidad para coordinar la entrega? 🙌`;
+            let msg = `🛍️ *PEDIDO DIRECTO — ${tienda.nombre}*\n\n${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL TuZona Comercial*:\n\n📦 *PRODUCTO:* ${productoSeleccionadoModal.nombre}\n💰 *PRECIO:* $${pUSD.toFixed(2)} USD | ${pCOP} COP | ${pBs} Bs.\n🕒 *MODALIDAD:* ${modalidadTxt}\n👤 *CLIENTE:* ${nom}\n📍 *DIRECCIÓN:* ${dir}\n🛵 *ENTREGA:* ${entrega}\n💳 *FORMA DE PAGO:* ${pago}\n\n¿Me confirman disponibilidad para coordinar la entrega? 🙌`;
 
             window.cerrarModalDetalleProducto();
             abrirWhatsAppDirecto(tienda.telefono, msg);
@@ -3140,7 +3255,17 @@
                 }
                 item.cant += 1;
             } else {
-                carritoCompras.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, cant: 1, tiendaSlug: tiendaActivaSlug });
+                carritoCompras.push({ 
+                    id: prod.id, 
+                    nombre: prod.nombre, 
+                    precio: prod.precio, 
+                    precioMayor: prod.precioMayor || null,
+                    minMayor: prod.minMayor || null,
+                    tieneMayor: !!(prod.tieneMayor && prod.precioMayor > 0),
+                    entregaTipo: prod.entregaTipo || 'INMEDIATA',
+                    cant: 1, 
+                    tiendaSlug: tiendaActivaSlug 
+                });
             }
             actualizarBarraCarrito();
         };
@@ -3150,7 +3275,11 @@
             const items = carritoCompras.filter(it => it.tiendaSlug === tiendaActivaSlug);
             if (items.length === 0) return barra.classList.add("hidden");
             barra.classList.remove("hidden");
-            const totalUSD = items.reduce((acc, it) => acc + (it.precio * it.cant), 0);
+            const totalUSD = items.reduce((acc, it) => {
+                const aplicaMayor = it.tieneMayor && it.precioMayor > 0 && it.cant >= (it.minMayor || 3);
+                const pU = aplicaMayor ? it.precioMayor : it.precio;
+                return acc + (pU * it.cant);
+            }, 0);
             const totalCant = items.reduce((acc, it) => acc + it.cant, 0);
             document.getElementById("lbl-carrito-cant").innerText = `${totalCant} productos agregados`;
             document.getElementById("lbl-carrito-total").innerText = convertirMonto(totalUSD, monedaTiendaActiva, tiendaActivaSlug);
@@ -3164,20 +3293,35 @@
 
             const tasas = obtenerTasasActivasTienda(tiendaActivaSlug);
 
-            cont.innerHTML = items.map((it, idx) => `
+            cont.innerHTML = items.map((it, idx) => {
+                const aplicaMayor = it.tieneMayor && it.precioMayor > 0 && it.cant >= (it.minMayor || 3);
+                const pU = aplicaMayor ? it.precioMayor : it.precio;
+                const entregaTxt = it.entregaTipo === 'BAJO_PEDIDO' ? ' <span class="text-indigo-600 text-[8.5px] font-bold">⏳ Bajo Pedido</span>' : '';
+                const mayorBadge = aplicaMayor ? ' <span class="bg-blue-100 text-blue-700 px-1 py-0.5 rounded font-black text-[8.5px] uppercase">Mayor</span>' : '';
+
+                return `
                 <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200 flex justify-between items-center text-xs">
                     <div class="min-w-0 flex-1 pr-2">
                         <span class="text-slate-900 font-bold block truncate">${it.nombre}</span>
-                        <span class="text-[10px] text-emerald-600 font-mono font-bold">${convertirMonto(it.precio, monedaTiendaActiva, tiendaActivaSlug)} c/u</span>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <span class="text-[10px] text-emerald-600 font-mono font-bold">${convertirMonto(pU, monedaTiendaActiva, tiendaActivaSlug)} c/u</span>
+                            ${mayorBadge}
+                            ${entregaTxt}
+                        </div>
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 font-mono">
                         <button onclick="window.cambiarCantCarrito(${idx}, -1)" class="w-6 h-6 rounded bg-slate-200 text-slate-700 font-bold flex items-center justify-center">-</button>
                         <span class="font-bold text-slate-900 px-1.5">${it.cant}</span>
                         <button onclick="window.cambiarCantCarrito(${idx}, 1)" class="w-6 h-6 rounded bg-blue-600 text-white font-bold flex items-center justify-center">+</button>
                     </div>
-                </div>`).join("");
+                </div>`;
+            }).join("");
 
-            const totalUSD = items.reduce((acc, it) => acc + (it.precio * it.cant), 0);
+            const totalUSD = items.reduce((acc, it) => {
+                const aplicaMayor = it.tieneMayor && it.precioMayor > 0 && it.cant >= (it.minMayor || 3);
+                const pU = aplicaMayor ? it.precioMayor : it.precio;
+                return acc + (pU * it.cant);
+            }, 0);
             document.getElementById("chk-monto-total-usd").innerText = convertirMonto(totalUSD, monedaTiendaActiva, tiendaActivaSlug);
             const totalCOP = Math.round(totalUSD * tasas.cop).toLocaleString("es-CO");
             const totalBs = (totalUSD * tasas.bs).toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -3210,12 +3354,22 @@
             const pago = document.getElementById("chk-in-pago").value;
 
             const tasas = obtenerTasasActivasTienda(tiendaActivaSlug);
-            const totalUSD = items.reduce((acc, it) => acc + (it.precio * it.cant), 0);
+            const totalUSD = items.reduce((acc, it) => {
+                const aplicaMayor = it.tieneMayor && it.precioMayor > 0 && it.cant >= (it.minMayor || 3);
+                const pU = aplicaMayor ? it.precioMayor : it.precio;
+                return acc + (pU * it.cant);
+            }, 0);
             const totalCOP = Math.round(totalUSD * tasas.cop).toLocaleString("es-CO");
             const totalBs = (totalUSD * tasas.bs).toFixed(2);
 
             let msg = `🛍️ *NUEVO PEDIDO DESDE TU VITRINA DIGITAL*\n🏢 *Comercio:* ${tienda.nombre}\n\n👤 *Cliente:* ${nombreCli}\n📍 *Dirección:* ${dirCli}\n🛵 *Entrega:* ${entrega}\n💳 *Pago:* ${pago}\n━━━━━━━━━━━━━━━━━━━━━\n*PRODUCTOS:*\n`;
-            items.forEach(it => { msg += `▪️ ${it.cant}x ${it.nombre} ($${(it.precio * it.cant).toFixed(2)})\n`; });
+            items.forEach(it => {
+                const aplicaMayor = it.tieneMayor && it.precioMayor > 0 && it.cant >= (it.minMayor || 3);
+                const pU = aplicaMayor ? it.precioMayor : it.precio;
+                const entregaTxt = it.entregaTipo === 'BAJO_PEDIDO' ? ' [⏳ Bajo Pedido]' : '';
+                const mayorTxt = aplicaMayor ? ' [📦 Precio al Mayor]' : '';
+                msg += `▪️ ${it.cant}x ${it.nombre} ($${(pU * it.cant).toFixed(2)})${mayorTxt}${entregaTxt}\n`;
+            });
             msg += `━━━━━━━━━━━━━━━━━━━━━\n💰 *TOTAL A PAGAR:*\n💵 $${totalUSD.toFixed(2)} USD\n🇨🇴 ${totalCOP} COP\n🇻🇪 ${totalBs} Bs.\n\n¡Hola! Acabo de hacer mi pedido a través de su vitrina en TCL TuZona Comercial. ¿Me confirman para coordinar? 🙌`;
 
             carritoCompras = carritoCompras.filter(it => it.tiendaSlug !== tiendaActivaSlug);
@@ -3695,6 +3849,14 @@
             window.cambiarTabComerciante('PRODUCTOS');
         };
 
+        window.togglePrecioMayorForm = function(val) {
+            const box = document.getElementById("box-campos-mayor");
+            if (box) {
+                if (val === "SI") box.classList.remove("hidden");
+                else box.classList.add("hidden");
+            }
+        };
+
         window.guardarProductoComerciante = async function() {
             if (!comercianteSesion) return;
             const slug = comercianteSesion.slug;
@@ -3715,6 +3877,14 @@
             }
             const disponible = (estadoFinal === "DISPONIBLE" && stock > 0);
 
+            // Modalidad de Entrega
+            const entregaTipo = document.getElementById("prod-inp-entrega-tipo").value || "INMEDIATA";
+
+            // Precio al Mayor
+            const tieneMayor = document.getElementById("prod-select-tiene-mayor").value === "SI";
+            let precioMayor = parseFloat(document.getElementById("prod-inp-precio-mayor").value) || 0;
+            let minMayor = parseInt(document.getElementById("prod-inp-min-mayor").value) || 3;
+
             const desc = document.getElementById("prod-inp-desc").value.trim();
             const foto = document.getElementById("prod-foto-base64").value;
 
@@ -3725,35 +3895,43 @@
             if (moneda === "COP") precioUSD = precio / tasas.cop;
             if (moneda === "BS") precioUSD = precio / tasas.bs;
 
+            let precioMayorUSD = null;
+            if (tieneMayor && precioMayor > 0) {
+                precioMayorUSD = precioMayor;
+                if (moneda === "COP") precioMayorUSD = precioMayor / tasas.cop;
+                if (moneda === "BS") precioMayorUSD = precioMayor / tasas.bs;
+            }
+
+            const datosProd = {
+                nombre,
+                categoria,
+                moneda,
+                precio: precioUSD,
+                stock: stock,
+                estado: estadoFinal,
+                disponible: disponible,
+                entregaTipo: entregaTipo,
+                tieneMayor: tieneMayor && (precioMayorUSD > 0),
+                precioMayor: tieneMayor ? precioMayorUSD : null,
+                minMayor: tieneMayor ? minMayor : null,
+                desc,
+                foto
+            };
+
             if (!productosPorTienda[slug]) productosPorTienda[slug] = [];
             if (editId) {
                 const idx = productosPorTienda[slug].findIndex(p => p.id === editId);
                 if (idx !== -1) {
                     productosPorTienda[slug][idx] = { 
                         ...productosPorTienda[slug][idx], 
-                        nombre, 
-                        categoria, 
-                        moneda, 
-                        precio: precioUSD, 
-                        stock: stock,
-                        estado: estadoFinal,
-                        disponible: disponible, 
-                        desc, 
+                        ...datosProd,
                         foto: foto || productosPorTienda[slug][idx].foto 
                     };
                 }
             } else {
                 productosPorTienda[slug].push({ 
                     id: "p-" + Date.now(), 
-                    nombre, 
-                    categoria, 
-                    moneda, 
-                    precio: precioUSD, 
-                    stock: stock,
-                    estado: estadoFinal,
-                    disponible: disponible, 
-                    desc, 
-                    foto 
+                    ...datosProd
                 });
             }
 
@@ -3771,6 +3949,11 @@
             document.getElementById("prod-inp-precio").value = "";
             document.getElementById("prod-inp-stock").value = "10";
             document.getElementById("prod-inp-disponible").value = "DISPONIBLE";
+            document.getElementById("prod-inp-entrega-tipo").value = "INMEDIATA";
+            document.getElementById("prod-select-tiene-mayor").value = "NO";
+            window.togglePrecioMayorForm("NO");
+            document.getElementById("prod-inp-precio-mayor").value = "";
+            document.getElementById("prod-inp-min-mayor").value = "3";
             document.getElementById("prod-inp-desc").value = "";
             document.getElementById("box-preview-prod-foto").innerHTML = `<i class="fa-solid fa-image"></i>`;
             document.getElementById("btn-cancelar-edicion-prod").classList.add("hidden");
@@ -3801,15 +3984,27 @@
                     badgeClass = "text-amber-600";
                 }
 
+                const entregaBadge = p.entregaTipo === 'BAJO_PEDIDO'
+                    ? `<span class="bg-indigo-50 text-indigo-700 border border-indigo-200 text-[8.5px] font-black px-1.5 py-0.5 rounded">⏳ Bajo Pedido</span>`
+                    : `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[8.5px] font-black px-1.5 py-0.5 rounded">⚡ Inmediata</span>`;
+
+                const mayorTxt = (p.tieneMayor && p.precioMayor > 0)
+                    ? `<span class="bg-blue-50 text-blue-700 border border-blue-200 text-[8.5px] font-mono font-bold px-1.5 py-0.5 rounded">📦 Mayor: ${convertirMonto(p.precioMayor, "USD", comercianteSesion.slug)} (Min ${p.minMayor || 3})</span>`
+                    : '';
+
                 return `
                 <div class="bg-white p-3 rounded-2xl border border-slate-200 shadow-sm flex justify-between items-center text-xs">
                     <div class="flex items-center gap-2.5 min-w-0 pr-2">
                         <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center">
                             ${p.foto ? `<img src="${p.foto}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-box text-slate-400"></i>`}
                         </div>
-                        <div class="min-w-0">
+                        <div class="min-w-0 space-y-0.5">
                             <h4 class="text-slate-900 font-black uppercase truncate">${p.nombre}</h4>
-                            <span class="text-[10px] text-emerald-600 font-mono font-bold block">${convertirMonto(p.precio, "USD", comercianteSesion.slug)}</span>
+                            <div class="flex flex-wrap items-center gap-1.5">
+                                <span class="text-[10px] text-emerald-600 font-mono font-bold">${convertirMonto(p.precio, "USD", comercianteSesion.slug)}</span>
+                                ${entregaBadge}
+                                ${mayorTxt}
+                            </div>
                             <span class="text-[9px] ${badgeClass} font-bold uppercase block">${badgeTxt}</span>
                         </div>
                     </div>
@@ -3845,6 +4040,26 @@
             let estadoVal = p.estado || (p.disponible ? "DISPONIBLE" : "PAUSADO");
             if (p.stock === 0) estadoVal = "AGOTADO";
             document.getElementById("prod-inp-disponible").value = estadoVal;
+
+            // Modalidad de Entrega
+            document.getElementById("prod-inp-entrega-tipo").value = p.entregaTipo || "INMEDIATA";
+
+            // Precio al Mayor
+            if (p.tieneMayor && p.precioMayor > 0) {
+                document.getElementById("prod-select-tiene-mayor").value = "SI";
+                window.togglePrecioMayorForm("SI");
+                let mayorMostrar = p.precioMayor;
+                if (p.moneda === "COP") mayorMostrar = Math.round(p.precioMayor * tasas.cop);
+                else if (p.moneda === "BS") mayorMostrar = +(p.precioMayor * tasas.bs).toFixed(2);
+                else mayorMostrar = +p.precioMayor.toFixed(2);
+                document.getElementById("prod-inp-precio-mayor").value = mayorMostrar;
+                document.getElementById("prod-inp-min-mayor").value = p.minMayor || 3;
+            } else {
+                document.getElementById("prod-select-tiene-mayor").value = "NO";
+                window.togglePrecioMayorForm("NO");
+                document.getElementById("prod-inp-precio-mayor").value = "";
+                document.getElementById("prod-inp-min-mayor").value = "3";
+            }
 
             document.getElementById("prod-inp-desc").value = p.desc || "";
             if (p.foto) {
