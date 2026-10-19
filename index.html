@@ -433,7 +433,7 @@
                     ● En Stock
                 </div>
                 <div id="det-prod-badge-entrega" class="absolute bottom-3 right-3 bg-indigo-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md">
-                    ⚡ Entrega Inmediata
+                    ⚡ Entrega Disponible
                 </div>
             </div>
 
@@ -665,7 +665,7 @@
                     <div>
                         <label class="text-[9px] text-slate-600 uppercase font-bold block mb-0.5">Modalidad de Entrega *</label>
                         <select id="prod-inp-entrega-tipo" class="input-clean font-bold text-xs">
-                            <option value="INMEDIATA">⚡ Entrega Inmediata (En Mostrador)</option>
+                            <option value="INMEDIATA">⚡ Entrega Disponible (En Mostrador)</option>
                             <option value="BAJO_PEDIDO">⏳ Bajo Pedido (Por Encargo / Catálogo)</option>
                         </select>
                     </div>
@@ -2589,10 +2589,34 @@
                 return `${cop.toLocaleString("es-CO")} COP`;
             }
             if (monedaDestino === "BS") {
-                const bs = precioUSD * tasas.bs;
-                return `${bs.toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} Bs`;
+                const bs = Math.round(precioUSD * tasas.bs);
+                return `${bs.toLocaleString("es-VE")} Bs`;
             }
             return `$${precioUSD.toFixed(2)}`;
+        }
+
+        function obtenerInfoEquivalencia(precioUSD, monedaActual, slug = null) {
+            const tasas = obtenerTasasActivasTienda(slug || tiendaActivaSlug);
+            if (monedaActual === "USD") {
+                const cop = Math.round(precioUSD * tasas.cop);
+                return {
+                    label: "🇨🇴 En Pesos:",
+                    monto: `${cop.toLocaleString("es-CO")} COP`,
+                    sub: "Tasa del día"
+                };
+            } else if (monedaActual === "COP") {
+                return {
+                    label: "💵 En Dólares:",
+                    monto: `$${precioUSD.toFixed(2)} USD`,
+                    sub: "Tasa del día"
+                };
+            } else {
+                return {
+                    label: "💵 En Dólares:",
+                    monto: `$${precioUSD.toFixed(2)} USD`,
+                    sub: "Tasa del día"
+                };
+            }
         }
 
         window.cambiarMonedaTienda = function(moneda) {
@@ -2970,78 +2994,91 @@
                 let photoOverlayHTML = "";
                 let botonHTML = "";
 
-                // La foto se mantiene 100% limpia sin etiquetas invasivas. Solo si está agotado o pausado se muestra un aviso translúcido.
+                // Foto limpia sin elementos invasivos
                 if (esAgotado) {
                     photoOverlayHTML = `<div class="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] flex items-center justify-center p-2"><span class="bg-rose-600 text-white font-black text-[9px] px-2.5 py-1 rounded-xl shadow uppercase tracking-wider">🚫 Agotado</span></div>`;
-                    botonHTML = `<button disabled class="w-full bg-slate-200 text-slate-400 text-[10px] py-2 rounded-xl uppercase font-black tracking-wider cursor-not-allowed">🚫 Sin Existencia</button>`;
+                    botonHTML = `<button disabled class="w-full bg-slate-200 text-slate-400 text-[10px] py-2.5 rounded-xl uppercase font-black tracking-wider cursor-not-allowed">🚫 Sin Existencia</button>`;
                 } else if (esPausado) {
                     photoOverlayHTML = `<div class="absolute inset-0 bg-slate-950/50 backdrop-blur-[2px] flex items-center justify-center p-2"><span class="bg-amber-600 text-white font-black text-[9px] px-2.5 py-1 rounded-xl shadow uppercase tracking-wider">⏸️ No Disponible</span></div>`;
-                    botonHTML = `<button disabled class="w-full bg-slate-200 text-slate-400 text-[10px] py-2 rounded-xl uppercase font-black tracking-wider cursor-not-allowed">⏸️ No Disponible</button>`;
+                    botonHTML = `<button disabled class="w-full bg-slate-200 text-slate-400 text-[10px] py-2.5 rounded-xl uppercase font-black tracking-wider cursor-not-allowed">⏸️ No Disponible</button>`;
                 } else {
                     botonHTML = `<button onclick="window.agregarAlCarrito('${p.id}')" class="w-full btn-brand text-[10.5px] py-2.5 rounded-xl uppercase tracking-wider flex items-center justify-center gap-1.5 active:scale-95 transition-all btn-interactive shadow-sm">
                         <i class="fa-solid fa-plus text-xs"></i> Agregar Pedido
                     </button>`;
                 }
 
-                // Modalidad de Entrega organizada fuera de la imagen
+                // Modalidad de Entrega organizada fuera de la foto: '⚡ Disponible' o '⏳ Bajo Pedido'
                 const entregaBadge = (p.entregaTipo === 'BAJO_PEDIDO')
                     ? `<span class="bg-indigo-50 text-indigo-700 border border-indigo-200/80 text-[8.5px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">⏳ Bajo Pedido</span>`
-                    : `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[8.5px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">⚡ Inmediata</span>`;
+                    : `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[8.5px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-wider shrink-0">⚡ Disponible</span>`;
 
-                // Bloque de Precio Detal y Mayor espacioso, legible y sin colisiones
+                // Bloque de precios simétrico, limpio, idéntico en altura y sin palabras confusas
                 let precioBloqueHTML = "";
                 if (p.tieneMayor && p.precioMayor > 0) {
                     precioBloqueHTML = `
-                    <div class="bg-gradient-to-r from-blue-50/90 to-indigo-50/50 rounded-2xl p-2.5 border border-blue-200/90 space-y-1.5 my-1 shadow-xs">
+                    <div class="bg-gradient-to-r from-blue-50/90 to-indigo-50/50 rounded-2xl p-2 sm:p-2.5 border border-blue-200/90 flex flex-col justify-between min-h-[62px] space-y-1.5 shadow-xs">
                         <div class="flex items-baseline justify-between leading-none">
                             <span class="text-[9px] font-black uppercase tracking-wider text-slate-500">Detal:</span>
-                            <strong class="text-xs font-black font-mono text-slate-900">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</strong>
+                            <span class="whitespace-nowrap text-[12px] sm:text-sm font-black font-mono text-slate-900 tracking-tight">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</span>
                         </div>
-                        <div class="flex items-baseline justify-between border-t border-blue-200/60 pt-1.5 leading-none">
+                        <div class="flex items-baseline justify-between border-t border-blue-200/70 pt-1.5 leading-none">
                             <span class="text-[9px] font-black uppercase tracking-wider text-blue-700 flex items-center gap-1">
-                                <i class="fa-solid fa-boxes-packing text-amber-500 text-[10px]"></i> Al Mayor:
+                                <i class="fa-solid fa-boxes-packing text-amber-500 text-[9.5px]"></i> Al Mayor:
                             </span>
                             <div class="text-right leading-tight">
-                                <strong class="text-xs font-black font-mono text-blue-700 block">${convertirMonto(p.precioMayor, monedaTiendaActiva, slug)}</strong>
-                                <span class="text-[8px] text-slate-500 font-bold block">(Mín. ${p.minMayor || 3} unid.)</span>
+                                <span class="whitespace-nowrap text-xs font-black font-mono text-blue-700 block">${convertirMonto(p.precioMayor, monedaTiendaActiva, slug)}</span>
+                                <span class="text-[8px] text-slate-500 font-bold block">(Mín. ${p.minMayor || 3} un.)</span>
                             </div>
                         </div>
                     </div>`;
                 } else {
+                    const eqInfo = obtenerInfoEquivalencia(p.precio, monedaTiendaActiva, slug);
                     precioBloqueHTML = `
-                    <div class="py-1">
-                        <strong class="text-sm sm:text-base font-black font-mono text-slate-900 block">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</strong>
+                    <div class="bg-slate-50/90 rounded-2xl p-2 sm:p-2.5 border border-slate-200/90 flex flex-col justify-between min-h-[62px] space-y-1.5 shadow-xs">
+                        <div class="flex items-baseline justify-between leading-none">
+                            <span class="text-[9px] font-black uppercase tracking-wider text-slate-500">Detal:</span>
+                            <span class="whitespace-nowrap text-[12px] sm:text-sm font-black font-mono text-slate-900 tracking-tight">${convertirMonto(p.precio, monedaTiendaActiva, slug)}</span>
+                        </div>
+                        <div class="flex items-baseline justify-between border-t border-slate-200/70 pt-1.5 leading-none">
+                            <span class="text-[9px] font-black uppercase tracking-wider text-slate-600 flex items-center gap-1">
+                                ${eqInfo.label}
+                            </span>
+                            <div class="text-right leading-tight">
+                                <span class="whitespace-nowrap text-xs font-black font-mono text-emerald-700 block">${eqInfo.monto}</span>
+                                <span class="text-[8px] text-slate-400 font-bold block">${eqInfo.sub}</span>
+                            </div>
+                        </div>
                     </div>`;
                 }
 
                 return `
-                <div onclick="window.abrirModalDetalleProducto('${p.id}')" class="card-product p-3 sm:p-3.5 flex flex-col justify-between space-y-2.5 cursor-pointer active:scale-[0.99] transition-transform ${esAgotado ? 'opacity-85' : ''}">
+                <div onclick="window.abrirModalDetalleProducto('${p.id}')" class="card-product p-3 sm:p-3.5 flex flex-col justify-between cursor-pointer active:scale-[0.99] transition-transform ${esAgotado ? 'opacity-85' : ''}">
                     <div class="space-y-2">
-                        <!-- FOTO LIMPIA (LA ESTRELLA DEL PRODUCTO) -->
+                        <!-- FOTO LIMPIA (SIN ELEMENTOS INVASIVOS ENCIMA) -->
                         <div class="relative w-full h-36 sm:h-40 bg-slate-100 rounded-2xl overflow-hidden flex items-center justify-center border border-slate-100 shadow-inner">
                             ${p.foto ? `<img src="${p.foto}" class="w-full h-full object-cover">` : `<i class="fa-solid fa-box-open text-slate-300 text-2xl"></i>`}
                             ${photoOverlayHTML}
                         </div>
                         
-                        <!-- INFORMACIÓN DEL PRODUCTO: CATEGORÍA Y ENTREGA ORGANIZADOS -->
-                        <div class="space-y-1">
-                            <div class="flex items-center justify-between gap-1.5 leading-none">
-                                <span class="text-[9.5px] text-blue-600 uppercase font-black tracking-wider truncate">${p.categoria || 'General'}</span>
-                                ${entregaBadge}
+                        <!-- CATEGORÍA, ESTADO, TÍTULO Y DESCRIPCIÓN CON ALTURAS HOMOGÉNEAS Y SIN TEXTOS CORTADOS -->
+                        <div class="space-y-1.5">
+                            <div class="space-y-1">
+                                <span class="text-[10px] text-blue-600 uppercase font-black tracking-wide block leading-tight">${p.categoria || 'General'}</span>
+                                <div class="leading-none flex items-center">${entregaBadge}</div>
                             </div>
-                            <h4 class="text-xs font-extrabold text-slate-900 uppercase line-clamp-2 leading-snug">${p.nombre}</h4>
-                            <p class="text-[10px] text-slate-500 line-clamp-2 font-medium leading-tight">${p.desc || ''}</p>
+                            <h4 class="text-xs font-extrabold text-slate-900 uppercase line-clamp-2 leading-snug min-h-[2.2rem] flex items-center">${p.nombre}</h4>
+                            <p class="text-[10px] text-slate-500 line-clamp-2 font-medium leading-tight min-h-[1.7rem]">${p.desc || ''}</p>
                         </div>
                     </div>
 
-                    <div class="space-y-1.5 pt-1 border-t border-slate-100" onclick="event.stopPropagation()">
+                    <div class="space-y-1.5 pt-1.5 border-t border-slate-100 mt-2" onclick="event.stopPropagation()">
                         ${precioBloqueHTML}
                         ${botonHTML}
                     </div>
                 </div>`;
             }).join("");
 
-            // RELLENO ESTÉTICO AUTOMÁTICO EN CASO IMPAR
+            // Cuadro estético de relleno para filas impares
             if (prods.length % 2 !== 0) {
                 html += `
                     <div class="card-product p-4 flex flex-col justify-between items-center text-center border-dashed border-2 border-slate-200 bg-slate-50/60 rounded-2xl min-h-[220px]">
@@ -3101,7 +3138,7 @@
                     badgeEntrega.innerText = "⏳ Bajo Pedido";
                 } else {
                     badgeEntrega.className = "absolute bottom-3 right-3 bg-emerald-600 text-white font-black text-[9px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md";
-                    badgeEntrega.innerText = "⚡ Entrega Inmediata";
+                    badgeEntrega.innerText = "⚡ Entrega Disponible";
                 }
             }
 
@@ -3152,7 +3189,7 @@
 
             const pUSD = prod.precio;
             const pCOP = Math.round(pUSD * tasas.cop).toLocaleString("es-CO");
-            const pBs = (pUSD * tasas.bs).toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const pBs = Math.round(pUSD * tasas.bs).toLocaleString("es-VE");
 
             document.getElementById("det-prod-precio-principal").innerText = convertirMonto(pUSD, monedaTiendaActiva, tiendaActivaSlug);
             document.getElementById("det-prod-precio-ref").innerText = `Ref: ${pCOP} COP | ${pBs} Bs.`;
@@ -3227,8 +3264,8 @@
             const tasas = obtenerTasasActivasTienda(tiendaActivaSlug);
             const pUSD = productoSeleccionadoModal.precio;
             const pCOP = Math.round(pUSD * tasas.cop).toLocaleString("es-CO");
-            const pBs = (pUSD * tasas.bs).toFixed(2);
-            const modalidadTxt = productoSeleccionadoModal.entregaTipo === 'BAJO_PEDIDO' ? '⏳ Bajo Pedido (Por Encargo)' : '⚡ Entrega Inmediata (En Mostrador)';
+            const pBs = Math.round(pUSD * tasas.bs).toLocaleString("es-VE");
+            const modalidadTxt = productoSeleccionadoModal.entregaTipo === 'BAJO_PEDIDO' ? '⏳ Bajo Pedido (Por Encargo)' : '⚡ Entrega Disponible (En Mostrador)';
 
             let msg = `🛍️ *PEDIDO DIRECTO — ${tienda.nombre}*\n\n${saludo} Estoy interesado en comprar el producto que tienes publicado en *TCL TuZona Comercial*:\n\n📦 *PRODUCTO:* ${productoSeleccionadoModal.nombre}\n💰 *PRECIO:* $${pUSD.toFixed(2)} USD | ${pCOP} COP | ${pBs} Bs.\n🕒 *MODALIDAD:* ${modalidadTxt}\n👤 *CLIENTE:* ${nom}\n📍 *DIRECCIÓN:* ${dir}\n🛵 *ENTREGA:* ${entrega}\n💳 *FORMA DE PAGO:* ${pago}\n\n¿Me confirman disponibilidad para coordinar la entrega? 🙌`;
 
@@ -3324,7 +3361,7 @@
             }, 0);
             document.getElementById("chk-monto-total-usd").innerText = convertirMonto(totalUSD, monedaTiendaActiva, tiendaActivaSlug);
             const totalCOP = Math.round(totalUSD * tasas.cop).toLocaleString("es-CO");
-            const totalBs = (totalUSD * tasas.bs).toLocaleString("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const totalBs = Math.round(totalUSD * tasas.bs).toLocaleString("es-VE");
             document.getElementById("chk-monto-equivalentes").innerText = `Ref: ${totalCOP} COP | ${totalBs} Bs.`;
             modal.classList.remove("hidden");
         };
@@ -3360,7 +3397,7 @@
                 return acc + (pU * it.cant);
             }, 0);
             const totalCOP = Math.round(totalUSD * tasas.cop).toLocaleString("es-CO");
-            const totalBs = (totalUSD * tasas.bs).toFixed(2);
+            const totalBs = Math.round(totalUSD * tasas.bs).toLocaleString("es-VE");
 
             let msg = `🛍️ *NUEVO PEDIDO DESDE TU VITRINA DIGITAL*\n🏢 *Comercio:* ${tienda.nombre}\n\n👤 *Cliente:* ${nombreCli}\n📍 *Dirección:* ${dirCli}\n🛵 *Entrega:* ${entrega}\n💳 *Pago:* ${pago}\n━━━━━━━━━━━━━━━━━━━━━\n*PRODUCTOS:*\n`;
             items.forEach(it => {
@@ -3986,7 +4023,7 @@
 
                 const entregaBadge = p.entregaTipo === 'BAJO_PEDIDO'
                     ? `<span class="bg-indigo-50 text-indigo-700 border border-indigo-200 text-[8.5px] font-black px-1.5 py-0.5 rounded">⏳ Bajo Pedido</span>`
-                    : `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[8.5px] font-black px-1.5 py-0.5 rounded">⚡ Inmediata</span>`;
+                    : `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[8.5px] font-black px-1.5 py-0.5 rounded">⚡ Disponible</span>`;
 
                 const mayorTxt = (p.tieneMayor && p.precioMayor > 0)
                     ? `<span class="bg-blue-50 text-blue-700 border border-blue-200 text-[8.5px] font-mono font-bold px-1.5 py-0.5 rounded">📦 Mayor: ${convertirMonto(p.precioMayor, "USD", comercianteSesion.slug)} (Min ${p.minMayor || 3})</span>`
